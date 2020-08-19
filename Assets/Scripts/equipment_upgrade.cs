@@ -27,6 +27,8 @@ public class equipment_upgrade : MonoBehaviour
     public equipment_info[] goggles;
     public equipment_info[] flippers;
 
+    public GameObject buy_ui;
+
     public Text[] suit_upgrade_price_text;        // 업그레이드에 필요한 가격 텍스트. 활성화,비활성화 2개
     public Text[] goggle_upgrade_price_text;
     public Text[] flipper_upgrade_price_text;
@@ -47,10 +49,10 @@ public class equipment_upgrade : MonoBehaviour
 
     //IEnumerator upgrade_effect()
 
-    public void return_to_farm()
+    public void return_to_home()
     {
         data_save();
-        SceneManager.LoadScene("farm");
+        buy_ui.gameObject.SetActive(false);
     }
 
     void Update()

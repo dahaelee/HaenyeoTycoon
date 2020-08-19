@@ -10,10 +10,26 @@ public class betting_rsp : MonoBehaviour
     //public Image rockSelect;
     //public Image objStore;
     public GameObject[] select;
-    public GameObject hide, question;
+    public GameObject hide, question, blank_bg;
     public GameObject[] seller_rsp;
     public float time = 0;
-    public int rsp_result = -1;
+    public static int rsp_result = -1;
+
+    public void initial_rsp()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            seller_rsp[i].SetActive(false);
+            select[i].SetActive(false);
+        }
+        rsp_result = -1;
+        time = 0;
+        seller = -1;
+        hide.transform.localScale = new Vector3(0.8f, 0.8f, 1);
+        hide.gameObject.SetActive(true);
+        question.gameObject.SetActive(true);
+        blank_bg.gameObject.SetActive(false);
+    }
 
     public void result(int myHand) // 상인 랜덤으로 가위바위보 정하고 해녀 중심 결과 rsp_result에 저장
     {
@@ -45,6 +61,7 @@ public class betting_rsp : MonoBehaviour
         hide_effect();
         //hide.SetActive(false);
         result(0);
+        blank_bg.gameObject.SetActive(true);
     }
     public void clickSci()
     {
@@ -52,6 +69,7 @@ public class betting_rsp : MonoBehaviour
         hide_effect();
         //hide.SetActive(false);
         result(1);
+        blank_bg.gameObject.SetActive(true);
     }
     public void clickPaper()
     {
@@ -59,6 +77,7 @@ public class betting_rsp : MonoBehaviour
         hide_effect();
         //hide.SetActive(false);
         result(2);
+        blank_bg.gameObject.SetActive(true);
     }
 
     public void hide_effect() // 가림막 없어지는 효과
@@ -72,14 +91,18 @@ public class betting_rsp : MonoBehaviour
         }
         time += Time.deltaTime;
     }
+
+    
+
+
     // Start is called before the first frame update
     void Start()
     {
-       
         for (int i = 0; i < 3; i++)
         {
             select[i].SetActive(false);
         }
+        
     }
 
     // Update is called once per frame
@@ -89,18 +112,6 @@ public class betting_rsp : MonoBehaviour
         {
             question.gameObject.SetActive(false);
             hide_effect();
-            if (rsp_result == 0)
-            {
-                Debug.Log("비겼습니다.");
-            }
-            else if (rsp_result == 1)
-            {
-                Debug.Log("졌습니다.");
-            }
-            else
-            {
-                Debug.Log("이겼습니다.");
-            }
         }
     }
     

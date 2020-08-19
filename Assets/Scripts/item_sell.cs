@@ -10,9 +10,12 @@ public class item_sell : MonoBehaviour
     public sell_item_info[] sea_items;
     //public sell_item_info starfish, seaweed, shell, shrimp, jellyfish, crab, octopus, abalone, turtle;
     public Text Haenyeo_money;
+    public GameObject sell_ui, rsp_ui, ask_ui;
 
     // 사운드 이펙트
     public AudioSource bgm, sell_click, updown_click;
+
+    public int temp_index, temp_item_num, temp_item_money;
 
     void Awake()
     {
@@ -21,28 +24,52 @@ public class item_sell : MonoBehaviour
         updown_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
 
         data_load();
+        Debug.Log(Haenyeo.sea_item_number[0]);
         // 임의로 설정한 자원 개수
-        //Haenyeo.sea_item_number[0] = 10;
-        //Haenyeo.sea_item_number[3] = 5;
+        Haenyeo.sea_item_number[0] = 10;
+        Haenyeo.sea_item_number[3] = 5;
         item_UI();
-        
         
     }
 
-    public void return_to_farm()
+    public void return_to_home()
     {
         data_save();
-        SceneManager.LoadScene("farm");
+        sell_ui.gameObject.SetActive(false);
+    }
+    public void rsp_yes()
+    {
+        //betting_rsp.initial_rsp();
+        ask_ui.gameObject.SetActive(false);
+        rsp_ui.gameObject.SetActive(true);
+    }
+    public void rsp_no()
+    {
+        // 원래 지정한 금액만 짤랑
+        sell_click.PlayOneShot(sell_click.clip);
+        
+        Haenyeo.money += temp_item_money;
+        
+        Haenyeo.sea_item_number[temp_index] -= temp_item_num;
+        
+        //sea_items[item_index].sell_price_text.text = (sea_items[item_index].raw_price * sea_items[item_index].sell_number).ToString("N0");
+        //Haenyeo.money += sea_items[item_index].raw_price * sea_items[item_index].sell_number; // 해녀돈 += 자원 팔 개수 * raw_price;
+        //Haenyeo.sea_item_number[item_index] -= sea_items[item_index].sell_number; // 해녀가 가진 자원 개수 -= 자원 팔 개수
+        ask_ui.gameObject.SetActive(false);
+        item_UI();
+        temp_index = -1;
+        temp_item_money = 0;
+        temp_item_num = 0;
     }
 
     // 해녀가 가진 자원만 보이도록 설정
     public void item_UI()
     {
-        //item_noshow();
+        item_noshow();
         Haenyeo_money.text = Haenyeo.money.ToString("N0");
         for (int i=0; i< sea_items.Length; i++)
         {
-            if(Haenyeo.sea_item_number[i] >= 0)
+            if(Haenyeo.sea_item_number[i] > 0)
             {
                 sea_items[i].gameObject.SetActive(true);
                 //sea_items[i].number_up_button.gameObject.SetActive(false);
@@ -99,10 +126,18 @@ public class item_sell : MonoBehaviour
     // 팔기 버튼
     public void sell_button_click(int item_index)
     {
+        ask_ui.gameObject.SetActive(true);
+        temp_index = item_index;
+        temp_item_num = sea_items[item_index].sell_number;
+        temp_item_money = sea_items[item_index].raw_price * sea_items[item_index].sell_number;
+
+        
+
         sell_click.PlayOneShot(sell_click.clip);
         sea_items[item_index].sell_price_text.text = (sea_items[item_index].raw_price * sea_items[item_index].sell_number).ToString("N0");
-        Haenyeo.money += sea_items[item_index].raw_price * sea_items[item_index].sell_number; // 해녀돈 += 자원 팔 개수 * raw_price;
-        Haenyeo.sea_item_number[item_index] -= sea_items[item_index].sell_number; // 해녀가 가진 자원 개수 -= 자원 팔 개수
+        //Haenyeo.money += sea_items[item_index].raw_price * sea_items[item_index].sell_number; // 해녀돈 += 자원 팔 개수 * raw_price;
+        //Haenyeo.sea_item_number[item_index] -= sea_items[item_index].sell_number; // 해녀가 가진 자원 개수 -= 자원 팔 개수
+        //item_noshow();
         item_UI();
     }
 
@@ -132,14 +167,53 @@ public class item_sell : MonoBehaviour
         if (sea_items[item_index].sell_number > 0) // 팔 자원 개수가 0보다 많아지면 활성화
         {
             sea_items[item_index].number_down_button.GetComponent<Button>().interactable = true;
+            sea_items[item_index].sell_button.GetComponent<Button>().interactable = true;
             //sea_items[item_index].number_down_button.SetActive(true);
         }
         else if (sea_items[item_index].sell_number <= 0) // 팔 자원 개수가 0과 같거나 작아지면 비활성화 (안되는 부분)
         {
             sea_items[item_index].number_down_button.GetComponent<Button>().interactable = false;
+            sea_items[item_index].sell_button.GetComponent<Button>().interactable = false;
             //sea_items[item_index].number_down_button.SetActive(false);
         }
     }
+
+
+    public void sell_rsp()
+    {
+        sell_click.PlayOneShot(sell_click.clip);
+
+        //sea_items[temp_index].sell_price_text.text = (sea_items[temp_index].raw_price * sea_items[temp_index].sell_number).ToString("N0");
+        if (betting_rsp.rsp_result == 0)
+        {
+            Debug.Log("비겼습니다.");
+            
+            //Haenyeo.money += sea_items[temp_index].raw_price * sea_items[temp_index].sell_number; // 해녀돈 += 자원 팔 개수 * raw_price;
+            Haenyeo.money += temp_item_money;
+        }
+        else if (betting_rsp.rsp_result == 1)
+        {
+            Debug.Log("졌습니다");
+            //Haenyeo.money += sea_items[temp_index].raw_price * sea_items[temp_index].sell_number / 2; // 해녀돈 += 자원 팔 개수 * raw_price / 2;
+            Haenyeo.money += temp_item_money / 2;
+        }
+        else if (betting_rsp.rsp_result == 2)
+        {
+            Debug.Log("이겼습니다");
+            //Haenyeo.money += sea_items[temp_index].raw_price * sea_items[temp_index].sell_number * 2; // 해녀돈 += 자원 팔 개수 * raw_price * 2;
+            Haenyeo.money += temp_item_money * 2;
+        }
+
+        //Haenyeo.sea_item_number[temp_index] -= sea_items[temp_index].sell_number; // 해녀가 가진 자원 개수 -= 자원 팔 개수
+        Haenyeo.sea_item_number[temp_index] -= temp_item_num;
+
+        rsp_ui.gameObject.SetActive(false);
+        item_UI();
+        temp_index = -1;
+        temp_item_money = 0;
+        temp_item_num = 0;
+    }
+
 
     public void data_save()
     {
