@@ -17,6 +17,8 @@ public class Haenyeo : MonoBehaviour
     public Image hp_bg;
     public Sprite hp100, hp80, hp60, hp40, hp20, hp0;
 
+    public static int[] farm_item_number = new int[9]; //보유하고있는 양식 자원 개수
+
     public enum sea_item_index
     {
         starfish = 0,
@@ -28,9 +30,22 @@ public class Haenyeo : MonoBehaviour
         octopus,
         abalone,
         turtle
-
     };
 
+
+    public enum farm_item_index
+    {
+        starfish = 0,
+        seaweed,
+        shell,
+        shrimp,
+        jellyfish,
+        crab,
+        octopus,
+        abalone,
+        turtle
+    };
+    
     public void Start()
     {
         hp_text.GetComponent<Text>().text = hp.ToString();
