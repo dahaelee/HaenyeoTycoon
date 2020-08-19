@@ -68,6 +68,7 @@ public class sea : MonoBehaviour
             time_remaining -= Time.deltaTime; //시간의 흐름에 따라 남은 시간 감소
         }
 
+        
         time_text.text = Mathf.CeilToInt(time_remaining).ToString(); //남은 시간을 time_text에 담기
         time_slider.value = time_remaining / time_max; //슬라이드의 값은 (남은 시간/전체 시간)
 
@@ -91,18 +92,19 @@ public class sea : MonoBehaviour
                 load_farm(); //양식장으로 이동
             }
         }
+        
 
         if (haenyeo.transform.position.x < -475) //해녀의 위치가 화면 왼쪽 끝으로 가면
         {
-            gagebar.transform.localPosition = new Vector3((-475 - haenyeo.transform.position.x)/100, 0.85f, 0f); //게이지바가 화면을 넘어가지 않도록 조정
+            gagebar.transform.localPosition = new Vector3((-475 - haenyeo.transform.position.x)/100, 0.85f, -1f); //게이지바가 화면을 넘어가지 않도록 조정
         }
         if (haenyeo.transform.position.x >= -475 && haenyeo.transform.position.x <= 475) //해녀의 위치가 화면 양 끝이 아니면
         {
-            gagebar.transform.localPosition = new Vector3(0f, 0.85f, 0f); //게이지바가 원래 위치에 있도록
+            gagebar.transform.localPosition = new Vector3(0f, 0.85f, -1f); //게이지바가 원래 위치에 있도록
         }
         if (haenyeo.transform.position.x > 475) //해녀의 위치가 화면 오른쪽 끝으로 가면
         {
-            gagebar.transform.localPosition = new Vector3((475 - haenyeo.transform.position.x)/100, 0.85f, 0f); //게이지바가 화면을 넘어가지 않도록 조정
+            gagebar.transform.localPosition = new Vector3((475 - haenyeo.transform.position.x)/100, 0.85f, -1f); //게이지바가 화면을 넘어가지 않도록 조정
         }
     }
 

@@ -5104,7 +5104,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7, y: 0.7}
+  m_Size: {x: 0.6, y: 0.6}
   m_EdgeRadius: 0
 --- !u!114 &444808484
 MonoBehaviour:
@@ -11325,6 +11325,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 249e04fe9894ebe478277e0dbdb06776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp100: {fileID: 0}
+  hp80: {fileID: 0}
+  hp60: {fileID: 0}
+  hp40: {fileID: 0}
+  hp20: {fileID: 0}
+  hp0: {fileID: 0}
+  hp_text: {fileID: 0}
 --- !u!61 &1253978623
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14106,7 +14113,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7, y: 0.7}
+  m_Size: {x: 0.6, y: 0.6}
   m_EdgeRadius: 0
 --- !u!114 &1474864743
 MonoBehaviour:
@@ -16909,7 +16916,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7, y: 0.7}
+  m_Size: {x: 0.6, y: 0.6}
   m_EdgeRadius: 0
 --- !u!114 &1794149409
 MonoBehaviour:
