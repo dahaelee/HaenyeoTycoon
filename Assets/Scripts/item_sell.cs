@@ -14,6 +14,9 @@ public class item_sell : MonoBehaviour
     // 사운드 이펙트
     public AudioSource bgm, sell_click, updown_click;
 
+    public GameObject sell_ui, ask_ui, rsp_ui;
+    public int temp_index, temp_num, temp_money;
+
     void Awake()
     {
         bgm.volume = PlayerPrefs.GetFloat("Bgm_volume", 1);
@@ -22,27 +25,64 @@ public class item_sell : MonoBehaviour
 
         data_load();
         // 임의로 설정한 자원 개수
-        //Haenyeo.sea_item_number[0] = 10;
-        //Haenyeo.sea_item_number[3] = 5;
-        item_UI();
-        
-        
+        Haenyeo.sea_item_number[0] = 10;
+        Haenyeo.sea_item_number[3] = 5;
+        item_UI();        
     }
 
-    public void return_to_farm()
+    public void return_to_home()
     {
-        data_save();
-        SceneManager.LoadScene("farm");
+        //data_save();
+        sell_ui.gameObject.SetActive(false);
     }
+
+    public void rsp_yes()
+    {
+        ask_ui.gameObject.SetActive(false);
+        rsp_ui.gameObject.SetActive(true);
+    }
+    public void rsp_no()
+    {
+        // 원래 지정한 금액만 짤랑
+        Haenyeo.money += temp_money;
+        Haenyeo.sea_item_number[temp_index] -= temp_num;
+       
+        ask_ui.gameObject.SetActive(false);
+        item_UI();
+    }
+
+    public void sell_rsp()
+    {
+        rsp_ui.SetActive(false);
+        sell_click.PlayOneShot(sell_click.clip);
+        if (betting_rsp.rsp_result == 0)
+        {
+            Haenyeo.money += temp_money;
+        }
+        else if (betting_rsp.rsp_result == 1)
+        {
+            Haenyeo.money += temp_money/2;
+        }
+        else
+        {
+            Haenyeo.money += temp_money*2;
+        }
+        Haenyeo.sea_item_number[temp_index] -= temp_num;
+        item_UI();
+    }
+
 
     // 해녀가 가진 자원만 보이도록 설정
     public void item_UI()
     {
-        //item_noshow();
+        temp_num = 0;
+        temp_money = 0;
+        temp_index = -1;
+        item_noshow();
         Haenyeo_money.text = Haenyeo.money.ToString("N0");
         for (int i=0; i< sea_items.Length; i++)
         {
-            if(Haenyeo.sea_item_number[i] >= 0)
+            if(Haenyeo.sea_item_number[i] > 0)
             {
                 sea_items[i].gameObject.SetActive(true);
                 //sea_items[i].number_up_button.gameObject.SetActive(false);
@@ -99,11 +139,13 @@ public class item_sell : MonoBehaviour
     // 팔기 버튼
     public void sell_button_click(int item_index)
     {
-        sell_click.PlayOneShot(sell_click.clip);
+        ask_ui.SetActive(true);
+        //sell_click.PlayOneShot(sell_click.clip);
+        temp_index = item_index;
         sea_items[item_index].sell_price_text.text = (sea_items[item_index].raw_price * sea_items[item_index].sell_number).ToString("N0");
-        Haenyeo.money += sea_items[item_index].raw_price * sea_items[item_index].sell_number; // 해녀돈 += 자원 팔 개수 * raw_price;
-        Haenyeo.sea_item_number[item_index] -= sea_items[item_index].sell_number; // 해녀가 가진 자원 개수 -= 자원 팔 개수
-        item_UI();
+        temp_money = sea_items[item_index].raw_price * sea_items[item_index].sell_number; // 해녀돈 += 자원 팔 개수 * raw_price;
+        temp_num = sea_items[item_index].sell_number; // 해녀가 가진 자원 개수 -= 자원 팔 개수
+        //item_UI();
     }
 
     // 업버튼 활성화/비활성화 
@@ -132,14 +174,18 @@ public class item_sell : MonoBehaviour
         if (sea_items[item_index].sell_number > 0) // 팔 자원 개수가 0보다 많아지면 활성화
         {
             sea_items[item_index].number_down_button.GetComponent<Button>().interactable = true;
+            sea_items[item_index].sell_button.GetComponent<Button>().interactable = true;
             //sea_items[item_index].number_down_button.SetActive(true);
         }
         else if (sea_items[item_index].sell_number <= 0) // 팔 자원 개수가 0과 같거나 작아지면 비활성화 (안되는 부분)
         {
             sea_items[item_index].number_down_button.GetComponent<Button>().interactable = false;
+            sea_items[item_index].sell_button.GetComponent<Button>().interactable = false;
             //sea_items[item_index].number_down_button.SetActive(false);
         }
     }
+
+    
 
     public void data_save()
     {
