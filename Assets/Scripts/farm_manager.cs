@@ -787,7 +787,6 @@ public class farm_manager : MonoBehaviour
     public void sea_ui()
     {
 
-
         if (is_sea_locked)  //잠겨있으면
         {
             //송금을 해야한다고 말하기
@@ -853,6 +852,8 @@ public class farm_manager : MonoBehaviour
     //게임 설정 창 UI
     public void setting()
     {
+
+        //Haenyeo.hp -= 1; hp내려가는거 실험용
         icon_click.PlayOneShot(icon_click.clip);        //아이콘 클릭시 사운드
         setting_ui.gameObject.SetActive(true);
         UI_background.gameObject.SetActive(true);
