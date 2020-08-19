@@ -10,23 +10,19 @@ using UnityEngine.UI;
 
 public class new_quest : MonoBehaviour
 {
-    //farm,sea 공통 오브젝트
+    //공통 오브젝트
     public Image touch_bg,quest_bg, text_window, next_triangle;
     public Text text, hilight_text;
     public static int step, quest_num;
+    public int IsQuest, item_num = 0;     //퀘스트 확인용
 
     //farm object
     public GameObject hilight_parent, bubble_parent;
     public Image[] hilight;
     public Image debtor, daddy , speech_bubble;
     public Text bubble_text;
-    public Image sea_icon_fake;
-
-    //sea object
-    public Image daddy_big; // 아빠 상반신 이미지
+    public Image sea_icon_fake,shop_icon_fake;
     
-    public int IsQuest, item_num=0;     //퀘스트 중인지 아닌지
-
     public void Initialize()
     {
         touch_bg.gameObject.SetActive(false);
@@ -38,19 +34,13 @@ public class new_quest : MonoBehaviour
         hilight_parent.SetActive(false);
         bubble_parent.gameObject.SetActive(false);
         sea_icon_fake.gameObject.SetActive(false);
-    }
-
-    public void sea_initialize() {
-        touch_bg.gameObject.SetActive(false);
-        quest_bg.gameObject.SetActive(false);
-        daddy_big.gameObject.SetActive(false);
-        text_window.gameObject.SetActive(false);
-        next_triangle.gameObject.SetActive(false);
+        shop_icon_fake.gameObject.SetActive(false);
     }
 
     // 빚쟁이의 첫번째 빚재촉
     public void Debtor1()
     {
+        Initialize();
         touch_bg.gameObject.SetActive(true);
         quest_bg.gameObject.SetActive(true);
         debtor.gameObject.SetActive(true);
@@ -141,20 +131,20 @@ public class new_quest : MonoBehaviour
                 }
                 break;
             case 3:
-                switch (step) {
-                    case 2:
+                Initialize();
+                break;
+            case 4:
 
-                        break;
-                }
                 break;
         }
     }
 
     public void sea_open()
     {
-        IsQuest = PlayerPrefs.GetInt("isQuest", 1);
+        PlayerPrefs.SetInt("isQuest", 3);
         SceneManager.LoadScene("sea"); // 바다로 이동
-        Initialize();
+        hilight[6].gameObject.SetActive(false);
+        Initialize();   //퀘스트 관련 오브젝트 false로 만듬
     }
 
     //아빠 1 - 게임 ui 설명
@@ -171,7 +161,7 @@ public class new_quest : MonoBehaviour
         step = 1; quest_num = 2;
 
         bubble_parent.transform.position = new Vector3(640, 540, 0); // 화면 상단 위치
-        bubble_text.text = "해녀야... 아빠 때문에 네가 고생하는 것 같아 마음이 편하지가 않구나..\n아직 양식장 구성에 대해 잘 모를테니 몇가지 설명을 해주마..";
+        bubble_text.text = "아빠 때문에 네가 고생하는 것 같아 마음이 편하지가 않구나..\n아직 양식장 구성에 대해 잘 모를테니 몇가지 설명을 해주마..";
     }
 
     public void Start()
@@ -179,20 +169,53 @@ public class new_quest : MonoBehaviour
         StartCoroutine("triangle_effect");
     }
 
-    public void Update() {
-        for (int i = 0; i < 9; i++) {
-            item_num+=Haenyeo.sea_item_number[i];
-        }
+    public void Update()
+    {
+        IsQuest = PlayerPrefs.GetInt("isQuest", 1);
+        Check_quest(IsQuest);     // quest 완료 검사
+    }
 
-        if (IsQuest == 1 && item_num == 1) {
-            sea_initialize();
-            quest_bg.gameObject.SetActive(true);
-            daddy_big.gameObject.SetActive(true);
-            text_window.gameObject.SetActive(true);
-            next_triangle.gameObject.SetActive(true);
+    public void Check_quest(int IsQuest) {
+        switch (IsQuest) {
+            case 3:
+                for (int i = 0; i < 9; i++)
+                {
+                    item_num += Haenyeo.sea_item_number[i];
+                }
+                if (item_num > 0)
+                {
+                    touch_bg.gameObject.SetActive(true);
+                    quest_bg.gameObject.SetActive(true);
+                    bubble_parent.SetActive(true);
 
-            quest_num = 3; step = 1;
-            text.text = "제법이구나 역시 우리 딸이야..! \n이런식으로 자원을 채집하는 거란다..\n자원 하나만 더 채집해 보겠니 ?";
+                    step = 1; quest_num = 3;
+                    bubble_parent.transform.position = new Vector3(640, 540, 0); // 화면 상단 위치
+                    bubble_text.text = "역시 우리 해녀로구나.. 이제 잡은 자원을 양식해보렴";
+
+                    item_num = 0;
+                    PlayerPrefs.SetInt("isQuest", 4);
+                }
+                break;
+            case 4:
+                for (int i = 0; i < 9; i++)
+                {
+                    item_num += Haenyeo.farm_item_number[i];
+                }
+                if (item_num > 0)
+                {
+                    hilight_parent.SetActive(true);
+                    hilight[5].gameObject.SetActive(true);
+                    bubble_parent.SetActive(true);
+                    shop_icon_fake.gameObject.SetActive(true);
+
+                    step = 1; quest_num = 4;
+                    bubble_parent.transform.position = new Vector3(640, 540, 0); // 화면 상단 위치
+                    bubble_text.text = "그렇지~ 자원은 그렇게 양식하는 거란다.. 상인 아저씨가 찾던데! 어서 가보렴";
+
+                    item_num = 0;
+                    PlayerPrefs.SetInt("isQuest", 4);
+                }
+                break;
         }
     }
 
