@@ -38,6 +38,7 @@ public class equipment_upgrade : MonoBehaviour
     public GameObject flipper_enable_button;   // 오리발 활성화 버튼
     public GameObject flipper_disable_button;  // 오리발 비활성화 버튼
 
+    public GameObject buy_ui;
 
     // 해녀가 장착하고 있는 장비
     public static int my_suit = 0;
@@ -47,10 +48,10 @@ public class equipment_upgrade : MonoBehaviour
 
     //IEnumerator upgrade_effect()
 
-    public void return_to_farm()
+    public void return_to_home()
     {
         data_save();
-        SceneManager.LoadScene("farm");
+        buy_ui.gameObject.SetActive(false);
     }
 
     void Update()
