@@ -8,6 +8,11 @@ TagManager:
   - turn_fish
   - haenyeo
   - turn_ball
+  - quest1
+  - quest2
+  - quest3
+  - quest4
+  - quest5
   layers:
   - Default
   - TransparentFX

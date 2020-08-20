@@ -71,7 +71,7 @@ public class farm_manager : MonoBehaviour
         if (isNew == 1)     //첫 시작이면 퀘스트 뜨게 함
         {
             //효민 - 빚쟁이 텍스트
-            GameObject.Find("new_quest").GetComponent<new_quest>().Debtor1();
+            GameObject.Find("new_quest").GetComponent<new_quest>().Sache1();
 
             //tutorial_parent.SetActive(true);
             //for (int k = 0; k < tutorials.Length; k++)
