@@ -1,58 +1,45 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class new_quest : MonoBehaviour
 {
+    //퀘스트 ui 관련 오브젝트
+    public GameObject quest_ui;
+    public GameObject content_parent,content;
+    public Text todo_text, type_text;
+    public Image quest_ing, quest_done;
+    public Button reward_button,cancle_button;
+
     //공통 오브젝트
     public Image touch_bg,quest_bg, text_window, next_triangle;
     public Text text, hilight_text;
     public static int step, quest_num;
-    public int IsQuest, item_num = 0;     //퀘스트 확인용
+    public static int IsQuest, item_num = 0;     //퀘스트 확인용
 
     //farm object
     public GameObject hilight_parent, bubble_parent;
     public Image[] hilight;
-    public Image debtor, daddy , speech_bubble;
+    public Image sache, daddy , speech_bubble;
     public Text bubble_text;
-    public Image sea_icon_fake,shop_icon_fake;
+    public Image sea_icon_fake;
     
     public void Initialize()
     {
         touch_bg.gameObject.SetActive(false);
         quest_bg.gameObject.SetActive(false);
-        debtor.gameObject.SetActive(false);
+        sache.gameObject.SetActive(false);
         text_window.gameObject.SetActive(false);
         next_triangle.gameObject.SetActive(false);
         hilight_text.gameObject.SetActive(false);
         hilight_parent.SetActive(false);
         bubble_parent.gameObject.SetActive(false);
         sea_icon_fake.gameObject.SetActive(false);
-        shop_icon_fake.gameObject.SetActive(false);
+        quest_ui.gameObject.SetActive(false);
     }
-
-    // 빚쟁이의 첫번째 빚재촉
-    public void Debtor1()
-    {
-        Initialize();
-        touch_bg.gameObject.SetActive(true);
-        quest_bg.gameObject.SetActive(true);
-        debtor.gameObject.SetActive(true);
-        text_window.gameObject.SetActive(true);
-        next_triangle.gameObject.SetActive(true);
-        hilight_text.gameObject.SetActive(false);
-        bubble_parent.gameObject.SetActive(false);
-        step = 1; quest_num = 1;
-
-        text.text = "너가 대신 아버지빚을 갚겠다고? \n마음은 기특하지만,\n과연 너가 돈을 갚을 수 있을진 의심이 되는군";
-    }
-
+    
     //다음 텍스트
     public void Next_text()
     {
@@ -125,7 +112,7 @@ public class new_quest : MonoBehaviour
                         break;
                     case 9:
                         sea_icon_fake.gameObject.SetActive(true);
-
+                        
                         bubble_text.text = "이 참에 바다에서 물질하는 법도 알려주마… 바다 아이콘을 눌러보렴";
                         break;
                 }
@@ -133,18 +120,24 @@ public class new_quest : MonoBehaviour
             case 3:
                 Initialize();
                 break;
-            case 4:
-
-                break;
         }
     }
-
-    public void sea_open()
+    
+    // 사채업자의 첫번째 빚재촉
+    public void Sache1()
     {
-        PlayerPrefs.SetInt("isQuest", 3);
-        SceneManager.LoadScene("sea"); // 바다로 이동
-        hilight[6].gameObject.SetActive(false);
-        Initialize();   //퀘스트 관련 오브젝트 false로 만듬
+        Initialize();
+        touch_bg.gameObject.SetActive(true);
+        quest_bg.gameObject.SetActive(true);
+        sache.gameObject.SetActive(true);
+        text_window.gameObject.SetActive(true);
+        next_triangle.gameObject.SetActive(true);
+        hilight_text.gameObject.SetActive(false);
+        bubble_parent.gameObject.SetActive(false);
+
+        quest_content_generate(1, "사채업자의 빚재촉", "5일동안 20만원 갚기");
+        step = 1; quest_num = 1;
+        text.text = "너가 대신 아버지빚을 갚겠다고? \n마음은 기특하지만,\n과연 너가 돈을 갚을 수 있을진 의심이 되는군";
     }
 
     //아빠 1 - 게임 ui 설명
@@ -158,16 +151,22 @@ public class new_quest : MonoBehaviour
         {
             hilight[i].gameObject.SetActive(false);
         }
-        step = 1; quest_num = 2;
 
+        quest_content_generate(2, "아빠의 가르침", "바다에서 자원 1개 이상 채집하기");
+        step = 1; quest_num = 2;
         bubble_parent.transform.position = new Vector3(640, 540, 0); // 화면 상단 위치
         bubble_text.text = "아빠 때문에 네가 고생하는 것 같아 마음이 편하지가 않구나..\n아직 양식장 구성에 대해 잘 모를테니 몇가지 설명을 해주마..";
     }
 
-    public void Start()
+    //fake_sea_icon 눌렀을 때 함수
+    public void sea_open()
     {
-        StartCoroutine("triangle_effect");
+        Initialize();
+        PlayerPrefs.SetInt("isQuest", 3);
+        SceneManager.LoadScene("sea"); // 바다로 이동
+        hilight[6].gameObject.SetActive(false);
     }
+
 
     public void Update()
     {
@@ -175,6 +174,7 @@ public class new_quest : MonoBehaviour
         Check_quest(IsQuest);     // quest 완료 검사
     }
 
+    // 퀘스트 완료 확인
     public void Check_quest(int IsQuest) {
         switch (IsQuest) {
             case 3:
@@ -184,9 +184,13 @@ public class new_quest : MonoBehaviour
                 }
                 if (item_num > 0)
                 {
+                    Initialize();
                     touch_bg.gameObject.SetActive(true);
                     quest_bg.gameObject.SetActive(true);
                     bubble_parent.SetActive(true);
+
+                    Destroy(GameObject.FindWithTag("quest2"));   //quest2 삭제
+                    quest_content_generate(3, "아빠의 가르침", "자원 양식하기");
 
                     step = 1; quest_num = 3;
                     bubble_parent.transform.position = new Vector3(640, 540, 0); // 화면 상단 위치
@@ -203,12 +207,12 @@ public class new_quest : MonoBehaviour
                 }
                 if (item_num > 0)
                 {
-                    hilight_parent.SetActive(true);
-                    hilight[5].gameObject.SetActive(true);
                     bubble_parent.SetActive(true);
-                    shop_icon_fake.gameObject.SetActive(true);
 
-                    step = 1; quest_num = 4;
+                    Destroy(GameObject.FindWithTag("quest3"));   //quest3 삭제
+                    quest_content_generate(4, "아빠의 가르침", "상인 아저씨와 대화하기");
+
+                    step = 1; quest_num = 3;
                     bubble_parent.transform.position = new Vector3(640, 540, 0); // 화면 상단 위치
                     bubble_text.text = "그렇지~ 자원은 그렇게 양식하는 거란다.. 상인 아저씨가 찾던데! 어서 가보렴";
 
@@ -217,6 +221,35 @@ public class new_quest : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    public void quest_content_generate(int quest_num,string type, string todo) {
+        //quest content 설정
+        quest_ing.gameObject.SetActive(true);
+        quest_done.gameObject.SetActive(false);
+        type_text.text = type;  todo_text.text = todo;
+        content.tag = "quest"+quest_num.ToString();
+
+        GameObject temp_content = Instantiate(content, new Vector3(0, 0, 0), Quaternion.identity);
+        temp_content.transform.SetParent(content_parent.transform);
+        temp_content.SetActive(true);
+    }
+
+    //quest_ui open
+    public void quest_ui_open() {
+        quest_bg.gameObject.SetActive(true);
+        quest_ui.gameObject.SetActive(true);
+    }
+
+    public void quest_ui_close()
+    {
+        quest_bg.gameObject.SetActive(false);
+        quest_ui.gameObject.SetActive(false);
+    }
+
+    public void Start()
+    {
+        StartCoroutine("triangle_effect");
     }
 
     //삼각형 깜박깜박 이펙트
