@@ -4,17 +4,33 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+//quest 관련 data..  scene 바뀔 때마다 클론 오브젝트 사라져서 static data 따로 저장..
+public class Quest_data {
+    public int state;   //0 진행중, 1 완료
+    public string todo;
+    public string type;
+
+    public Quest_data(int state, string type,string todo)
+    {
+        this.state = state;
+        this.type = type;
+        this.todo = todo;
+    }
+}
+
 public class new_quest : MonoBehaviour
 {
+    public static SortedList<int, Quest_data> quest_data = new SortedList<int, Quest_data>();   // 퀘스트 목록
+
     //퀘스트 ui 관련 오브젝트
     public GameObject quest_ui;
-    public GameObject content_parent,content;
+    public GameObject content_parent, content;
     public Text todo_text, type_text;
     public Image quest_ing, quest_done;
-    public Button reward_button,cancle_button;
+    public Button reward_button, cancle_button;
 
     //공통 오브젝트
-    public Image touch_bg,quest_bg, text_window, next_triangle;
+    public Image touch_bg, quest_bg, text_window, next_triangle;
     public Text text, hilight_text;
     public static int step, quest_num;
     public static int IsQuest, item_num = 0;     //퀘스트 확인용
@@ -22,10 +38,10 @@ public class new_quest : MonoBehaviour
     //farm object
     public GameObject hilight_parent, bubble_parent;
     public Image[] hilight;
-    public Image sache, daddy , speech_bubble;
+    public Image sache, daddy, speech_bubble;
     public Text bubble_text;
     public Image sea_icon_fake;
-    
+
     public void Initialize()
     {
         touch_bg.gameObject.SetActive(false);
@@ -39,7 +55,7 @@ public class new_quest : MonoBehaviour
         sea_icon_fake.gameObject.SetActive(false);
         quest_ui.gameObject.SetActive(false);
     }
-    
+
     //다음 텍스트
     public void Next_text()
     {
@@ -112,7 +128,7 @@ public class new_quest : MonoBehaviour
                         break;
                     case 9:
                         sea_icon_fake.gameObject.SetActive(true);
-                        
+
                         bubble_text.text = "이 참에 바다에서 물질하는 법도 알려주마… 바다 아이콘을 눌러보렴";
                         break;
                 }
@@ -122,11 +138,12 @@ public class new_quest : MonoBehaviour
                 break;
         }
     }
-    
+
     // 사채업자의 첫번째 빚재촉
     public void Sache1()
     {
         Initialize();
+        quest_data.Clear(); //퀘스트 목록 지우기
         touch_bg.gameObject.SetActive(true);
         quest_bg.gameObject.SetActive(true);
         sache.gameObject.SetActive(true);
@@ -135,7 +152,9 @@ public class new_quest : MonoBehaviour
         hilight_text.gameObject.SetActive(false);
         bubble_parent.gameObject.SetActive(false);
 
-        quest_content_generate(1, "사채업자의 빚재촉", "5일동안 20만원 갚기");
+
+        quest_data.Add(1, new Quest_data(0, "사채업자의 빚재촉", "5일동안 20만원 갚기"));   // 퀘스트 목록에 추가하기
+        Awake(); //실시간 반영
         step = 1; quest_num = 1;
         text.text = "너가 대신 아버지빚을 갚겠다고? \n마음은 기특하지만,\n과연 너가 돈을 갚을 수 있을진 의심이 되는군";
     }
@@ -147,12 +166,13 @@ public class new_quest : MonoBehaviour
         quest_bg.gameObject.SetActive(true);
         bubble_parent.SetActive(true);
         hilight_parent.SetActive(true);
-        for (int i = 0;  i < hilight.Length; i++)
+        for (int i = 0; i < hilight.Length; i++)
         {
             hilight[i].gameObject.SetActive(false);
         }
 
-        quest_content_generate(2, "아빠의 가르침", "바다에서 자원 1개 이상 채집하기");
+        quest_data.Add(2, new Quest_data(0, "아빠의 가르침", "바다에서 자원 1개 이상 채집하기"));   // 퀘스트 목록에 추가하기
+        Awake(); //실시간 반영
         step = 1; quest_num = 2;
         bubble_parent.transform.position = new Vector3(640, 540, 0); // 화면 상단 위치
         bubble_text.text = "아빠 때문에 네가 고생하는 것 같아 마음이 편하지가 않구나..\n아직 양식장 구성에 대해 잘 모를테니 몇가지 설명을 해주마..";
@@ -188,9 +208,10 @@ public class new_quest : MonoBehaviour
                     touch_bg.gameObject.SetActive(true);
                     quest_bg.gameObject.SetActive(true);
                     bubble_parent.SetActive(true);
-
-                    Destroy(GameObject.FindWithTag("quest2"));   //quest2 삭제
-                    quest_content_generate(3, "아빠의 가르침", "자원 양식하기");
+                    
+                    quest_data.Remove(2);   // quest 2 삭제
+                    quest_data.Add(3, new Quest_data(0, "아빠의 가르침", "자원 양식하기"));   // 퀘스트 목록에 추가하기
+                    Awake(); //실시간 반영
 
                     step = 1; quest_num = 3;
                     bubble_parent.transform.position = new Vector3(640, 540, 0); // 화면 상단 위치
@@ -209,8 +230,10 @@ public class new_quest : MonoBehaviour
                 {
                     bubble_parent.SetActive(true);
 
-                    Destroy(GameObject.FindWithTag("quest3"));   //quest3 삭제
-                    quest_content_generate(4, "아빠의 가르침", "상인 아저씨와 대화하기");
+
+                    quest_data.Remove(3);   // quest 3 삭제
+                    quest_data.Add(4, new Quest_data(0, "아빠의 가르침", "상인 아저씨와 대화하기"));   // 퀘스트 목록에 추가하기
+                    Awake(); //실시간 반영
 
                     step = 1; quest_num = 3;
                     bubble_parent.transform.position = new Vector3(640, 540, 0); // 화면 상단 위치
@@ -223,18 +246,6 @@ public class new_quest : MonoBehaviour
         }
     }
 
-    public void quest_content_generate(int quest_num,string type, string todo) {
-        //quest content 설정
-        quest_ing.gameObject.SetActive(true);
-        quest_done.gameObject.SetActive(false);
-        type_text.text = type;  todo_text.text = todo;
-        content.tag = "quest"+quest_num.ToString();
-
-        GameObject temp_content = Instantiate(content, new Vector3(0, 0, 0), Quaternion.identity);
-        temp_content.transform.SetParent(content_parent.transform);
-        temp_content.SetActive(true);
-    }
-
     //quest_ui open
     public void quest_ui_open() {
         quest_bg.gameObject.SetActive(true);
@@ -245,6 +256,37 @@ public class new_quest : MonoBehaviour
     {
         quest_bg.gameObject.SetActive(false);
         quest_ui.gameObject.SetActive(false);
+    }
+
+    // quest_data를 gameobject로 바꿔줌
+    public void Awake()
+    {
+        //기존 자식 오브젝트들 삭제하고 다시 생성
+        for (int i = 0; i < content_parent.transform.childCount; i++)
+        {
+            Destroy(content_parent.transform.GetChild(i).gameObject);
+        }
+        content_parent.transform.DetachChildren();
+
+        foreach (var tmp in quest_data) {
+            Quest_data data = tmp.Value;
+
+            if (data.state == 0)
+            {
+                quest_ing.gameObject.SetActive(true);
+                quest_done.gameObject.SetActive(false);
+            }
+            else
+            {
+                quest_ing.gameObject.SetActive(false);
+                quest_done.gameObject.SetActive(true);
+            }
+            type_text.text = data.type; todo_text.text = data.todo;
+
+            GameObject temp_content = Instantiate(content, new Vector3(0, 0, 0), Quaternion.identity);
+            temp_content.transform.SetParent(content_parent.transform);
+            temp_content.SetActive(true);
+        }
     }
 
     public void Start()
