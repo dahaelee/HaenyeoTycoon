@@ -8,8 +8,7 @@ public class sea : MonoBehaviour
 {
     public float time_remaining, time_max, countdown;
     public Image return_to_farms_ui, show_mesh_ui, timeover_return_ui, block_touch, start_button;
-    public Slider time_slider;
-    public Text time_text, countdown_text;
+    public Text countdown_text;
     public GameObject[] items_got; //그물망 속 자원 배열 
     public int[] item_num; //그물망 속 자원개수 배열
     public Text[] item_num_text; //그물망 속 자원개수 텍스트 배열 
@@ -41,8 +40,6 @@ public class sea : MonoBehaviour
         timeover_return_ui.gameObject.SetActive(false);
         timeover_return_ui.gameObject.SetActive(false);
 
-        time_max = (float)Haenyeo.diving_time; //전체 시간 = 해녀의 diving_time 
-        time_remaining = time_max; //시작할때 남은 시간을 전체 시간으로 초기화
         countdown = 5.0f;
         level = Haenyeo.level;
 
@@ -65,16 +62,11 @@ public class sea : MonoBehaviour
 
         if (!block_touch.gameObject.activeSelf) //터치 방지가 비활성화 상태일 때만
         {
-            time_remaining -= Time.deltaTime; //시간의 흐름에 따라 남은 시간 감소
+            Haenyeo.hp -= Time.deltaTime; //시간의 흐름에 따라 체력 감소 (아이템 별로 수치 조정하기)
         }
 
-        
-        time_text.text = Mathf.CeilToInt(time_remaining).ToString(); //남은 시간을 time_text에 담기
-        time_slider.value = time_remaining / time_max; //슬라이드의 값은 (남은 시간/전체 시간)
-
-        if (time_remaining <= 0) //남은 시간이 0보다 작아지면
+        if (Haenyeo.hp <= 0) //체력이 0보다 작아지면
         {
-            time_remaining = 0; //마이너스값이 뜨지 않도록 0으로
             block_touch.gameObject.SetActive(true); //팝업창 외의 영역 터치 방지
             timeover_return_ui.gameObject.SetActive(true); //카운트다운 팝업창 활성화
 
@@ -236,6 +228,7 @@ public class sea : MonoBehaviour
         PlayerPrefs.SetInt("Haenyeo_sea_item_number7", Haenyeo.sea_item_number[7]);
         PlayerPrefs.SetInt("Haenyeo_sea_item_number8", Haenyeo.sea_item_number[8]);
         PlayerPrefs.SetInt("Haenyeo" + "_" + "money", Haenyeo.money); // 바다에서 코인으로 번 돈 저장용
+        PlayerPrefs.SetFloat("Haenyeo_hp", Haenyeo.hp); // 체력 저장
         StartCoroutine("fade_out"); //화면 페이드아웃 후 양식장으로 전환
     }
     public IEnumerator fade_out()
