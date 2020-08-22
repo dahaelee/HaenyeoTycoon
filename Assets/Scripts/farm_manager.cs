@@ -59,8 +59,6 @@ public class farm_manager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-<<<<<<< HEAD
-=======
 
 
         int isNew = PlayerPrefs.GetInt("isNew", 1);     //새로운거인지 확인
@@ -68,24 +66,11 @@ public class farm_manager : MonoBehaviour
         {
             //효민 - 빚쟁이 텍스트
             GameObject.Find("new_quest").GetComponent<new_quest>().Sache1();
-
-            //tutorial_parent.SetActive(true);
-            //for (int k = 0; k < tutorials.Length; k++)
-            //{
-            //    tutorials[k].gameObject.SetActive(false);
-            //}
-            //tutorials[0].gameObject.SetActive(true);
-
             PlayerPrefs.SetInt("isNew", 0);
         }
-        else
-        {
-            tutorial_parent.SetActive(false);
-        }
 
 
 
->>>>>>> 75aeed78bf612a3a5a6ff187450ec2f343706c8e
         activation_cost = 50000;        //양식장 확장 비용
         limit_day = 20;
         sending_int = 0;
@@ -133,7 +118,19 @@ public class farm_manager : MonoBehaviour
     public void farming_money(int index)    //양식장 번호 파라미터
     {
         get_money.PlayOneShot(get_money.clip);  //수확할 때 사운드
-        //수확됨
+        //양식자원 하나 증가
+        int item_num = farms[index].item.number;
+        Haenyeo.farm_item_number[item_num]++;
+        //양식장 비우기
+        farms[index].item = null;
+        farms[index].isFarming = false;         //양식중 아님으로 바꾸기
+        farms[index].farm_opportunity = 5;          //양식 횟수 초기화
+        farms[index].item1.gameObject.SetActive(false);     //자원들 다 안보이게 하기
+        farms[index].item2.gameObject.SetActive(false);
+        farms[index].item3.gameObject.SetActive(false);
+        farms[index].money.gameObject.SetActive(false);
+        farms[index].plus.gameObject.SetActive(true);       //양식하기 플러스 아이콘 보이게하기
+
     }
 
 
@@ -147,13 +144,8 @@ public class farm_manager : MonoBehaviour
         }
         image.gameObject.SetActive(false);
         yield return new WaitForSeconds(0.1f);
-<<<<<<< HEAD
         image2.gameObject.SetActive(false);
-=======
-        //Debug.Log("하이 헬로");
         image2.gameObject.SetActive(false);
-        //Debug.Log("하이 헬로2");
->>>>>>> 75aeed78bf612a3a5a6ff187450ec2f343706c8e
         yield return new WaitForSeconds(0.05f);
         image3.gameObject.SetActive(true);
     }
@@ -188,6 +180,7 @@ public class farm_manager : MonoBehaviour
 
             farms[farm_index].isFarming = true;    //양식 시작한걸로 하기
             Haenyeo.sea_item_number[item_index] -= 1;   //자원 1개 차감 
+            Haenyeo.hp -= 1f;       //체력 1 줄어들기
             farms[farm_index].plus.gameObject.SetActive(false); //플러스 표시 빼기
             farmable_item_ui.gameObject.SetActive(false);   //양식 가능한 자원 보여주는 창 닫기
 
@@ -203,24 +196,11 @@ public class farm_manager : MonoBehaviour
             farms[farm_index].item_generating = Wait_generating(farms[farm_index]);
             StartCoroutine(farms[farm_index].item_generating);
 
-<<<<<<< HEAD
-=======
-            /*
-            if (farms[farm_index].remaining_time < haenyeo.sea_item[item_index].farm_time / 3*2) //시간이 3분의 1 지났을 경우
-            {
-                farms[farm_index].item2.gameObject.SetActive(true);
-            }
-            if (farms[farm_index].remaining_time < haenyeo.sea_item[item_index].farm_time /3) //시간이 3분의 2 지났을 경우
-            {
-                farms[farm_index].item3.gameObject.SetActive(true);
-            }
-            */
 
         }
         else
         {   //3개 미만인 경우 양식 안함
             //Debug.Log("양식 못해열");
->>>>>>> 75aeed78bf612a3a5a6ff187450ec2f343706c8e
         }
     }
 
@@ -738,10 +718,6 @@ public class farm_manager : MonoBehaviour
     //UI 창 오픈하는 코드와 이펙트
     IEnumerator UI_On(Image image)
     {
-<<<<<<< HEAD
-=======
-        //Debug.Log("ffff");
->>>>>>> 75aeed78bf612a3a5a6ff187450ec2f343706c8e
         yield return new WaitForSeconds(0.1f);
         UI_background.gameObject.SetActive(true);
         image.gameObject.SetActive(true);
