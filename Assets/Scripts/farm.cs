@@ -29,7 +29,6 @@ public class farm : MonoBehaviour
 
         void OnDisable()
         {
-            PlayerPrefs.SetInt("farm" + farm_number + "_sea_item", item.number);
             if (is_farm_Activated)
             {
                 PlayerPrefs.SetInt("farm" + farm_number + "_is_farm_activated", 1);     //true면 1저장
@@ -42,7 +41,8 @@ public class farm : MonoBehaviour
             if (isFarming)
             {
                 PlayerPrefs.SetInt("farm" + farm_number + "_isFarming", 1);     //true면 1저장
-            }
+                PlayerPrefs.SetInt("farm" + farm_number + "_sea_item", item.number);
+        }
             else
             {
                 PlayerPrefs.SetInt("farm" + farm_number + "_isFarming", 0);
