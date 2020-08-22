@@ -88,6 +88,26 @@ public class farm : MonoBehaviour
 
     }
 
+
+    // 양식장 비우는 코드
+    public void farmReset()
+    {
+        this.item = null;
+        this.isFarming = false;         //양식중 아님으로 바꾸기
+        this.farm_opportunity = 5;          //양식 횟수 초기화
+        this.item1.gameObject.SetActive(false);     //자원들 다 안보이게 하기
+        this.item2.gameObject.SetActive(false);
+        this.item3.gameObject.SetActive(false);
+        this.money.gameObject.SetActive(false);
+        this.plus.gameObject.SetActive(true);       //양식하기 플러스 아이콘 보이게하기
+        if (item_generating != null)
+        {
+            StopCoroutine(item_generating);
+            item_generating = null;
+        }
+    }
+
+
     public void data_load()
     {
         this.farming_effect.gameObject.SetActive(false);
