@@ -27,7 +27,7 @@ public class sea_item : MonoBehaviour
         this.anim = anim;
     }
 
-    void Awake()
+    void Start()
     {
         info_name.text = item_name_kor;
         info_price.text = string.Format("{0:#,###0}", farm_price);
