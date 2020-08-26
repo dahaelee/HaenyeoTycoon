@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 public class item_sell : MonoBehaviour
 {
     public sell_item_info[] sea_items;
-    //public sell_item_info starfish, seaweed, shell, shrimp, jellyfish, crab, octopus, abalone, turtle;
     public Text Haenyeo_money;
 
     // 사운드 이펙트
@@ -24,15 +23,13 @@ public class item_sell : MonoBehaviour
         updown_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
 
         data_load();
-        // 임의로 설정한 자원 개수
-        Haenyeo.sea_item_number[0] = 10;
-        Haenyeo.sea_item_number[3] = 5;
+        item_noshow();
         item_UI();        
     }
 
     public void return_to_home()
     {
-        //data_save();
+        data_save();
         sell_ui.gameObject.SetActive(false);
     }
 
