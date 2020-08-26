@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class new_quest : MonoBehaviour
+public class tutorial_quest : MonoBehaviour
 {
     //공통 오브젝트
     public GameObject quest_ui;
@@ -15,7 +15,7 @@ public class new_quest : MonoBehaviour
     //farm object
     public GameObject hilight_parent, bubble_parent;
     public Image[] hilight;
-    public Image sache, daddy, speech_bubble;
+    public Image sache, speech_bubble;
     public Text bubble_text;
     public string[] tutorial_texts;
     public Image sea_icon_fake;
@@ -75,7 +75,7 @@ public class new_quest : MonoBehaviour
                         bubble_text.text = tutorial_texts[step - 1];
                     }
                     //말풍선 위치 조정
-                    if(step==5)   bubble_parent.transform.position = new Vector3(640, 450, 0);
+                    if (step == 5) bubble_parent.transform.position = new Vector3(640, 450, 0);
                     if (step == 8)
                     {
                         bubble_text.text = tutorial_texts[step - 1];
@@ -103,7 +103,7 @@ public class new_quest : MonoBehaviour
         bubble_parent.gameObject.SetActive(false);
 
 
-        quest_manager.quest_contents.Add(1, new Quest_Content(1, "사채업자의 빚재촉", "5일동안 20만원 갚기",0));   // 퀘스트 목록에 추가하기
+        quest_manager.quest_contents.Add(1, new Quest_Content(1, "사채업자의 빚재촉", "5일동안 20만원 갚기", 0));   // 퀘스트 목록에 추가하기
         GameObject.Find("quest_manager").GetComponent<quest_manager>().quest_contents_update();//실시간 반영
         step = 1; quest_num = 1;
         text.text = "너가 대신 아버지빚을 갚겠다고? \n마음은 기특하지만,\n과연 너가 돈을 갚을 수 있을진 의심이 되는군";
@@ -112,7 +112,7 @@ public class new_quest : MonoBehaviour
     //아빠 1 - 게임 ui 설명
     public void Daddy1()
     {
-        tutorial_texts = new string[] 
+        tutorial_texts = new string[]
         {
             "아빠 때문에 네가 고생하는 것 같아 마음이 편하지가 않구나..\n아직 양식장 구성에 대해 잘 모를테니 몇가지 설명을 해주마..",
             "이건 너의 소지금을 나타낸단다...",
@@ -133,7 +133,7 @@ public class new_quest : MonoBehaviour
             hilight[i].gameObject.SetActive(false);
         }
 
-        quest_manager.quest_contents.Add(2, new Quest_Content(1, "아빠의 가르침", "바다에서 자원 1개 이상 채집하기",0));   // 퀘스트 목록에 추가하기
+        quest_manager.quest_contents.Add(2, new Quest_Content(1, "아빠의 가르침", "바다에서 자원 1개 이상 채집하기", 0));   // 퀘스트 목록에 추가하기
         GameObject.Find("quest_manager").GetComponent<quest_manager>().quest_contents_update(); //실시간 반영
         step = 1; quest_num = 2;
         bubble_parent.transform.position = new Vector3(640, 450, 0); // 화면 상단 위치
@@ -146,7 +146,7 @@ public class new_quest : MonoBehaviour
         Initialize();
         PlayerPrefs.SetInt("isQuest", 3);
         SceneManager.LoadScene("sea"); // 바다로 이동
-        hilight[6].gameObject.SetActive(false);
+        hilight[5].gameObject.SetActive(false);
     }
 
 
@@ -157,8 +157,10 @@ public class new_quest : MonoBehaviour
     }
 
     // 퀘스트 완료 확인
-    public void Check_quest(int IsQuest) {
-        switch (IsQuest) {
+    public void Check_quest(int IsQuest)
+    {
+        switch (IsQuest)
+        {
             case 3:
                 for (int i = 0; i < 9; i++)
                 {
@@ -172,7 +174,7 @@ public class new_quest : MonoBehaviour
                     bubble_parent.SetActive(true);
 
                     quest_manager.quest_contents.Remove(2);   // quest 2 삭제
-                    quest_manager.quest_contents.Add(3, new Quest_Content(1, "아빠의 가르침", "자원 양식하기",0));   // 퀘스트 목록에 추가하기
+                    quest_manager.quest_contents.Add(3, new Quest_Content(1, "아빠의 가르침", "자원 양식하기", 0));   // 퀘스트 목록에 추가하기
                     GameObject.Find("quest_manager").GetComponent<quest_manager>().quest_contents_update(); ; //실시간 반영
 
                     step = 1; quest_num = 3;
@@ -194,7 +196,7 @@ public class new_quest : MonoBehaviour
 
 
                     quest_manager.quest_contents.Remove(3);   // quest 3 삭제
-                    quest_manager.quest_contents.Add(4, new Quest_Content(1, "아빠의 가르침", "상인 아저씨와 대화하기",0));   // 퀘스트 목록에 추가하기
+                    quest_manager.quest_contents.Add(4, new Quest_Content(1, "아빠의 가르침", "상인 아저씨와 대화하기", 0));   // 퀘스트 목록에 추가하기
                     GameObject.Find("quest_manager").GetComponent<quest_manager>().quest_contents_update(); //실시간 반영
 
                     step = 1; quest_num = 3;
@@ -209,7 +211,8 @@ public class new_quest : MonoBehaviour
     }
 
     //quest_ui open
-    public void quest_ui_open() {
+    public void quest_ui_open()
+    {
         quest_bg.gameObject.SetActive(true);
         quest_ui.gameObject.SetActive(true);
     }
@@ -244,4 +247,3 @@ public class new_quest : MonoBehaviour
     }
 
 }
-                                                                                                 
