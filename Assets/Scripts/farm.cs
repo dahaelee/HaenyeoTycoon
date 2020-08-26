@@ -144,7 +144,7 @@ public class farm : MonoBehaviour
         }
         this.farm_opportunity = PlayerPrefs.GetInt("farm" + farm_number + "_opportunity", 1);   //양식 횟수 받아오기 없으면 초기화 1
         this.remaining_time = PlayerPrefs.GetInt("farm" + farm_number + "_remaining_time", 0);  //남은 시간 받아오기 없으면 초기화 0
-        this.item = farm_manager.sea_item[PlayerPrefs.GetInt("farm" + farm_number + "_sea_item", 0)];  //무슨 자원 담고있었는지 가져옴
+        this.item = farm_manager.sea_item[PlayerPrefs.GetInt("farm" + farm_number + "_sea_item", 0)].GetComponent<sea_item>();  //무슨 자원 담고있었는지 가져옴
         string LastTime = PlayerPrefs.GetString("lasttime", System.DateTime.Now.ToString());    //마지막 접속시간 확인
         DateTime OldTime = System.DateTime.Parse(LastTime);
         DateTime NewTime = System.DateTime.Now;

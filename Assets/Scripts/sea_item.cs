@@ -12,7 +12,6 @@ public class sea_item : MonoBehaviour
     public float sea1_prob, sea2_prob, sea3_prob; //각 바다에서의 생성확률
     public bool moving; //바다에서 움직이는지 여부
     public int difficulty; //채집 시 난이도
-    public Text info_name, info_price, info_time;
     public Animator anim;
     public sea_item(string name, int raw_price, int farm_price, int farm_time, float sea1_prob, float sea2_prob, float sea3_prob, bool moving, int difficulty, Animator anim)
     {
@@ -29,25 +28,5 @@ public class sea_item : MonoBehaviour
 
     void Start()
     {
-        info_name.text = item_name_kor;
-        info_price.text = string.Format("{0:#,###0}", farm_price);
-        /*        if ((farm_time / 60) > 0)
-                {
-                    if (farm_time % 60 == 0)
-                    {
-                        info_time.text = (farm_time / 60).ToString() + "분 ";
-                    }
-                    else
-                    {
-                        info_time.text = (farm_time / 60).ToString() + "분 " + (farm_time % 60).ToString() + "초";
-                    }
-
-                }
-                else
-                {
-                    info_time.text = (farm_time % 60).ToString() + "초";
-                }
-                */
-        info_time.text = (farm_time).ToString() + "초";
     }
 }

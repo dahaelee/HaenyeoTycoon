@@ -8,13 +8,12 @@ using System.Diagnostics;
 
 public class farm_manager : MonoBehaviour
 {
-    public FarmState currentState = FarmState.day;
     public UI_manager UI_manager;       //UI 관련 매니저
     public bool isTest = false;
     public farm[] farms;
     public GameObject[] farmable_items;
-    public static sea_item[] sea_item;
-    public sea_item starfish, seaweed, shell, shrimp, jellyfish, crab, octopus, abalone, turtle;
+    public GameObject sea_item_parent;
+    public static GameObject[] sea_item;
     public Text name_info, time_info, day, money, debt, debt_repay, money_repay, sending_amount_repay;
     public int chosen_item, chosen_farm, trash_farm_num, activation_cost, sending_int, sending_limit, limit_day;
     public bool is_chosen;
@@ -28,12 +27,6 @@ public class farm_manager : MonoBehaviour
 
     IEnumerator current_Info;
 
-    public enum FarmState
-    {
-        day,
-        night
-    }
-
     public enum farms_index
     {
         farm0 = 0,
@@ -42,21 +35,17 @@ public class farm_manager : MonoBehaviour
         farm3,
         farm4,
         farm5,
-        farm6
+        farm6,
+        farm7
     }
 
     void OnEnable()
     {
-        sea_item = new sea_item[9];
-        sea_item[0] = shell;
-        sea_item[1] = seaweed;
-        sea_item[2] = starfish;
-        sea_item[3] = shrimp;
-        sea_item[4] = jellyfish;
-        sea_item[5] = crab;
-        sea_item[6] = octopus;
-        sea_item[7] = abalone;
-        sea_item[8] = turtle;
+        sea_item = new GameObject[9];
+        for(int i=0; i < sea_item.Length; i++)
+        {
+            sea_item[i] = sea_item_parent.transform.GetChild(i).gameObject;
+        }
         data_load();
     }
     void Awake()
@@ -88,6 +77,13 @@ public class farm_manager : MonoBehaviour
         money.GetComponent<Text>().text = Haenyeo.money.ToString();
         debt.GetComponent<Text>().text = Haenyeo.debt.ToString();
 
+        for(int i=0; i < sea_item.Length; i++)
+        {
+            sea_item[i].transform.GetChild(2).GetComponent<Text>().text = sea_item[i].GetComponent<sea_item>().item_name_kor;
+            sea_item[i].transform.GetChild(3).GetComponent<Text>().text = sea_item[i].GetComponent<sea_item>().farm_price.ToString();
+            sea_item[i].transform.GetChild(4).GetComponent<Text>().text = sea_item[i].GetComponent<sea_item>().farm_time.ToString();
+        }
+
         UI_manager.AllUIoff();
 
     }
@@ -103,9 +99,11 @@ public class farm_manager : MonoBehaviour
 
         effect_sound_ctrl();
         bgm_sound_ctrl();
-        if (Haenyeo.hp <= 0)
+
+        if (Haenyeo.hp <= 0 && Haenyeo.todayState==Haenyeo.TodayState.day)
         {
-            //정산 시작
+            //정산 시작 함수실행
+            Haenyeo.todayState = Haenyeo.TodayState.night;
         }
 
     }
@@ -173,7 +171,7 @@ public class farm_manager : MonoBehaviour
             Haenyeo.hp -= 1f;       //체력 1 줄어들기
             farms[farm_index].plus.gameObject.SetActive(false); //플러스 표시 빼기
 
-            farms[farm_index].item = sea_item[item_index];    //양식장에 자원 넣기
+            farms[farm_index].item = sea_item[item_index].GetComponent<sea_item>();    //양식장에 자원 넣기
             farms[farm_index].item1.sprite = Resources.Load<Sprite>(sea_item[item_index].name);   //자원 이미지 바꾸기
             farms[farm_index].item2.sprite = Resources.Load<Sprite>(sea_item[item_index].name);   //자원 이미지 바꾸기
             farms[farm_index].item3.sprite = Resources.Load<Sprite>(sea_item[item_index].name);   //자원 이미지 바꾸기
@@ -258,48 +256,17 @@ public class farm_manager : MonoBehaviour
         trash_farm_num = index;
         if (farms[index].isFarming)
         {
-            switch (farms[index].item.number)
-            {
-                case 0:
-                    name_info.text = "조개 양식장";
-                    break;
-                case 1:
-                    name_info.text = "미역 양식장";
-                    break;
-                case 2:
-                    name_info.text = "불가사리 양식장";
-                    break;
-                case 3:
-                    name_info.text = "새우 양식장";
-                    break;
-                case 4:
-                    name_info.text = "해파리 양식장";
-                    break;
-                case 5:
-                    name_info.text = "꽃게 양식장";
-                    break;
-                case 6:
-                    name_info.text = "문어 양식장";
-                    break;
-                case 7:
-                    name_info.text = "전복 양식장";
-                    break;
-                case 8:
-                    name_info.text = "거북이 양식장";
-                    break;
-
-            }
-
-            if (UI_manager.currentState != UI_manager.UIstate.farm_info)
-            {
-                StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.farm_info));
-            }
-
-            //생성까지 남은 시간 보여주기
-            current_Info = Farm_remaining_time(index);
-            StartCoroutine(current_Info);
+            name_info.text = farms[index].item.item_name_kor + " 양식장";
         }
 
+        if (UI_manager.currentState != UI_manager.UIstate.farm_info)
+        {
+            StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.farm_info));
+        }
+
+        //생성까지 남은 시간 보여주기
+        current_Info = Farm_remaining_time(index);
+        StartCoroutine(current_Info);
     }
 
     //생성까지 시간 차감하며 기다리기
