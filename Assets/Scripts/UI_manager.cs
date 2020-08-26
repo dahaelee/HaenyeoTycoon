@@ -54,7 +54,7 @@ public class UI_manager : MonoBehaviour
     }
 
     //UI 창 오픈하는 코드와 이펙트
-    IEnumerator UI_On(UIstate uistate)
+    public IEnumerator UI_On(UIstate uistate, bool AutoUIOff = false)
     {
         currentState = uistate;
         yield return new WaitForSeconds(0.1f);
@@ -64,6 +64,11 @@ public class UI_manager : MonoBehaviour
         {
             UIs[(int)uistate].rectTransform.localScale = new Vector3((float)(0.95 + i * 0.01), (float)(0.95 + i * 0.01), (float)(0.95 + i * 0.01));
             yield return 0;
+        }
+        if (AutoUIOff)
+        {
+            yield return new WaitForSeconds(2f);
+            AllUIoff();
         }
 
     }

@@ -16,9 +16,8 @@ public class farm_manager : MonoBehaviour
     public static sea_item[] sea_item;
     public sea_item starfish, seaweed, shell, shrimp, jellyfish, crab, octopus, abalone, turtle;
     public Text name_info, time_info, day, money, debt, debt_repay, money_repay, sending_amount_repay;
-    public Image farm_info, farmable_item_ui, farming_start_bttn, UI_background, trash_ui, expand_ui, repay_ui, go_sea_ui, send_money_warning, no_money_ui, ask_quit_ui, setting_ui, restart_ui, ending, no_item;
     public int chosen_item, chosen_farm, trash_farm_num, activation_cost, sending_int, sending_limit, limit_day;
-    public bool is_chosen, is_infoUI_On, is_farmableUI_On, is_trashUI_On, is_expandUI_On, is_repayUI_On, is_goseaUI_On, is_warning_Effect_On;
+    public bool is_chosen;
     public static bool is_sea_locked, is_repay_locked;
     public string sending_str = "";
     public Slider bgm_volume, effect_volume;
@@ -99,7 +98,7 @@ public class farm_manager : MonoBehaviour
         debt.GetComponent<Text>().text = string.Format("{0:#,###0}", Haenyeo.debt);
         if (Input.GetKeyUp(KeyCode.Escape))
         {
-            StartCoroutine(UI_On(ask_quit_ui));
+            StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.ask_quit));
         }
 
         effect_sound_ctrl();
@@ -167,13 +166,12 @@ public class farm_manager : MonoBehaviour
         {
 
             button_click.PlayOneShot(button_click.clip);
-            UI_off();
+            UI_manager.AllUIoff();
 
             farms[farm_index].isFarming = true;    //양식 시작한걸로 하기
             Haenyeo.sea_item_number[item_index] -= 1;   //자원 1개 차감 
             Haenyeo.hp -= 1f;       //체력 1 줄어들기
             farms[farm_index].plus.gameObject.SetActive(false); //플러스 표시 빼기
-            farmable_item_ui.gameObject.SetActive(false);   //양식 가능한 자원 보여주는 창 닫기
 
             farms[farm_index].item = sea_item[item_index];    //양식장에 자원 넣기
             farms[farm_index].item1.sprite = Resources.Load<Sprite>(sea_item[item_index].name);   //자원 이미지 바꾸기
@@ -199,7 +197,7 @@ public class farm_manager : MonoBehaviour
     //양식 가능한 자원 보여주기
     public void show_farmable_item(int farm_index)
     {
-
+        is_chosen = false;  
         popup_click.PlayOneShot(popup_click.clip);      //팝업창 사운드
 
         for (int k = 0; k < item_count.Length; k++)            //자원 개수 보여주기
@@ -221,21 +219,18 @@ public class farm_manager : MonoBehaviour
         if (count < 1)
         {
             request_denied.PlayOneShot(request_denied.clip);        //요청 거절 사운드
-            StartCoroutine(warning_UI_effect(no_item));
+            StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.no_item, true));
         }
         else
         {
-
-            if (!is_farmableUI_On)
-            {
-                UI_off();
-                is_farmableUI_On = true;
-                StartCoroutine(UI_On(farmable_item_ui));    //양식 가능한 자원 보여주는 ui창 띄우기
+            if (UI_manager.currentState != UI_manager.UIstate.farmable_item) { 
+                StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.farmable_item));    //양식 가능한 자원 보여주는 ui창 띄우기
             }
+
             for (int i = 0; i < 9; i++)
             {
 
-                if (Haenyeo.sea_item_number[i] > 0)    //5개 이상인 자원만 보여주기
+                if (Haenyeo.sea_item_number[i] > 0)
                 {
                     count++;
                     farmable_items[i].SetActive(true);
@@ -250,54 +245,9 @@ public class farm_manager : MonoBehaviour
                     farmable_items[i].SetActive(false);
                 }
             }
-            if (!is_chosen)//자원이 5개 이상이 없으면 양식 불가
-            {
-                farming_start_bttn.gameObject.SetActive(false);
-            }
             chosen_farm = farm_index;   //양식장 번호 저장
         }
 
-
-    }
-
-    public void UI_off()
-    {
-        if (is_infoUI_On)
-        {
-            is_infoUI_On = false;
-            farm_info.gameObject.SetActive(false);
-            StopCoroutine(current_Info);
-        }
-        if (is_farmableUI_On)
-        {
-            is_farmableUI_On = false;
-            farmable_item_ui.gameObject.SetActive(false);
-        }
-        if (is_trashUI_On)
-        {
-            is_trashUI_On = false;
-            trash_ui.gameObject.SetActive(false);
-        }
-        if (is_expandUI_On)
-        {
-            is_expandUI_On = false;
-            expand_ui.gameObject.SetActive(false);
-        }
-        repay_ui.gameObject.SetActive(false);
-
-        if (is_goseaUI_On)
-        {
-            is_goseaUI_On = false;
-            go_sea_ui.gameObject.SetActive(false);
-        }
-        is_chosen = false;
-        send_money_warning.gameObject.SetActive(false);
-        no_money_ui.gameObject.SetActive(false);
-        ask_quit_ui.gameObject.SetActive(false);
-        setting_ui.gameObject.SetActive(false);
-        restart_ui.gameObject.SetActive(false);
-        no_item.gameObject.SetActive(false);
-        UI_background.gameObject.SetActive(false);
 
     }
 
@@ -340,13 +290,9 @@ public class farm_manager : MonoBehaviour
 
             }
 
-            //양식정보 UI 창 띄우기
-            if (!is_infoUI_On)
+            if (UI_manager.currentState != UI_manager.UIstate.farm_info)
             {
-                UI_off();
-                is_infoUI_On = true;
-                StartCoroutine(UI_On(farm_info));
-
+                StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.farm_info));
             }
 
             //생성까지 남은 시간 보여주기
@@ -417,11 +363,10 @@ public class farm_manager : MonoBehaviour
     public void Ask_trash()
     {
         button_click.PlayOneShot(button_click.clip);    //버튼클릭 사운드
-        if (!is_trashUI_On)
+        
+        if (UI_manager.currentState != UI_manager.UIstate.trash)
         {
-            UI_off();
-            is_trashUI_On = true;
-            StartCoroutine(UI_On(trash_ui));
+            StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.trash));
         }
     }
 
@@ -429,23 +374,20 @@ public class farm_manager : MonoBehaviour
     public void trash_farm()
     {
         trashing.PlayOneShot(trashing.clip);
-        UI_off();
+        UI_manager.AllUIoff();
         farms[trash_farm_num].farmReset();
-
 
     }
 
     //양식장 확장하기
     public void Ask_expand_farm(int index)
     {
-
-        if (!is_expandUI_On)
+ 
+        popup_click.PlayOneShot(popup_click.clip);
+        chosen_farm = index;
+        if (UI_manager.currentState != UI_manager.UIstate.expand)
         {
-            popup_click.PlayOneShot(popup_click.clip);
-            UI_off();
-            is_expandUI_On = true;
-            chosen_farm = index;
-            StartCoroutine(UI_On(expand_ui));
+            StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.expand));
         }
     }
 
@@ -456,7 +398,7 @@ public class farm_manager : MonoBehaviour
         {
             int index = chosen_farm;
             expand_click.PlayOneShot(expand_click.clip);      //확장클릭 사운드
-            UI_off();
+            UI_manager.AllUIoff();
             farms[index].is_farm_Activated = true;
             Haenyeo.money -= activation_cost;
             StartCoroutine(FadeOut(farms[index].lock_img, farms[index].locked_bg, farms[index].plus, 0.1f));
@@ -466,8 +408,11 @@ public class farm_manager : MonoBehaviour
         {
             //소지금이 부족합니다 UI 띄우기
             request_denied.PlayOneShot(request_denied.clip);        //요청 거절 사운드
-            UI_off();
-            StartCoroutine(warning_UI_effect(no_money_ui));
+
+            if (UI_manager.currentState != UI_manager.UIstate.no_money)
+            {
+                StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.no_money, true));
+            }
         }
 
     }
@@ -475,7 +420,7 @@ public class farm_manager : MonoBehaviour
     //수확까지 남은 시간 보여주기
     IEnumerator Farm_remaining_time(int index)
     {
-        while (is_infoUI_On)
+        while (UI_manager.currentState==UI_manager.UIstate.farm_info)
         {
             if ((farms[index].remaining_time / 60) > 0)
             {
@@ -496,7 +441,7 @@ public class farm_manager : MonoBehaviour
     {
         icon_click.PlayOneShot(icon_click.clip);        //아이콘 클릭시 사운드
         UI_manager.AllUIoff();
-        StartCoroutine(UI_On(repay_ui));
+        StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.repay));
         debt_repay.GetComponent<Text>().text = string.Format("{0:#,###0}", Haenyeo.debt);
         money_repay.GetComponent<Text>().text = string.Format("{0:#,###0}", Haenyeo.money);
         sending_int = 0;
@@ -545,9 +490,7 @@ public class farm_manager : MonoBehaviour
         if (sending_int < sending_limit)
         {
             button_click.PlayOneShot(button_click.clip);
-            send_money_warning.gameObject.SetActive(true);
-            UI_background.gameObject.SetActive(true);
-
+            StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.interest_warning));
         }
         else
         {
@@ -610,7 +553,7 @@ public class farm_manager : MonoBehaviour
             Haenyeo.debt = 0;
         }
         Haenyeo.debt += (int)(Haenyeo.debt * 0.01);     //이자율 1%
-        UI_off();
+        UI_manager.AllUIoff();
         is_repay_locked = true;
         is_sea_locked = false;      //바다 아이콘 활성화
         if (isTest)
@@ -652,11 +595,10 @@ public class farm_manager : MonoBehaviour
     {
         if (Haenyeo.hp > 0)
         {
-            if (!is_goseaUI_On)
+            if (UI_manager.currentState != UI_manager.UIstate.go_sea)
             {
                 icon_click.PlayOneShot(icon_click.clip);        //아이콘 클릭시 사운드
-                is_goseaUI_On = true;
-                StartCoroutine(UI_On(go_sea_ui));   //바다가시겠습니까 물어보는 UI띄움
+                StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.go_sea));
             }
         }
         else
@@ -666,34 +608,6 @@ public class farm_manager : MonoBehaviour
         
     }
 
-    //아이콘 비활성화 시에 뜨는 알림UI 이펙트
-    IEnumerator warning_UI_effect(Image image)
-    {
-        is_warning_Effect_On = true;
-        image.gameObject.SetActive(true);
-        for (int i = 0; i < 10; i++)
-        {
-            image.rectTransform.localScale = new Vector3((float)(0.7 + i * 0.03), (float)(0.7 + i * 0.03), (float)(0.7 + i * 0.03));
-            yield return 0;
-        }
-        yield return new WaitForSeconds(2f);
-        image.gameObject.SetActive(false);
-        is_warning_Effect_On = false;
-    }
-
-    //UI 창 오픈하는 코드와 이펙트
-    IEnumerator UI_On(Image image)
-    {
-        yield return new WaitForSeconds(0.1f);
-        UI_background.gameObject.SetActive(true);
-        image.gameObject.SetActive(true);
-        for (int i = 0; i < 5; i++)
-        {
-            image.rectTransform.localScale = new Vector3((float)(0.95 + i * 0.01), (float)(0.95 + i * 0.01), (float)(0.95 + i * 0.01));
-            yield return 0;
-        }
-
-    }
 
     //자원 생성될 때 째깍 거리는 이펙트
     IEnumerator item_effect(Image image)
@@ -712,23 +626,20 @@ public class farm_manager : MonoBehaviour
     public void setting()
     {
         Haenyeo.hp -= 1;
-        //Debug.Log(Haenyeo.hp);
         icon_click.PlayOneShot(icon_click.clip);        //아이콘 클릭시 사운드
-        setting_ui.gameObject.SetActive(true);
-        UI_background.gameObject.SetActive(true);
-
+        StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.setting));
     }
 
     public void restart_bttn()
     {
         button_click.PlayOneShot(button_click.clip);
-        StartCoroutine(UI_On(restart_ui));
+        StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.restart));
     }
 
     public void ask_quit()
     {
         button_click.PlayOneShot(button_click.clip);
-        StartCoroutine(UI_On(ask_quit_ui));
+        StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.ask_quit));
     }
 
 
@@ -777,11 +688,11 @@ public class farm_manager : MonoBehaviour
     //배드 엔딩으로 넘어감
     IEnumerator bad_ending()
     {
-        ending.gameObject.SetActive(true);        //중간 장면
-        ending.color = new Vector4(1, 1, 1, 0);
+        StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.ending));
+        UI_manager.UIs[(int)UI_manager.UIstate.ending].color = new Vector4(1, 1, 1, 0);
         for (float i = 0f; i <= 1; i += 0.1f)
         {
-            ending.color = new Vector4(1, 1, 1, i);
+            UI_manager.UIs[(int)UI_manager.UIstate.ending].color = new Vector4(1, 1, 1, i);
             yield return new WaitForSeconds(0.1f);
         }
 
@@ -791,11 +702,11 @@ public class farm_manager : MonoBehaviour
     //해피 엔딩으로 넘어감
     IEnumerator happy_ending()
     {
-        ending.gameObject.SetActive(true);        //중간 장면
-        ending.color = new Vector4(1, 1, 1, 0);
+        StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.ending));        //중간 장면
+        UI_manager.UIs[(int)UI_manager.UIstate.ending].color = new Vector4(1, 1, 1, 0);
         for (float i = 0f; i <= 1; i += 0.1f)
         {
-            ending.color = new Vector4(1, 1, 1, i);
+            UI_manager.UIs[(int)UI_manager.UIstate.ending].color = new Vector4(1, 1, 1, i);
             yield return new WaitForSeconds(0.2f);
         }
         SceneManager.LoadScene("ending_happy");
