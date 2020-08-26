@@ -54,6 +54,11 @@ public class equipment_upgrade : MonoBehaviour
         buy_ui.gameObject.SetActive(false);
     }
 
+    public void tab_change()
+    {
+
+    }
+
     void Update()
     {
         init_equipment();

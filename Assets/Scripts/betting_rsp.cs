@@ -57,24 +57,18 @@ public class betting_rsp : MonoBehaviour
     public void clickRock()
     {
         select[0].SetActive(true);
-        //hide.SetActive(true);
-        hide_effect();
         result(0);
         blank_bg.SetActive(true);
     }
     public void clickSci()
     {
         select[1].SetActive(true);
-        //hide.SetActive(true);
-        hide_effect();
         result(1);
         blank_bg.SetActive(true);
     }
     public void clickPaper()
     {
         select[2].SetActive(true);
-        
-        hide_effect();
         result(2);
         blank_bg.SetActive(true);
     }
