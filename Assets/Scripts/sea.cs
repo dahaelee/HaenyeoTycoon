@@ -8,6 +8,7 @@ public class sea : MonoBehaviour
 {
     public float time_remaining, time_max, countdown;
     public Image return_to_farms_ui, show_mesh_ui, timeover_return_ui, block_touch, start_button;
+    public Image text_window, next_triangle;
     public Text countdown_text;
     public GameObject[] items_got; //그물망 속 자원 배열 
     public int[] item_num; //그물망 속 자원개수 배열
@@ -27,18 +28,21 @@ public class sea : MonoBehaviour
         {
             tutorial_parent.SetActive(true);
             PlayerPrefs.SetInt("IsSeaNew", 0);
+            start_button.gameObject.SetActive(false);
         }
         else
         {
             tutorial_parent.SetActive(false);
+            start_button.gameObject.SetActive(true);
         }
 
         block_touch.gameObject.SetActive(true);
-        start_button.gameObject.SetActive(true);
         return_to_farms_ui.gameObject.SetActive(false);
         show_mesh_ui.gameObject.SetActive(false);
         timeover_return_ui.gameObject.SetActive(false);
         timeover_return_ui.gameObject.SetActive(false);
+
+        StartCoroutine("triangle_effect");
 
         countdown = 5.0f;
         level = Haenyeo.level;
@@ -253,5 +257,21 @@ public class sea : MonoBehaviour
     public void next_tutorial(int index)
     {
         tutorials[index].gameObject.SetActive(false);
+    }
+
+    public void last_tutorial()
+    {
+        start_button.gameObject.SetActive(true);
+    }
+
+    IEnumerator triangle_effect()
+    {
+        while (text_window.IsActive())
+        {
+            next_triangle.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.3f);
+            next_triangle.gameObject.SetActive(false);
+            yield return new WaitForSeconds(0.3f);
+        }
     }
 }
