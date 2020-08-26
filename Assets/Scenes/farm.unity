@@ -718,9 +718,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 111789258}
-  info_price: {fileID: 1752006712}
-  info_time: {fileID: 732488355}
   anim: {fileID: 0}
 --- !u!114 &23450814
 MonoBehaviour:
@@ -1205,9 +1202,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!1 &65896510
 GameObject:
@@ -5240,9 +5234,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 608836915}
-  info_price: {fileID: 1032334043}
-  info_time: {fileID: 7100400}
   anim: {fileID: 0}
 --- !u!114 &330447502
 MonoBehaviour:
@@ -5716,9 +5707,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 267498223}
-  info_price: {fileID: 1689897097}
-  info_time: {fileID: 285412111}
   anim: {fileID: 0}
 --- !u!114 &358403116
 MonoBehaviour:
@@ -8533,9 +8521,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!1 &544080527
 GameObject:
@@ -11749,9 +11734,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 1551684588}
-  info_price: {fileID: 252766009}
-  info_time: {fileID: 781107860}
   anim: {fileID: 0}
 --- !u!114 &805013114
 MonoBehaviour:
@@ -12341,7 +12323,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afe2cbc6c26266e448843d6d1301eac4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
   UI_manager: {fileID: 833427163}
   isTest: 0
   farms:
@@ -12363,15 +12344,7 @@ MonoBehaviour:
   - {fileID: 1341299735}
   - {fileID: 1570259226}
   - {fileID: 805013111}
-  starfish: {fileID: 330447501}
-  seaweed: {fileID: 358403115}
-  shell: {fileID: 1059977886}
-  shrimp: {fileID: 1725176309}
-  jellyfish: {fileID: 1254970170}
-  crab: {fileID: 23450813}
-  octopus: {fileID: 1341299737}
-  abalone: {fileID: 1570259228}
-  turtle: {fileID: 805013113}
+  sea_item_parent: {fileID: 2045954006}
   name_info: {fileID: 1930365665}
   time_info: {fileID: 742131068}
   day: {fileID: 1129194332}
@@ -15109,9 +15082,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!1 &1042060469
 GameObject:
@@ -15537,9 +15507,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 1278096863}
-  info_price: {fileID: 991484859}
-  info_time: {fileID: 1754952705}
   anim: {fileID: 0}
 --- !u!114 &1059977887
 MonoBehaviour:
@@ -16168,9 +16135,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!1 &1119639135
 GameObject:
@@ -16227,9 +16191,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!1 &1124858123
 GameObject:
@@ -17528,9 +17489,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!1 &1216304794
 GameObject:
@@ -17587,9 +17545,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!1 &1229512914
 GameObject:
@@ -18180,9 +18135,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 902644242}
-  info_price: {fileID: 1582498799}
-  info_time: {fileID: 789543621}
   anim: {fileID: 0}
 --- !u!114 &1254970171
 MonoBehaviour:
@@ -19045,9 +18997,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 880675756}
-  info_price: {fileID: 847511853}
-  info_time: {fileID: 524568389}
   anim: {fileID: 0}
 --- !u!114 &1341299738
 MonoBehaviour:
@@ -19597,9 +19546,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!1 &1370861288
 GameObject:
@@ -22086,9 +22032,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 906763520}
-  info_price: {fileID: 600374439}
-  info_time: {fileID: 940031453}
   anim: {fileID: 0}
 --- !u!114 &1570259229
 MonoBehaviour:
@@ -24988,9 +24931,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 430431543}
-  info_price: {fileID: 1108798854}
-  info_time: {fileID: 1369906473}
   anim: {fileID: 0}
 --- !u!114 &1725176310
 MonoBehaviour:
@@ -27705,9 +27645,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!1 &1956767346
 GameObject:

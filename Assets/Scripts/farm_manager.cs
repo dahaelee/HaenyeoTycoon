@@ -105,7 +105,6 @@ public class farm_manager : MonoBehaviour
             //정산 시작 함수실행
             Haenyeo.todayState = Haenyeo.TodayState.night;
         }
-
     }
 
     //수확하기 버튼 눌렀을 때 실행
