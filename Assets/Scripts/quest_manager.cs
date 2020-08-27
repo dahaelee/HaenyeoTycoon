@@ -150,7 +150,6 @@ public class quest_manager : MonoBehaviour
 
         Daily_quest_form data=daily_quest_list[key];
         for (int i = 0; i < 2; i++) persons[i].SetActive(false);
-        Debug.Log(data.person);
         persons[data.person].SetActive(true);
         text.text = data.text; todo_text.text = data.todo; reward_text.text = data.reward;
 
