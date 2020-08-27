@@ -1,14 +1,15 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class tutorial_quest : MonoBehaviour
 {
     //공통 오브젝트
-    public GameObject quest_ui;
-    public Image touch_bg, quest_bg, text_window, next_triangle;
-    public Text text, hilight_text;
+    public GameObject quest_ui,quest_box;
+    public Image touch_bg, quest_bg,text_box,next_triangle;
+    public Text text;
     public static int step, quest_num;
     public static int IsQuest, item_num = 0;     //퀘스트 확인용
 
@@ -24,10 +25,7 @@ public class tutorial_quest : MonoBehaviour
     {
         touch_bg.gameObject.SetActive(false);
         quest_bg.gameObject.SetActive(false);
-        sache.gameObject.SetActive(false);
-        text_window.gameObject.SetActive(false);
-        next_triangle.gameObject.SetActive(false);
-        hilight_text.gameObject.SetActive(false);
+        quest_box.SetActive(false);
         hilight_parent.SetActive(false);
         bubble_parent.gameObject.SetActive(false);
         sea_icon_fake.gameObject.SetActive(false);
@@ -47,9 +45,7 @@ public class tutorial_quest : MonoBehaviour
                 switch (step)
                 {
                     case 2:
-                        hilight_text.gameObject.SetActive(true);
-                        text.text = "우선 5일을 주마.\n                        을 갚지 못한다면.. \n어떻게 되는진 말하지 않아도 알겠지 ? ";
-                        hilight_text.text = "5일동안 20만원";
+                        text.text = "우선 5일을 주마.\n기간 안에 20만원을 갚지 못한다면.. \n어떻게 되는진 말하지 않아도 알겠지 ? ";
                         break;
                     default:
                         Initialize();
@@ -93,17 +89,16 @@ public class tutorial_quest : MonoBehaviour
     public void Sache1()
     {
         Initialize();
-        quest_manager.quest_contents.Clear(); //퀘스트 목록 지우기
+        quest_manager.tutorial_quest_list.Clear();
+        quest_manager.daily_quest_list.Clear(); //퀘스트 목록 지우기
         touch_bg.gameObject.SetActive(true);
         quest_bg.gameObject.SetActive(true);
+        quest_box.SetActive(true);
         sache.gameObject.SetActive(true);
-        text_window.gameObject.SetActive(true);
-        next_triangle.gameObject.SetActive(true);
-        hilight_text.gameObject.SetActive(false);
         bubble_parent.gameObject.SetActive(false);
 
 
-        quest_manager.quest_contents.Add(1, new Quest_Content(1, "사채업자의 빚재촉", "5일동안 20만원 갚기", 0));   // 퀘스트 목록에 추가하기
+        quest_manager.tutorial_quest_list.Add(1, new Tutorial_quest_form(1, "사채업자의 빚재촉", "5일동안 20만원 갚기"));   // 퀘스트 목록에 추가하기
         GameObject.Find("quest_manager").GetComponent<quest_manager>().quest_contents_update();//실시간 반영
         step = 1; quest_num = 1;
         text.text = "너가 대신 아버지빚을 갚겠다고? \n마음은 기특하지만,\n과연 너가 돈을 갚을 수 있을진 의심이 되는군";
@@ -133,7 +128,7 @@ public class tutorial_quest : MonoBehaviour
             hilight[i].gameObject.SetActive(false);
         }
 
-        quest_manager.quest_contents.Add(2, new Quest_Content(1, "아빠의 가르침", "바다에서 자원 1개 이상 채집하기", 0));   // 퀘스트 목록에 추가하기
+        quest_manager.tutorial_quest_list.Add(2, new Tutorial_quest_form(1, "아빠의 가르침", "바다에서 자원 1개 이상 채집하기"));   // 퀘스트 목록에 추가하기
         GameObject.Find("quest_manager").GetComponent<quest_manager>().quest_contents_update(); //실시간 반영
         step = 1; quest_num = 2;
         bubble_parent.transform.position = new Vector3(640, 450, 0); // 화면 상단 위치
@@ -173,8 +168,8 @@ public class tutorial_quest : MonoBehaviour
                     quest_bg.gameObject.SetActive(true);
                     bubble_parent.SetActive(true);
 
-                    quest_manager.quest_contents.Remove(2);   // quest 2 삭제
-                    quest_manager.quest_contents.Add(3, new Quest_Content(1, "아빠의 가르침", "자원 양식하기", 0));   // 퀘스트 목록에 추가하기
+                    quest_manager.tutorial_quest_list.Remove(2);   // quest 2 삭제
+                    quest_manager.tutorial_quest_list.Add(3, new Tutorial_quest_form(1, "아빠의 가르침", "자원 양식하기"));   // 퀘스트 목록에 추가하기
                     GameObject.Find("quest_manager").GetComponent<quest_manager>().quest_contents_update(); ; //실시간 반영
 
                     step = 1; quest_num = 3;
@@ -195,8 +190,8 @@ public class tutorial_quest : MonoBehaviour
                     bubble_parent.SetActive(true);
 
 
-                    quest_manager.quest_contents.Remove(3);   // quest 3 삭제
-                    quest_manager.quest_contents.Add(4, new Quest_Content(1, "아빠의 가르침", "상인 아저씨와 대화하기", 0));   // 퀘스트 목록에 추가하기
+                    quest_manager.tutorial_quest_list.Remove(3);   // quest 3 삭제
+                    quest_manager.tutorial_quest_list.Add(4, new Tutorial_quest_form(1, "아빠의 가르침", "상인 아저씨와 대화하기"));   // 퀘스트 목록에 추가하기
                     GameObject.Find("quest_manager").GetComponent<quest_manager>().quest_contents_update(); //실시간 반영
 
                     step = 1; quest_num = 3;
@@ -237,7 +232,7 @@ public class tutorial_quest : MonoBehaviour
     //삼각형 깜박깜박 이펙트
     IEnumerator triangle_effect()
     {
-        while (text_window.IsActive())
+        while (text_box.IsActive())
         {
             next_triangle.gameObject.SetActive(true);
             yield return new WaitForSeconds(0.3f);
