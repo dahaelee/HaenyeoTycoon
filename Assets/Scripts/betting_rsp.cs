@@ -12,24 +12,33 @@ public class betting_rsp : MonoBehaviour
     public float hide_time = 0, result_time = 0;
     public static int rsp_result = -1;
 
-    public GameObject[] result_ui;
+    public Image[] result_ui;
     public GameObject result_mask;
+    public Image target;
 
+    
     public void initial_rsp()
     {
+        result_mask.SetActive(false);
         hide.SetActive(true);
         for (int i = 0; i < 3; i++)
         {
             seller_rsp[i].SetActive(false);
             select[i].SetActive(false);
+            result_ui[i].gameObject.SetActive(false);
         }
         hide_time = 0;
+        result_time = 0;
         seller = -1;
         hide.transform.localScale = new Vector3(0.8f, 0.8f, 1);
         question.SetActive(true);
         blank_bg.SetActive(false);
         rsp_result = -1;
+
     }
+
+    
+
     public void result(int myHand) // 상인 랜덤으로 가위바위보 정하고 해녀 중심 결과 rsp_result에 저장
     {
         for(int i = 0; i < 3; i++)
@@ -44,33 +53,39 @@ public class betting_rsp : MonoBehaviour
         if(k == 0)
         {
             rsp_result = 0; // 비김           
-            result_ui[0].SetActive(true);
+            //result_ui[0].gameObject.SetActive(true);
+            
         }
         else if(k == 1)
         {
             rsp_result = 1; // 짐
-            result_ui[1].SetActive(true);
+            //result_ui[1].gameObject.SetActive(true);
+            
         }
         else
         {
             rsp_result = 2; // 이김
-            result_ui[2].SetActive(true);
+            //result_ui[2].gameObject.SetActive(true);
+            
         }
     }
     public void clickRock()
     {
+        result_mask.SetActive(true);
         select[0].SetActive(true);
         result(0);
         blank_bg.SetActive(true);
     }
     public void clickSci()
     {
+        result_mask.SetActive(true);
         select[1].SetActive(true);
         result(1);
         blank_bg.SetActive(true);
     }
     public void clickPaper()
     {
+        result_mask.SetActive(true);
         select[2].SetActive(true);
         result(2);
         blank_bg.SetActive(true);
@@ -99,21 +114,24 @@ public class betting_rsp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        initial_rsp();
+        result_mask.SetActive(false);
         blank_bg.SetActive(false);
         for (int i = 0; i < 3; i++)
         {
             select[i].SetActive(false);
-            result_ui[i].SetActive(false);
+            result_ui[i].gameObject.SetActive(false);
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (rsp_result > 0)
+        if (rsp_result >= 0)
         {
             question.gameObject.SetActive(false);
             hide_effect();
+            //result_effect(rsp_result);
         }
     }
     

@@ -25534,6 +25534,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   new_exist: {fileID: 1984133463}
+  quest_icon: {fileID: 19838080}
   content_parent: {fileID: 945940309}
   content: {fileID: 1930216733}
   summary_text: {fileID: 311918131}
