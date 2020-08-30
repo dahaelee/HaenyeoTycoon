@@ -52,38 +52,96 @@ public class farm : MonoBehaviour
         
     }
 
+    //생성까지 시간 차감하며 기다리기
+    public IEnumerator Wait_generating()
+    {
+        this.isFarming = true;
+        this.farm_opportunity--;
+        this.remaining_time = this.item.farm_time;
+
+        this.item1.gameObject.SetActive(true);
+        this.item2.gameObject.SetActive(false);
+        this.item3.gameObject.SetActive(false);
+        if (this.item.name == "turtle")
+        {
+            this.item1.rectTransform.localScale = new Vector3((float)1.2, (float)0.8, (float)0.8);
+            this.item2.rectTransform.localScale = new Vector3((float)1.2, 1, 1);
+            this.item3.rectTransform.localScale = new Vector3((float)1.2, 1, 1);
+        }
+        else
+        {
+            this.item1.rectTransform.localScale = new Vector3(1, 1, 1);
+            this.item2.rectTransform.localScale = new Vector3(1, 1, 1);
+            this.item3.rectTransform.localScale = new Vector3(1, 1, 1);
+        }
+
+        bool item2_effect_On = false;
+        bool item3_effect_On = false;
+        while (this.remaining_time > 0)
+        {
+            if ((this.remaining_time < (this.item.farm_time / 3) * 2) && (this.remaining_time >= this.item.farm_time / 3))
+            {
+                this.item2.gameObject.SetActive(true);
+                if (!item2_effect_On)
+                {
+                    item2_effect_On = true;
+                }
+            }
+            if (this.remaining_time < this.item.farm_time / 3)
+            {
+                this.item3.gameObject.SetActive(true);
+                if (!item3_effect_On)
+                {
+                    item3_effect_On = true;
+                }
+            }
+            yield return new WaitForSeconds(1);
+
+            this.remaining_time--;
+        }
+        this.isFarming = false;
+        //item1.gameObject.SetActive(false);
+        //item2.gameObject.SetActive(false);
+        //item3.gameObject.SetActive(false);
+        this.money.gameObject.SetActive(true);
+        //farm.bubble_item.gameObject.SetActive(true);
+    }
+
 
     //게임 다시 시작할 때 셋팅용으로 쓰는 함수
-    IEnumerator Wait_generating_start(farm farm)
+    IEnumerator Wait_generating_start()
     {
-        if (farm.is_money_on)
+        if (this.is_money_on)
         {
-            farm.money.gameObject.SetActive(true);
+            this.money.gameObject.SetActive(true);
         }
-        else if (farm.isFarming)
+        else if (this.isFarming)
         {
-            farm.item1.gameObject.SetActive(true);
-            farm.item2.gameObject.SetActive(false);
-            farm.item3.gameObject.SetActive(false);
-            while (farm.remaining_time > 0)
+            this.item1.gameObject.SetActive(true);
+            this.item2.gameObject.SetActive(false);
+            this.item3.gameObject.SetActive(false);
+            while (this.remaining_time > 0)
             {
-                if (farm.remaining_time < (farm.item.farm_time / 3) * 2)
+                if (this.remaining_time < (this.item.farm_time / 3) * 2)
                 {
 
-                    farm.item2.gameObject.SetActive(true);
+                    this.item2.gameObject.SetActive(true);
 
                 }
-                if (farm.remaining_time < farm.item.farm_time / 3)
+                if (this.remaining_time < this.item.farm_time / 3)
                 {
 
-                    farm.item3.gameObject.SetActive(true);
+                    this.item3.gameObject.SetActive(true);
                 }
                 yield return new WaitForSeconds(1);
-                Debug.Log(farm.remaining_time);
 
-                farm.remaining_time--;
+                this.remaining_time--;
             }
-            farm.money.gameObject.SetActive(true);
+            this.isFarming = false;
+            item1.gameObject.SetActive(false);
+            item2.gameObject.SetActive(false);
+            item3.gameObject.SetActive(false);
+            this.money.gameObject.SetActive(true);
             //farm.bubble_item.gameObject.SetActive(true);
         }
 
@@ -195,7 +253,7 @@ public class farm : MonoBehaviour
                         this.remaining_time = 0;
                     }
                     item1.gameObject.SetActive(true);
-                    this.item_generating = Wait_generating_start(this);
+                    this.item_generating = this.Wait_generating_start();
                     StartCoroutine(this.item_generating);
                 }
             }
