@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 public class Tutorial_quest_form
 {
@@ -45,12 +46,12 @@ public class quest_manager : MonoBehaviour
 {
     public static SortedList<int, Tutorial_quest_form> tutorial_quest_list = new SortedList<int, Tutorial_quest_form>();    //튜토리얼 퀘스트 목록
     public static SortedList<int, Daily_quest_form> daily_quest_list = new SortedList<int, Daily_quest_form>(); // 일일 퀘스트 목록
-    public GameObject new_exist;
+    public GameObject new_exist,quest_icon;
 
     //퀘스트 content 관련 오브젝트
     public GameObject content_parent, content;
     public Text summary_text, type_text;
-    public Image touch_x;
+    public Image touch_x,touch;
     public Image[] quest_states;
     public Button finish_active, finish_inactive;
 
@@ -93,13 +94,10 @@ public class quest_manager : MonoBehaviour
         {
             Tutorial_quest_form data = tmp.Value;
 
-            for (int i = 0; i < 3; i++)
-            {
-                quest_states[i].gameObject.SetActive(false);
-                persons[i].gameObject.SetActive(false);
-            }
+            for (int i = 0; i < 3; i++)  quest_states[i].gameObject.SetActive(false);
             finish_inactive.gameObject.SetActive(false);
             finish_active.gameObject.SetActive(false);
+            touch.gameObject.SetActive(false);
             //퀘스트 state
             quest_states[data.state].gameObject.SetActive(true);
             touch_x.gameObject.SetActive(true);
@@ -117,16 +115,16 @@ public class quest_manager : MonoBehaviour
         {
             Daily_quest_form data = tmp.Value;
 
-            if (data.state == 0) new_exist.SetActive(true);
-
-            for (int i = 0; i < 3; i++)
+            if (data.state == 0)
             {
-                quest_states[i].gameObject.SetActive(false);
-                persons[i].gameObject.SetActive(false);
+                new_exist.SetActive(true);
+                StartCoroutine("quest_icon_effect");
             }
+            for (int i = 0; i < 3; i++)  quest_states[i].gameObject.SetActive(false);
             finish_inactive.gameObject.SetActive(false);
             finish_active.gameObject.SetActive(false);
             touch_x.gameObject.SetActive(false);
+            touch.gameObject.SetActive(true);
             quest_states[data.state].gameObject.SetActive(true);
             if (data.state == 2) finish_active.gameObject.SetActive(true);
             else finish_inactive.gameObject.SetActive(true);
@@ -149,7 +147,7 @@ public class quest_manager : MonoBehaviour
         int key = Int32.Parse(content_name);
 
         Daily_quest_form data=daily_quest_list[key];
-        for (int i = 0; i < 2; i++) persons[i].SetActive(false);
+        for (int i = 0; i < 3; i++) persons[i].SetActive(false);
         persons[data.person].SetActive(true);
         text.text = data.text; todo_text.text = data.todo; reward_text.text = data.reward;
 
@@ -198,5 +196,18 @@ public class quest_manager : MonoBehaviour
         for (int i = 0; i < 3; i++) quest_giver[i].SetActive(false);
         quest_box.gameObject.SetActive(false);
     }
-    
+
+    //새로운 퀘스트 있을 때 아이콘 깜박깜박
+    IEnumerator quest_icon_effect()
+    {
+        int time = 0;
+        while (time < 5)
+        {
+            quest_icon.gameObject.transform.Rotate(Vector3.back * 20);
+            yield return new WaitForSeconds(0.2f);
+            quest_icon.gameObject.transform.Rotate(Vector3.forward * 20);
+            yield return new WaitForSeconds(0.2f);
+            time++;
+        }
+    }
 }
