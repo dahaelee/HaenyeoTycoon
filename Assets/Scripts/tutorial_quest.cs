@@ -187,8 +187,10 @@ public class tutorial_quest : MonoBehaviour
                 }
                 if (item_num > 0)
                 {
+                    Initialize();
+                    touch_bg.gameObject.SetActive(true);
+                    quest_bg.gameObject.SetActive(true);
                     bubble_parent.SetActive(true);
-
 
                     quest_manager.tutorial_quest_list.Remove(3);   // quest 3 삭제
                     quest_manager.tutorial_quest_list.Add(4, new Tutorial_quest_form(1, "아빠의 가르침", "상인 아저씨와 대화하기"));   // 퀘스트 목록에 추가하기
@@ -199,7 +201,7 @@ public class tutorial_quest : MonoBehaviour
                     bubble_text.text = "그렇지~ 자원은 그렇게 양식하는 거란다.. 상인 아저씨가 찾던데! 어서 가보렴";
 
                     item_num = 0;
-                    PlayerPrefs.SetInt("isQuest", 4);
+                    PlayerPrefs.SetInt("isQuest", 5);
                 }
                 break;
         }
