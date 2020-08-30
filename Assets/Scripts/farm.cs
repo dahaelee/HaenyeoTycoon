@@ -15,7 +15,7 @@ public class farm : MonoBehaviour
     public bool isFarming;  //자원 양식중인지 여부
     public bool is_money_on; //생성 완료가 되고나서 수확할 단계인지 확인
     public Image plus, farming_effect;
-    public Image item1, item2, item3, locked_bg, lock_img, money, bubble_item;
+    public Image item1, item2, item3, locked_bg, lock_img, money;
     public Text farm_price, item_count;
     public IEnumerator item_generating;   //양식 하고있는 함수 코루틴
 
@@ -84,7 +84,7 @@ public class farm : MonoBehaviour
                 farm.remaining_time--;
             }
             farm.money.gameObject.SetActive(true);
-            farm.bubble_item.gameObject.SetActive(true);
+            //farm.bubble_item.gameObject.SetActive(true);
         }
 
     }
@@ -100,7 +100,7 @@ public class farm : MonoBehaviour
         this.item2.gameObject.SetActive(false);
         this.item3.gameObject.SetActive(false);
         this.money.gameObject.SetActive(false);
-        this.bubble_item.gameObject.SetActive(false);
+        //this.bubble_item.gameObject.SetActive(false);
         this.plus.gameObject.SetActive(true);       //양식하기 플러스 아이콘 보이게하기
         if (item_generating != null)
         {
@@ -120,7 +120,7 @@ public class farm : MonoBehaviour
         this.item3.gameObject.SetActive(false);
         this.locked_bg.gameObject.SetActive(false);
         this.money.gameObject.SetActive(false);
-        this.bubble_item.gameObject.SetActive(false);
+        //this.bubble_item.gameObject.SetActive(false);
 
         TimeSpan time_interv;       //시간 차이를 담는 변수
         if (PlayerPrefs.GetInt("farm" + farm_number + "_is_farm_activated", 0) != 0)    //양식장 활성화 상태였는지 확인
@@ -175,7 +175,7 @@ public class farm : MonoBehaviour
                 this.item1.sprite = Resources.Load<Sprite>(item.name);   //자원 이미지 바꾸기
                 this.item2.sprite = Resources.Load<Sprite>(item.name);   //자원 이미지 바꾸기
                 this.item3.sprite = Resources.Load<Sprite>(item.name);   //자원 이미지 바꾸기
-                this.bubble_item.sprite = Resources.Load<Sprite>(item.name); // 버블에 뜨는 자원 이미지 바꾸기
+                //this.bubble_item.sprite = Resources.Load<Sprite>(item.name); // 버블에 뜨는 자원 이미지 바꾸기
                 if (time_interv.TotalSeconds > this.remaining_time)   //양식시간이 이미 지났는가?
                 {
                     this.remaining_time = 0;
@@ -183,7 +183,7 @@ public class farm : MonoBehaviour
                     this.item2.gameObject.SetActive(true);
                     this.item3.gameObject.SetActive(true);
                     this.money.gameObject.SetActive(true);
-                    this.bubble_item.gameObject.SetActive(true);
+                    //this.bubble_item.gameObject.SetActive(true);
                     this.is_money_on = true;
                     this.farm_opportunity--;
                 }

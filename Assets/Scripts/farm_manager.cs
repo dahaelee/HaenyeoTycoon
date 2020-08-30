@@ -321,7 +321,7 @@ public class farm_manager : MonoBehaviour
         }
         farm.isFarming = false;
         farm.money.gameObject.SetActive(true);
-        farm.bubble_item.gameObject.SetActive(true);
+        //farm.bubble_item.gameObject.SetActive(true);
 
 
     }
