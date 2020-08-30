@@ -24,6 +24,7 @@ public class UI_manager : MonoBehaviour
         setting,        //설정 UI창
         restart,        //게임을 초기화?
         ending,     
+        today_work, //하루 정산
         no_item,
         None
     }
