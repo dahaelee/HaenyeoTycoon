@@ -13,7 +13,7 @@ public class item_sell : MonoBehaviour
     // 사운드 이펙트
     public AudioSource bgm, sell_click, updown_click;
 
-    public GameObject sell_ui, ask_ui, rsp_ui, wild_ui, farmed_ui;
+    public GameObject sell_ui, ask_ui, rsp_ui, wild_ui, farmed_ui, touch_x;
     public int temp_index, temp_num, temp_money;
 
     void Awake()
@@ -42,6 +42,7 @@ public class item_sell : MonoBehaviour
 
     public void rsp_yes()
     {
+        touch_x.SetActive(false);
         ask_ui.gameObject.SetActive(false);
         rsp_ui.gameObject.SetActive(true);
     }
@@ -50,7 +51,7 @@ public class item_sell : MonoBehaviour
         // 원래 지정한 금액만 짤랑
         Haenyeo.money += temp_money;
         Haenyeo.sea_item_number[temp_index] -= temp_num;
-       
+        touch_x.SetActive(false);
         ask_ui.gameObject.SetActive(false);
         item_UI();
     }
@@ -143,6 +144,7 @@ public class item_sell : MonoBehaviour
     // 팔기 버튼
     public void sell_button_click(int item_index)
     {
+        touch_x.SetActive(true);
         ask_ui.SetActive(true);
         //sell_click.PlayOneShot(sell_click.clip);
         temp_index = item_index;
