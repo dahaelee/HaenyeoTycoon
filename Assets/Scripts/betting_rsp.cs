@@ -5,15 +5,15 @@ using UnityEngine.UI;
 
 public class betting_rsp : MonoBehaviour
 {
-    //int you = -1;
     int seller = -1;
-    //public Image rockSelect;
-    //public Image objStore;
     public GameObject[] select;
     public GameObject hide, question, blank_bg;
     public GameObject[] seller_rsp;
-    public float time = 0;
+    public float hide_time = 0, result_time = 0;
     public static int rsp_result = -1;
+
+    public GameObject[] result_ui;
+    public GameObject result_mask;
 
     public void initial_rsp()
     {
@@ -23,7 +23,7 @@ public class betting_rsp : MonoBehaviour
             seller_rsp[i].SetActive(false);
             select[i].SetActive(false);
         }
-        time = 0;
+        hide_time = 0;
         seller = -1;
         hide.transform.localScale = new Vector3(0.8f, 0.8f, 1);
         question.SetActive(true);
@@ -43,15 +43,18 @@ public class betting_rsp : MonoBehaviour
         int k = (3 + myHand - seller) % 3;
         if(k == 0)
         {
-            rsp_result = 0; // 비김            
+            rsp_result = 0; // 비김           
+            result_ui[0].SetActive(true);
         }
         else if(k == 1)
         {
             rsp_result = 1; // 짐
+            result_ui[1].SetActive(true);
         }
         else
         {
             rsp_result = 2; // 이김
+            result_ui[2].SetActive(true);
         }
     }
     public void clickRock()
@@ -75,13 +78,23 @@ public class betting_rsp : MonoBehaviour
 
     public void hide_effect() // 가림막 없어지는 효과
     {
-        hide.transform.localScale = new Vector3(0, 0.8f, 1) + new Vector3(0.8f, 0, 0) * (1 - 2 * time);
-        if (time > 0.5f)
+        hide.transform.localScale = new Vector3(0, 0.8f, 1) + new Vector3(0.8f, 0, 0) * (1 - 2 * hide_time);
+        if (hide_time > 0.5f)
         {
-            time = 0;
+            hide_time = 0;
             hide.gameObject.SetActive(false);
         }
-        time += Time.deltaTime;
+        hide_time += Time.deltaTime;
+    }
+
+    public void result_effect(int result) // 가위바위보 결과 내려오는 이펙트
+    {
+        result_mask.transform.localScale = new Vector3(1, 0, 1) + new Vector3(0, 1, 0) * (1 - 2 * result_time);
+        if (result_time > 0.5f)
+        {
+            result_time = 0;
+        }
+        result_time += Time.deltaTime;
     }
     // Start is called before the first frame update
     void Start()
@@ -90,6 +103,7 @@ public class betting_rsp : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             select[i].SetActive(false);
+            result_ui[i].SetActive(false);
         }
     }
 
