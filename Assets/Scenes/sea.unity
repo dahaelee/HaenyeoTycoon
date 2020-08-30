@@ -343,9 +343,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &21347356
 BoxCollider2D:
@@ -611,9 +608,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &65320246
 BoxCollider2D:
@@ -804,9 +798,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &85270415
 BoxCollider2D:
@@ -1292,9 +1283,6 @@ MonoBehaviour:
   sea3_prob: 0.2
   moving: 0
   difficulty: 1
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 129134848}
 --- !u!95 &129134848
 Animator:
@@ -1502,9 +1490,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &137299188
 BoxCollider2D:
@@ -1731,7 +1716,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &150010180
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2054,9 +2039,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &181069964
 BoxCollider2D:
@@ -2247,9 +2229,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &199727244
 BoxCollider2D:
@@ -2475,9 +2454,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &204030209
 BoxCollider2D:
@@ -2774,9 +2750,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &214929944
 BoxCollider2D:
@@ -3275,9 +3248,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &283919730
 BoxCollider2D:
@@ -3511,9 +3481,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &329221035
 BoxCollider2D:
@@ -3781,9 +3748,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &333325062
 BoxCollider2D:
@@ -4053,9 +4017,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &342869108
 BoxCollider2D:
@@ -4444,9 +4405,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &400704395
 BoxCollider2D:
@@ -4876,9 +4834,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &427232981
 BoxCollider2D:
@@ -5479,9 +5434,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &451695300
 BoxCollider2D:
@@ -5849,9 +5801,6 @@ MonoBehaviour:
   sea3_prob: 0.2
   moving: 0
   difficulty: 4
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 509545697}
 --- !u!95 &509545697
 Animator:
@@ -6016,9 +5965,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &511190544
 BoxCollider2D:
@@ -6288,9 +6234,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 2
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 548030037}
 --- !u!95 &548030037
 Animator:
@@ -6696,9 +6639,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &586619314
 BoxCollider2D:
@@ -7365,9 +7305,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &688698959
 BoxCollider2D:
@@ -7847,9 +7784,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &814543077
 BoxCollider2D:
@@ -8568,9 +8502,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &932394642
 BoxCollider2D:
@@ -8673,9 +8604,6 @@ MonoBehaviour:
   sea3_prob: 0.2
   moving: 1
   difficulty: 4
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 949724547}
 --- !u!95 &949724547
 Animator:
@@ -9848,9 +9776,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &1001000089
 BoxCollider2D:
@@ -10316,9 +10241,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 3
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 1051864727}
 --- !u!95 &1051864727
 Animator:
@@ -10873,9 +10795,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &1135213028
 BoxCollider2D:
@@ -11145,9 +11064,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &1175147281
 BoxCollider2D:
@@ -11831,9 +11747,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &1259469492
 BoxCollider2D:
@@ -11936,9 +11849,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 1
   difficulty: 3
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 1261231520}
 --- !u!95 &1261231520
 Animator:
@@ -12103,9 +12013,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &1283024889
 BoxCollider2D:
@@ -12371,9 +12278,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 1
   difficulty: 3
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 1298703214}
 --- !u!95 &1298703214
 Animator:
@@ -12775,9 +12679,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &1317947673
 BoxCollider2D:
@@ -13076,9 +12977,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &1333771839
 BoxCollider2D:
@@ -13559,9 +13457,6 @@ MonoBehaviour:
   sea3_prob: 0.2
   moving: 1
   difficulty: 2
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 1402651506}
 --- !u!95 &1402651506
 Animator:
@@ -13884,9 +13779,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &1408494570
 BoxCollider2D:
@@ -14296,9 +14188,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &1465205578
 BoxCollider2D:
@@ -14826,9 +14715,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &1559731156
 BoxCollider2D:
@@ -15724,9 +15610,6 @@ MonoBehaviour:
   sea3_prob: 0.2
   moving: 0
   difficulty: 1
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 1652743691}
 --- !u!95 &1652743691
 Animator:
@@ -15970,9 +15853,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &1675316558
 BoxCollider2D:
@@ -16287,9 +16167,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &1707148513
 BoxCollider2D:
@@ -17649,9 +17526,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &1828806961
 BoxCollider2D:
@@ -18186,9 +18060,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &1912709645
 BoxCollider2D:
@@ -18901,9 +18772,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &1967350250
 BoxCollider2D:
@@ -19601,9 +19469,6 @@ MonoBehaviour:
   sea3_prob: 0
   moving: 0
   difficulty: 0
-  info_name: {fileID: 0}
-  info_price: {fileID: 0}
-  info_time: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &2033831774
 BoxCollider2D:

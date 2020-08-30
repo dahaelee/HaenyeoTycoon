@@ -22,8 +22,8 @@ public class sea_movement : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     {
         player_render.sprite = front_sprite; //해녀 이미지 정면으로 
         radius = rect_background.rect.width * 0.5f; //배경의 반지름
-        speed = (float)Haenyeo.moving_speed; 
-        level = Haenyeo.level; 
+        speed = (float)Haenyeo.moving_speed;
+        level = Haenyeo.level;
 
         min_bound1 = bound1.bounds.min;
         max_bound1 = bound1.bounds.max;
@@ -40,9 +40,11 @@ public class sea_movement : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     void Update()
     {
-        player.GetComponent<Rigidbody2D>().AddForce(move_position*100);
+        keyboard_move(); // 키보드로 움직이기 위한 함수
 
-        if (level == 1) 
+        player.GetComponent<Rigidbody2D>().AddForce(move_position * 100);
+
+        if (level == 1)
         {
             clamped_length = Mathf.Clamp(player.transform.position.x, min_bound1.x + 50, max_bound1.x - 50);
             clamped_1 = Mathf.Clamp(player.transform.position.y, min_bound1.y + 80, max_bound1.y - 80);
@@ -62,6 +64,73 @@ public class sea_movement : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         }
     }
 
+    public void keyboard_move()
+    {
+        if (Input.GetKey(KeyCode.A))
+        {
+            haenyeo_anim.SetBool("is_moving", true);
+            rect_joystick.transform.Translate(Vector3.left * 100f * Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            haenyeo_anim.SetBool("is_moving", true);
+            rect_joystick.transform.Translate(Vector3.right * 100f * Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.W))
+        {
+            haenyeo_anim.SetBool("is_moving", true);
+            rect_joystick.transform.Translate(Vector3.up * 100f * Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            haenyeo_anim.SetBool("is_moving", true);
+            rect_joystick.transform.Translate(Vector3.down * 100f * Time.deltaTime);
+        }
+
+        // 조이스틱으로 할 때의 value 값 == rect_joystick.anchoredPosition
+        rect_joystick.anchoredPosition = Vector2.ClampMagnitude(rect_joystick.anchoredPosition, radius / 2); //스틱을 배경에 가두기
+        value = rect_joystick.anchoredPosition;
+
+        distance = Vector2.Distance((Vector2)rect_background.position, (Vector2)rect_joystick.position) / radius * 2; //distance는 배경과 스틱의 거리차와 비례 (0~1)
+        value = value.normalized; //value의 속도값은 빼고 방향값만 남기기
+        move_position = new Vector3(value.x * speed * distance, value.y * speed * distance, 0f); //이동 좌표를 방향*속도*거리 로 구하기 
+
+        haenyeo_anim.SetBool("is_moving", true);
+
+        if (value.x > 0.3)
+        {
+            player.transform.rotation = Quaternion.Euler(0, 0, value.y * 30); //해녀 이미지 회전하기
+            haenyeo_anim.SetBool("front", false);
+            haenyeo_anim.SetBool("right", true);
+            haenyeo_anim.SetBool("left", false);
+        }
+        if (value.x > -0.3 && value.x < 0.3)
+        {
+            player.transform.rotation = Quaternion.Euler(0, 0, 0); //해녀 이미지 회전 초기화
+            haenyeo_anim.SetBool("front", true);
+            haenyeo_anim.SetBool("right", false);
+            haenyeo_anim.SetBool("left", false);
+        }
+        if (value.x < -0.3)
+        {
+            player.transform.rotation = Quaternion.Euler(0, 0, -value.y * 30); //해녀 이미지 회전하기
+            haenyeo_anim.SetBool("front", false);
+            haenyeo_anim.SetBool("right", false);
+            haenyeo_anim.SetBool("left", true);
+        }
+
+        // WASD 키에서 손을 뗐고, 아무 키도 눌리고 있지 않을 때 
+        if ((Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S)) && (!Input.anyKey)) 
+        {
+            rect_joystick.localPosition = Vector3.zero; //스틱을 원위치
+            move_position = Vector3.zero; //이동 좌표 초기화
+            player_render.sprite = front_sprite; //해녀 이미지 정면으로
+            player.transform.rotation = Quaternion.Euler(0, 0, 0); //해녀 이미지 회전 초기화 
+
+            haenyeo_anim.SetBool("is_moving", false);
+        }
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
         //터치 좌표를 anchoredPosition으로 변환
@@ -75,7 +144,6 @@ public class sea_movement : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     public void OnDrag(PointerEventData eventData) //eventData는 스크린좌표
     {
-
         //터치 좌표를 anchoredPosition으로 변환
         Vector2 pos;
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(rect_screen, eventData.position, cam, out pos))
@@ -85,7 +153,7 @@ public class sea_movement : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         }
 
         value = pos - (Vector2)rect_background.anchoredPosition; //value = 터치 좌표 - 배경 좌표
-        value = Vector2.ClampMagnitude(value, radius/2); //스틱을 배경에 가두기 
+        value = Vector2.ClampMagnitude(value, radius / 2); //스틱을 배경에 가두기 
         rect_joystick.localPosition = value; //스틱을 배경에서 value만큼 떨어지도록
 
         distance = Vector2.Distance((Vector2)rect_background.position, (Vector2)rect_joystick.position) / radius * 2; //distance는 배경과 스틱의 거리차와 비례 (0~1)
