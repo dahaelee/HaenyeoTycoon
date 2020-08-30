@@ -24,6 +24,7 @@ public class farm_manager : MonoBehaviour
     //사운드 관련 필드
     public AudioSource bgm, button_click, popup_click, expand_click, request_denied, get_money, trashing, next_day, debt_sending, num_pad, icon_click, item_click, farm_money;
 
+    public Image[] items;
 
     IEnumerator current_Info;
 
@@ -320,6 +321,7 @@ public class farm_manager : MonoBehaviour
         }
         farm.isFarming = false;
         farm.money.gameObject.SetActive(true);
+        farm.bubble_item.gameObject.SetActive(true);
 
 
     }
@@ -400,6 +402,14 @@ public class farm_manager : MonoBehaviour
 
         }
 
+    }
+
+    //하루정산 UI 띄우기
+    public void today_work()
+    {
+        icon_click.PlayOneShot(icon_click.clip);
+        UI_manager.AllUIoff();
+        StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.today_work));
     }
 
     //송금하기 UI 띄우기
