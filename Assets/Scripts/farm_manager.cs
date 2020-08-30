@@ -175,6 +175,7 @@ public class farm_manager : MonoBehaviour
             farms[farm_index].item1.sprite = Resources.Load<Sprite>(sea_item[item_index].name);   //자원 이미지 바꾸기
             farms[farm_index].item2.sprite = Resources.Load<Sprite>(sea_item[item_index].name);   //자원 이미지 바꾸기
             farms[farm_index].item3.sprite = Resources.Load<Sprite>(sea_item[item_index].name);   //자원 이미지 바꾸기
+            //farms[farm_index].bubble_item.sprite = = Resources.Load<Sprite>(sea_item[item_index].name);
 
             farms[farm_index].item1.gameObject.SetActive(true);
             farms[farm_index].item2.gameObject.SetActive(false);
