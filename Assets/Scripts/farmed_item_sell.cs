@@ -4,19 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-
-public class item_sell : MonoBehaviour
+public class farmed_item_sell : MonoBehaviour
 {
     public sell_item_info[] sea_items;
     public Text Haenyeo_money;
 
-    // 사운드 이펙트
+    //사운드 이펙트
     public AudioSource bgm, sell_click, updown_click;
 
-    public GameObject sell_ui, ask_ui, rsp_ui, wild_ui, farmed_ui, touch_x;
-    public int temp_index, temp_num, temp_money;
+    public GameObject sell_ui, wild_ui, farmed_ui;
+    //public int temp_index, temp_num, temp_money;
 
-    void Awake()
+    private void Awake()
     {
         bgm.volume = PlayerPrefs.GetFloat("Bgm_volume", 1);
         sell_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
@@ -24,7 +23,7 @@ public class item_sell : MonoBehaviour
 
         data_load();
         item_noshow();
-        item_UI();        
+        item_UI();
     }
 
     public void return_to_home()
@@ -36,58 +35,21 @@ public class item_sell : MonoBehaviour
     public void tab_change()
     {
         data_save();
-        wild_ui.gameObject.SetActive(false);
-        farmed_ui.gameObject.SetActive(true);
+        farmed_ui.gameObject.SetActive(false);
+        wild_ui.gameObject.SetActive(true);
     }
 
-    public void rsp_yes()
-    {
-        touch_x.SetActive(false);
-        ask_ui.gameObject.SetActive(false);
-        rsp_ui.gameObject.SetActive(true);
-    }
-    public void rsp_no()
-    {
-        // 원래 지정한 금액만 짤랑
-        Haenyeo.money += temp_money;
-        Haenyeo.sea_item_number[temp_index] -= temp_num;
-        touch_x.SetActive(false);
-        ask_ui.gameObject.SetActive(false);
-        item_UI();
-    }
-
-    public void sell_rsp()
-    {
-        rsp_ui.SetActive(false);
-        sell_click.PlayOneShot(sell_click.clip);
-        if (betting_rsp.rsp_result == 0)
-        {
-            Haenyeo.money += temp_money;
-        }
-        else if (betting_rsp.rsp_result == 1)
-        {
-            Haenyeo.money += temp_money/2;
-        }
-        else
-        {
-            Haenyeo.money += temp_money*2;
-        }
-        Haenyeo.sea_item_number[temp_index] -= temp_num;
-        item_UI();
-    }
-
-
-    // 해녀가 가진 자원만 보이도록 설정
+    // 해녀가 가진 양식자원만 보이도록 설정
     public void item_UI()
     {
-        temp_num = 0;
-        temp_money = 0;
-        temp_index = -1;
+        //temp_num = 0;
+        //temp_money = 0;
+        //temp_index = -1;
         item_noshow();
         Haenyeo_money.text = Haenyeo.money.ToString("N0");
-        for (int i=0; i< sea_items.Length; i++)
+        for (int i = 0; i < sea_items.Length; i++)
         {
-            if(Haenyeo.sea_item_number[i] > 0)
+            if (Haenyeo.farm_item_number[i] > 0)
             {
                 sea_items[i].gameObject.SetActive(true);
                 //sea_items[i].number_up_button.gameObject.SetActive(false);
@@ -95,7 +57,7 @@ public class item_sell : MonoBehaviour
 
                 sea_items[i].sell_number = 0; // 팔 자원개수 0으로 초기화
                 sea_items[i].sell_price = sea_items[i].sell_number * sea_items[i].raw_price;
-                sea_items[i].total_number = Haenyeo.sea_item_number[i];
+                sea_items[i].total_number = Haenyeo.farm_item_number[i];
 
                 sea_items[i].sell_number_text.text = sea_items[i].sell_number.ToString();
                 sea_items[i].total_number_text.text = sea_items[i].total_number.ToString();
@@ -110,7 +72,7 @@ public class item_sell : MonoBehaviour
     //모든 자원창을 끔
     public void item_noshow()
     {
-        for(int i = 0; i < sea_items.Length; i++)
+        for (int i = 0; i < sea_items.Length; i++)
         {
             sea_items[i].gameObject.SetActive(false);
         }
@@ -126,7 +88,6 @@ public class item_sell : MonoBehaviour
         sea_items[item_index].sell_price_text.text = (sea_items[item_index].raw_price * sea_items[item_index].sell_number).ToString("N0");
         up(item_index);
         down(item_index);
-
     }
 
     // 팔 자원 개수 줄이는 버튼
@@ -144,13 +105,12 @@ public class item_sell : MonoBehaviour
     // 팔기 버튼
     public void sell_button_click(int item_index)
     {
-        touch_x.SetActive(true);
-        ask_ui.SetActive(true);
+        //ask_ui.SetActive(true);
         //sell_click.PlayOneShot(sell_click.clip);
-        temp_index = item_index;
+        //temp_index = item_index;
         sea_items[item_index].sell_price_text.text = (sea_items[item_index].raw_price * sea_items[item_index].sell_number).ToString("N0");
-        temp_money = sea_items[item_index].raw_price * sea_items[item_index].sell_number; // 해녀돈 += 자원 팔 개수 * raw_price;
-        temp_num = sea_items[item_index].sell_number; // 해녀가 가진 자원 개수 -= 자원 팔 개수
+        //temp_money = sea_items[item_index].raw_price * sea_items[item_index].sell_number; // 해녀돈 += 자원 팔 개수 * raw_price;
+        //temp_num = sea_items[item_index].sell_number; // 해녀가 가진 자원 개수 -= 자원 팔 개수
         //item_UI();
     }
 
@@ -174,7 +134,7 @@ public class item_sell : MonoBehaviour
     // 다운버튼 활성화/비활성화 
     public void down(int item_index)
     {
-       
+
         sea_items[item_index].number_down_button.SetActive(true);
 
         if (sea_items[item_index].sell_number > 0) // 팔 자원 개수가 0보다 많아지면 활성화
@@ -191,24 +151,22 @@ public class item_sell : MonoBehaviour
         }
     }
 
-    
-
     public void data_save()
     {
         //데이터 저장
 
         PlayerPrefs.SetInt("Haenyeo" + "_" + "money", Haenyeo.money);
-       
-        PlayerPrefs.SetInt("Haenyeo_sea_item_number0", Haenyeo.sea_item_number[0]);
-        PlayerPrefs.SetInt("Haenyeo_sea_item_number1", Haenyeo.sea_item_number[1]);
-        PlayerPrefs.SetInt("Haenyeo_sea_item_number2", Haenyeo.sea_item_number[2]);
-        PlayerPrefs.SetInt("Haenyeo_sea_item_number3", Haenyeo.sea_item_number[3]);
-        PlayerPrefs.SetInt("Haenyeo_sea_item_number4", Haenyeo.sea_item_number[4]);
-        PlayerPrefs.SetInt("Haenyeo_sea_item_number5", Haenyeo.sea_item_number[5]);
-        PlayerPrefs.SetInt("Haenyeo_sea_item_number6", Haenyeo.sea_item_number[6]);
-        PlayerPrefs.SetInt("Haenyeo_sea_item_number7", Haenyeo.sea_item_number[7]);
-        PlayerPrefs.SetInt("Haenyeo_sea_item_number8", Haenyeo.sea_item_number[8]);
-        
+
+        PlayerPrefs.SetInt("Haenyeo_farm_item_number0", Haenyeo.farm_item_number[0]);
+        PlayerPrefs.SetInt("Haenyeo_farm_item_number1", Haenyeo.farm_item_number[1]);
+        PlayerPrefs.SetInt("Haenyeo_farm_item_number2", Haenyeo.farm_item_number[2]);
+        PlayerPrefs.SetInt("Haenyeo_farm_item_number3", Haenyeo.farm_item_number[3]);
+        PlayerPrefs.SetInt("Haenyeo_farm_item_number4", Haenyeo.farm_item_number[4]);
+        PlayerPrefs.SetInt("Haenyeo_farm_item_number5", Haenyeo.farm_item_number[5]);
+        PlayerPrefs.SetInt("Haenyeo_farm_item_number6", Haenyeo.farm_item_number[6]);
+        PlayerPrefs.SetInt("Haenyeo_farm_item_number7", Haenyeo.farm_item_number[7]);
+        PlayerPrefs.SetInt("Haenyeo_farm_item_number8", Haenyeo.farm_item_number[8]);
+
         PlayerPrefs.Save();
     }
     public void data_load()
@@ -218,15 +176,15 @@ public class item_sell : MonoBehaviour
 
         //해녀 보유한 자원 개수 초기화
 
-        Haenyeo.sea_item_number[0] = PlayerPrefs.GetInt("Haenyeo_sea_item_number0", 10);
-        Haenyeo.sea_item_number[1] = PlayerPrefs.GetInt("Haenyeo_sea_item_number1", 10);
-        Haenyeo.sea_item_number[2] = PlayerPrefs.GetInt("Haenyeo_sea_item_number2", 10);
-        Haenyeo.sea_item_number[3] = PlayerPrefs.GetInt("Haenyeo_sea_item_number3", 10);
-        Haenyeo.sea_item_number[4] = PlayerPrefs.GetInt("Haenyeo_sea_item_number4", 10);
-        Haenyeo.sea_item_number[5] = PlayerPrefs.GetInt("Haenyeo_sea_item_number5", 10);
-        Haenyeo.sea_item_number[6] = PlayerPrefs.GetInt("Haenyeo_sea_item_number6", 10);
-        Haenyeo.sea_item_number[7] = PlayerPrefs.GetInt("Haenyeo_sea_item_number7", 10);
-        Haenyeo.sea_item_number[8] = PlayerPrefs.GetInt("Haenyeo_sea_item_number8", 10);
+        Haenyeo.farm_item_number[0] = PlayerPrefs.GetInt("Haenyeo_farm_item_number0", 10);
+        Haenyeo.farm_item_number[1] = PlayerPrefs.GetInt("Haenyeo_farm_item_number1", 10);
+        Haenyeo.farm_item_number[2] = PlayerPrefs.GetInt("Haenyeo_farm_item_number2", 10);
+        Haenyeo.farm_item_number[3] = PlayerPrefs.GetInt("Haenyeo_farm_item_number3", 10);
+        Haenyeo.farm_item_number[4] = PlayerPrefs.GetInt("Haenyeo_farm_item_number4", 10);
+        Haenyeo.farm_item_number[5] = PlayerPrefs.GetInt("Haenyeo_farm_item_number5", 10);
+        Haenyeo.farm_item_number[6] = PlayerPrefs.GetInt("Haenyeo_farm_item_number6", 10);
+        Haenyeo.farm_item_number[7] = PlayerPrefs.GetInt("Haenyeo_farm_item_number7", 10);
+        Haenyeo.farm_item_number[8] = PlayerPrefs.GetInt("Haenyeo_farm_item_number8", 10);
 
     }
 }
