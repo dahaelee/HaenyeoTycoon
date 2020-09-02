@@ -5,49 +5,10 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
 
-public class Tutorial_quest_form
-{
-    public int state;   //0. new 1. ing 2. done
-    public string summary;
-    public string type;
-
-    public Tutorial_quest_form(int state, string type, string summary)
-    {
-        this.state = state;
-        this.type = type;
-        this.summary = summary;
-    }
-
-}
-
-public class Daily_quest_form
-{
-    public int state;//0. new 1. ing 2. done
-    public string summary;
-    public string type;
-    public int person; //0. 사채업자 1. 아빠 2. 상인아저씨
-    public string text; // 말풍선 텍스트
-    public string todo; // 해야할 일
-    public string reward;   // 보상
-
-    public Daily_quest_form(int state,string summary, string type, int person, string text, string todo, string reward)
-    {
-        this.state = state;
-        this.summary = summary;
-        this.type = type;
-        this.person = person;
-        this.text = text;
-        this.todo = todo;
-        this.reward = reward;
-    }
-}
-
 public class quest_manager : MonoBehaviour
 {
-    public static SortedList<int, Tutorial_quest_form> tutorial_quest_list = new SortedList<int, Tutorial_quest_form>();    //튜토리얼 퀘스트 목록
-    public static SortedList<int, Daily_quest_form> daily_quest_list = new SortedList<int, Daily_quest_form>(); // 일일 퀘스트 목록
     public GameObject new_exist,quest_icon;
-
+    
     //퀘스트 content 관련 오브젝트
     public GameObject content_parent, content;
     public Text summary_text, type_text;
@@ -65,16 +26,26 @@ public class quest_manager : MonoBehaviour
     public GameObject quest_bg, quest_box_touch,quest_box;
     public GameObject[] quest_giver;
     public Text hilight_text,box_text;
-
-    public static int day;
     
-    void Update()
+    void Start()
     {
-        day = PlayerPrefs.GetInt("day", 1);
-        give_daily_quest(); //일일 퀘스트 제공
+        string tutorial_quest_load = PlayerPrefs.GetString("tutorial_quest", "new");
+        string daily_quest_load = PlayerPrefs.GetString("daily_quest", "new");
+        
+        if (!tutorial_quest_load.Equals("new"))
+        {
+            quest_Data.tutorial_quest_list = JsonUtility.FromJson<Tutorial_Serialization>(tutorial_quest_load).toList();
+            quest_Data.daily_quest_list = JsonUtility.FromJson<Daily_Serialization>(daily_quest_load).toList();
+            quest_contents_update();
+        }
     }
 
-    //퀘스트 목록 업데이트
+    void Update()
+    {
+        //give_daily_quest(); //일일 퀘스트 제공
+    }
+
+    //퀘스트 목록 업데이트 
     public void quest_contents_update()
     {
         //초기화
@@ -90,52 +61,66 @@ public class quest_manager : MonoBehaviour
         content_parent.transform.DetachChildren();
 
         // 튜토리얼 퀘스트
-        foreach (var tmp in tutorial_quest_list)
+        for(int i=0;i<quest_Data.tutorial_quest_list.Count;i++)
         {
-            Tutorial_quest_form data = tmp.Value;
+            Tutorial_quest_form data = quest_Data.tutorial_quest_list[i];
 
-            for (int i = 0; i < 3; i++)  quest_states[i].gameObject.SetActive(false);
-            finish_inactive.gameObject.SetActive(false);
-            finish_active.gameObject.SetActive(false);
-            touch.gameObject.SetActive(false);
-            //퀘스트 state
-            quest_states[data.state].gameObject.SetActive(true);
-            touch_x.gameObject.SetActive(true);
-            
-            type_text.text = data.type; summary_text.text = data.summary;
-
-            GameObject temp_content = Instantiate(content, new Vector3(0, 0, 0), Quaternion.identity);
-            temp_content.transform.SetParent(content_parent.transform);
-            temp_content.name = "tutorial" + tmp.Key.ToString();
-            temp_content.SetActive(true);
-        }
-        
-        //일일 퀘스트
-        foreach (var tmp in daily_quest_list)
-        {
-            Daily_quest_form data = tmp.Value;
-
-            if (data.state == 0)
+            if (data.state != -1)   //퀘스트 목록에 추가할 퀘스트라면
             {
-                new_exist.SetActive(true);
-                StartCoroutine("quest_icon_effect");
-            }
-            for (int i = 0; i < 3; i++)  quest_states[i].gameObject.SetActive(false);
-            finish_inactive.gameObject.SetActive(false);
-            finish_active.gameObject.SetActive(false);
-            touch_x.gameObject.SetActive(false);
-            touch.gameObject.SetActive(true);
-            quest_states[data.state].gameObject.SetActive(true);
-            if (data.state == 2) finish_active.gameObject.SetActive(true);
-            else finish_inactive.gameObject.SetActive(true);
+                for (int j = 0; j < 3; j++) quest_states[i].gameObject.SetActive(false);
+                finish_inactive.gameObject.SetActive(false);
+                finish_active.gameObject.SetActive(false);
+                touch.gameObject.SetActive(false);
+                //퀘스트 state
+                quest_states[data.state].gameObject.SetActive(true);
+                touch_x.gameObject.SetActive(true);
 
-            type_text.text = data.type; summary_text.text = data.summary;
-            
-            //content와 popup복제해서 부모 설정하기
-            GameObject temp_content = Instantiate(content, new Vector3(0, 0, 0), Quaternion.identity);
-            temp_content.transform.SetParent(content_parent.transform);
-            temp_content.name = tmp.Key.ToString();      //이름을 key로 설정
-            temp_content.SetActive(true);
+                type_text.text = data.type; summary_text.text = data.summary;
+
+                GameObject temp_content = Instantiate(content, new Vector3(0, 0, 0), Quaternion.identity);
+                temp_content.transform.SetParent(content_parent.transform);
+                temp_content.SetActive(true);
+            }
+        }
+
+        //일일 퀘스트
+        for (int i = 0; i < quest_Data.daily_quest_list.Count; i++)
+        {
+            Daily_quest_form data = quest_Data.daily_quest_list[i];
+
+            if (data.state != -1)
+            {
+                if (data.state == 0)
+                {
+                    new_exist.SetActive(true);
+                    StartCoroutine("quest_icon_effect");
+                }
+                for (int j = 0; j < 3; j++) quest_states[i].gameObject.SetActive(false);
+                finish_inactive.gameObject.SetActive(false);
+                finish_active.gameObject.SetActive(false);
+                touch_x.gameObject.SetActive(false);
+                touch.gameObject.SetActive(true);
+                quest_states[data.state].gameObject.SetActive(true);
+                if (data.state == 2) finish_active.gameObject.SetActive(true);
+                else finish_inactive.gameObject.SetActive(true);
+
+                type_text.text = data.type; summary_text.text = data.summary;
+
+                //content와 popup복제해서 부모 설정하기
+                GameObject temp_content = Instantiate(content, new Vector3(0, 0, 0), Quaternion.identity);
+                temp_content.transform.SetParent(content_parent.transform);
+                temp_content.name = i.ToString();      //이름을 인덱스로 설정
+                temp_content.SetActive(true);
+            }
+        }
+
+        //json타입 변환 후 저장
+        if (quest_Data.daily_quest_list.Count != 0 && quest_Data.tutorial_quest_list.Count != 0)
+        {
+            string tutorial_quest_save = JsonUtility.ToJson(new Tutorial_Serialization(quest_Data.tutorial_quest_list));
+            string daily_quest_save = JsonUtility.ToJson(new Daily_Serialization(quest_Data.daily_quest_list));
+            PlayerPrefs.SetString("tutorial_quest", tutorial_quest_save);
+            PlayerPrefs.SetString("daily_quest", daily_quest_save);
         }
     }
 
@@ -144,15 +129,15 @@ public class quest_manager : MonoBehaviour
     {
         //클릭한 오브젝트 찾아서 key 찾기
         string content_name = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject.name;
-        int key = Int32.Parse(content_name);
+        int idx = Int32.Parse(content_name);
 
-        Daily_quest_form data=daily_quest_list[key];
+        Daily_quest_form data=quest_Data.daily_quest_list[idx];
         for (int i = 0; i < 3; i++) persons[i].SetActive(false);
         persons[data.person].SetActive(true);
         text.text = data.text; todo_text.text = data.todo; reward_text.text = data.reward;
 
         //state변경 및 content update
-        daily_quest_list[key].state = 1;
+        quest_Data.daily_quest_list[idx].state = 1;
         quest_contents_update();
 
         popup.SetActive(true);
@@ -165,16 +150,11 @@ public class quest_manager : MonoBehaviour
 
     //일일 퀘스트 제공
     public void give_daily_quest()
-    {   //임시 퀘스트
-        if (day == 1 && Haenyeo.hp < 90)
-        {
-            PlayerPrefs.SetInt("day", 2);
-
-            Daily_quest_form day_quest = daily_quest.daily_quest1;
-            show_quest_box(day_quest); // 화면 어두워지고 텍스트창 뜨기
-            daily_quest_list.Add(0, new Daily_quest_form(0,day_quest.summary, day_quest.type, day_quest.person, day_quest.text,day_quest.todo,day_quest.reward));
-            quest_contents_update();
-        }
+    {  
+         Daily_quest_form day_quest = new Daily_quest_form(1,"2","3",1,"2","3","1");        //임시, 수정
+         show_quest_box(day_quest); // 화면 어두워지고 텍스트창 뜨기
+         
+         quest_contents_update();
     }
 
     //화면 어두워지면서 퀘스트 주는 거
@@ -203,9 +183,9 @@ public class quest_manager : MonoBehaviour
         int time = 0;
         while (time < 5)
         {
-            quest_icon.gameObject.transform.Rotate(Vector3.back * 20);
+            quest_icon.gameObject.transform.Rotate(Vector3.back * 10);
             yield return new WaitForSeconds(0.2f);
-            quest_icon.gameObject.transform.Rotate(Vector3.forward * 20);
+            quest_icon.gameObject.transform.Rotate(Vector3.forward * 10);
             yield return new WaitForSeconds(0.2f);
             time++;
         }
