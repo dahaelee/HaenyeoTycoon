@@ -27,6 +27,7 @@ public class UI_manager : MonoBehaviour
         ending,     
         today_work, //하루 정산
         no_item,
+        no_HP,
         None
     }
 
@@ -92,13 +93,13 @@ public class UI_manager : MonoBehaviour
 
         while (LerpT <= 1)
         {
-            hp_minus.transform.position = Vector2.Lerp(startPos, endPos, LerpT);
+            hp_minus.transform.localPosition = Vector2.Lerp(startPos, endPos, LerpT);
 
             LerpT += Time.deltaTime * speed;
             yield return null;
         }
         yield return new WaitForSeconds(0.3f);
         hp_minus.gameObject.SetActive(false);
-        hp_minus.transform.position = startPos;
+        hp_minus.transform.localPosition = startPos;
     }
 }
