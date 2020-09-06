@@ -79,15 +79,15 @@ public class quest_Data : MonoBehaviour
         daily_quest_list.Clear();
 
         //튜토리얼 퀘스트 추가
-        tutorial_quest_list.Add(new Tutorial_quest_form(-1, "사채업자의 빚재촉", "5일동안 20만원 갚기"));  
+        tutorial_quest_list.Add(new Tutorial_quest_form(-1, "사채업자의 빚재촉", "5일동안 50만원 갚기"));  
         tutorial_quest_list.Add(new Tutorial_quest_form(-1, "아빠의 가르침", "바다에서 자원 1개 이상 채집하기"));
         tutorial_quest_list.Add(new Tutorial_quest_form(-1, "아빠의 가르침", "자원 양식하기"));
         tutorial_quest_list.Add(new Tutorial_quest_form(-1, "아빠의 가르침", "상점 방문하기"));
 
         //일일 퀘스트 추가
-        daily_quest_list.Add(new Daily_quest_form(-1,"조개 5개 채집하기","제철 해산물",2, "과일도 제철 과일이 맛있고,\n해산물도 제철 해산물이 맛있지.\n그런고로, 오늘은 조개를 가져오면 짭짤하게 쳐주마!\n그럼 오늘도 잘 부탁한다, 해녀야~~","","5만원"));
-        daily_quest_list.Add(new Daily_quest_form(-1, "양식 미역 3번 수확하기", "양식의 달인", 1, "해녀 생활을 훌륭하게 잘 해내고 있구나\n양식 하는 건 아직 미숙하던데\n미역 3번만 수확해 보겠니?", "", "8만원"));
-        daily_quest_list.Add(new Daily_quest_form(-1, "새우 2개, 꽃게 1개 채집하기", "오늘의 점심", 1, "해녀야,, 오늘따라 얼큰한 해물라면이 끌리지 않니..?\n몇 가지 재료만 가져다 주면 아빠가 끓여줄게..\n그럼.. 부탁할게..", "", "10만원"));
+        daily_quest_list.Add(new Daily_quest_form(-1,"조개 5개 채집하기","제철 해산물",2, "과일도 제철 과일이 맛있고,\n해산물도 제철 해산물이 맛있지.\n그런고로, 오늘은 조개를 가져오면 짭짤하게 쳐주마!\n그럼 오늘도 잘 부탁한다, 해녀야~~","","2만원"));
+        daily_quest_list.Add(new Daily_quest_form(-1, "양식 미역 3번 수확하기", "양식의 달인", 1, "해녀 생활을 훌륭하게 잘 해내고 있구나\n양식 하는 건 아직 미숙하던데\n미역 3번만 수확해 보겠니?", "", "3만원"));
+        daily_quest_list.Add(new Daily_quest_form(-1, "새우 2개, 꽃게 1개 채집하기", "오늘의 점심", 1, "해녀야,, 오늘따라 얼큰한 해물라면이 끌리지 않니..?\n몇 가지 재료만 가져다 주면 아빠가 끓여줄게..\n그럼.. 부탁할게..", "", "5만원"));
 
         //첫 튜토 시작
         GameObject.Find("tutorial_quest").GetComponent<tutorial_quest>().Sache1();

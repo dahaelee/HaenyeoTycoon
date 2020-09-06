@@ -45,7 +45,7 @@ public class tutorial_quest : MonoBehaviour
                 switch (step)
                 {
                     case 2:
-                        text.text = "우선 5일을 주마.\n기간 안에 20만원을 갚지 못한다면.. \n어떻게 되는진 말하지 않아도 알겠지 ? ";
+                        text.text = "우선 5일을 주마.\n기간 안에 50만원을 갚지 못한다면.. \n어떻게 되는진 말하지 않아도 알겠지 ? ";
                         break;
                     default:
                         Initialize();
