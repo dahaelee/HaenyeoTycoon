@@ -52,9 +52,21 @@ public class betting_rsp : MonoBehaviour
         };
         rand_text = Random.Range(0, rsp_text.Length);
         seller_text.text = rsp_text[rand_text];
-        StartCoroutine(store_home.UI_On(bubble_seller, seller_text));
+        StartCoroutine(UI_On(bubble_seller, seller_text));
     }
-
+    public IEnumerator UI_On(Image image, Text text)
+    {
+        yield return new WaitForSeconds(0.1f);
+        image.gameObject.SetActive(true);
+        text.gameObject.SetActive(true);
+        for (int i = 0; i < 5; i++)
+        {
+            image.rectTransform.localScale = new Vector3((float)(1.45 + i * 0.01), (float)(1.45 + i * 0.01), (float)(1.45 + i * 0.01));
+            text.rectTransform.localScale = new Vector3((float)(0.95 + i * 0.01), (float)(0.95 + i * 0.01), (float)(0.95 + i * 0.01));
+            yield return 0;
+        }
+        yield return new WaitForSeconds(2.5f);
+    }
     public IEnumerator result_effect(Image result_ui)
     {
         result_ui.gameObject.SetActive(true);
@@ -80,23 +92,17 @@ public class betting_rsp : MonoBehaviour
         if(k == 0)
         {
             rsp_result = 0; // 비김
-            StartCoroutine(result_effect(result_ui[0]));
-            //result_ui[0].gameObject.SetActive(true);
             seller_text.text = "비겼구만! 그렇다면 제값에 받도록 하마.";
         }
         else if(k == 1)
         {
             rsp_result = 1; // 짐
-            StartCoroutine(result_effect(result_ui[1]));
-            //result_ui[1].gameObject.SetActive(true);
             seller_text.text = "아이고~ 어쩌니. 아저씨가 이겨버렸네. 내기는 내기니까, 반값으로 잘 받아가마 해녀야~";
         }
         else
         {
             rsp_result = 2; // 이김
-            StartCoroutine(result_effect(result_ui[2]));
-            //result_ui[2].gameObject.SetActive(true);
-            seller_text.text = "이런~ 내가 졌구나. 기분이다! 두배로 쳐주마!";
+            seller_text.text = "이런~ 내가 졌구나. 기분이다! 다섯배로 쳐주마!";
 
         }
     }
@@ -128,10 +134,10 @@ public class betting_rsp : MonoBehaviour
         hide.transform.localScale = new Vector3(0, 0.8f, 1) + new Vector3(0.8f, 0, 0) * (1 - 2 * hide_time);
         if (hide_time > 0.5f)
         {
-            hide_time = 0;
             hide.gameObject.SetActive(false);
         }
         hide_time += Time.deltaTime;
+        StartCoroutine(result_effect(result_ui[rsp_result]));
     }
     
     // Start is called before the first frame update
@@ -158,7 +164,6 @@ public class betting_rsp : MonoBehaviour
         {
             question.gameObject.SetActive(false);
             hide_effect();
-            //result_effect(rsp_result);
         }
     }
     

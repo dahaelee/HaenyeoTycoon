@@ -13,7 +13,7 @@ public class item_sell : MonoBehaviour
     // 사운드 이펙트
     public AudioSource bgm, sell_click, updown_click;
 
-    public GameObject sell_ui, ask_ui, rsp_ui, wild_ui, farmed_ui, touch_x, no_wild, return_ui;
+    public GameObject sell_ui, ask_ui, rsp_ui, wild_ui, farmed_ui, touch_x, no_wild, return_ui, black_bg;
 
     public Image plus_money;
     public int temp_index, temp_num, temp_money;
@@ -37,6 +37,7 @@ public class item_sell : MonoBehaviour
         return_ui.SetActive(false);
         wild_ui.gameObject.SetActive(false);
         farmed_ui.gameObject.SetActive(false);
+        item_UI();
     }
 
     public void tab_change()
@@ -48,6 +49,7 @@ public class item_sell : MonoBehaviour
 
     public void rsp_yes()
     {
+        black_bg.SetActive(true);
         touch_x.SetActive(false);
         ask_ui.gameObject.SetActive(false);
         rsp_ui.gameObject.SetActive(true);
@@ -65,6 +67,7 @@ public class item_sell : MonoBehaviour
 
     public void sell_rsp()
     {
+        black_bg.SetActive(false);
         rsp_ui.SetActive(false);
         sell_click.PlayOneShot(sell_click.clip);
         if (betting_rsp.rsp_result == 0)
@@ -79,12 +82,13 @@ public class item_sell : MonoBehaviour
         }
         else
         {
-            Haenyeo.money += temp_money*2;
+            Haenyeo.money += temp_money*5;
             //plus_money.text = "+ " + (temp_money*2).ToString("N0");
         }
         Haenyeo.sea_item_number[temp_index] -= temp_num;
         item_UI();
         StartCoroutine(reward_effect());
+        data_save();
     }
 
 
@@ -169,6 +173,7 @@ public class item_sell : MonoBehaviour
         temp_money = sea_items[item_index].raw_price * sea_items[item_index].sell_number; // 해녀돈 += 자원 팔 개수 * raw_price;
         temp_num = sea_items[item_index].sell_number; // 해녀가 가진 자원 개수 -= 자원 팔 개수
         //item_UI();
+        data_save();
     }
 
     // 업버튼 활성화/비활성화 
