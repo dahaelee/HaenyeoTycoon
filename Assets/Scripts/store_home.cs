@@ -5,7 +5,30 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class store_home : MonoBehaviour
 {
-    public GameObject sell_tab, buy_tab, return_from_buy, return_from_sell;
+    //public Button change_to_upgrade, change_to_sell;
+
+    //public void upgrade_tab_click()
+    //{
+    //    sell_tab.SetActive(false);
+    //    upgrade_tab.SetActive(true);
+    //}
+    //public void sell_tab_click()
+    //{
+    //    upgrade_tab.SetActive(false);
+    //    sell_tab.SetActive(true);
+    //}
+
+    void Start()
+    {
+        int storeNew = PlayerPrefs.GetInt("storeNew", 1);
+        if (storeNew == 1)
+        {
+            quest_Data.tutorial_quest_list[3].state = -1;
+            PlayerPrefs.SetInt("storeNew", 0);
+        }
+    }
+
+    public GameObject sell_tab, buy_tab,return_from_buy, return_from_sell;
     public int rand_text = -1;
     public string[] seller_text;
     public Text bubble_text;

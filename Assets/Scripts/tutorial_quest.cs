@@ -45,7 +45,7 @@ public class tutorial_quest : MonoBehaviour
                 switch (step)
                 {
                     case 2:
-                        text.text = "우선 5일을 주마.\n기간 안에 20만원을 갚지 못한다면.. \n어떻게 되는진 말하지 않아도 알겠지 ? ";
+                        text.text = "우선 5일을 주마.\n기간 안에 50만원을 갚지 못한다면.. \n어떻게 되는진 말하지 않아도 알겠지 ? ";
                         break;
                     default:
                         Initialize();
@@ -196,7 +196,7 @@ public class tutorial_quest : MonoBehaviour
 
                     step = 1; quest_num = 3;
                     bubble_parent.transform.position = new Vector3(640, 450, 0); // 화면 상단 위치
-                    bubble_text.text = "그렇지~ 자원은 그렇게 양식하는 거란다.. 상인 아저씨가 찾던데! 어서 가보렴";
+                    bubble_text.text = "그렇지~ 자원은 그렇게 양식하는 거란다.. 상점도 한번 둘러보겠니?";
 
                     item_num = 0;
                     PlayerPrefs.SetInt("isQuest", 5);
@@ -208,6 +208,7 @@ public class tutorial_quest : MonoBehaviour
     //quest_ui open
     public void quest_ui_open()
     {
+        GameObject.Find("quest_manager").GetComponent<quest_manager>().quest_contents_update(); //실시간 반영
         quest_bg.gameObject.SetActive(true);
         quest_ui.gameObject.SetActive(true);
     }

@@ -28,9 +28,9 @@ public class Haenyeo : MonoBehaviour
 
     public enum sea_item_index
     {
-        starfish = 0,
+        shell = 0,
         seaweed,
-        shell,
+        starfish,
         shrimp,
         jellyfish,
         crab,
@@ -65,8 +65,6 @@ public class Haenyeo : MonoBehaviour
     }
     void Update()
     {
-
-
         hp_text.GetComponent<Text>().text = Mathf.CeilToInt(hp).ToString(); // 체력 소수점 부분 버림
         if (hp >= 90)
         {
@@ -92,6 +90,10 @@ public class Haenyeo : MonoBehaviour
         {
             hp_bg.GetComponent<Image>().sprite = hp0;
         }
+        else if (hp < 0)
+        {
+            hp = 0;
+        }
     }
 
     void SetHP()
@@ -99,5 +101,6 @@ public class Haenyeo : MonoBehaviour
         
         
     }
+
 
 }
