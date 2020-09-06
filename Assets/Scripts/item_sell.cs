@@ -13,15 +13,19 @@ public class item_sell : MonoBehaviour
     // 사운드 이펙트
     public AudioSource bgm, sell_click, updown_click;
 
-    public GameObject sell_ui, ask_ui, rsp_ui, wild_ui, farmed_ui, touch_x;
+    public GameObject sell_ui, ask_ui, rsp_ui, wild_ui, farmed_ui, touch_x, no_wild, return_ui;
+
+    public Image plus_money;
     public int temp_index, temp_num, temp_money;
+    int if_no_wild = 0;
+
 
     void Awake()
     {
         bgm.volume = PlayerPrefs.GetFloat("Bgm_volume", 1);
         sell_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
         updown_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
-
+        if_no_wild = 0;
         data_load();
         item_noshow();
         item_UI();        
@@ -30,7 +34,9 @@ public class item_sell : MonoBehaviour
     public void return_to_home()
     {
         data_save();
-        sell_ui.gameObject.SetActive(false);
+        return_ui.SetActive(false);
+        wild_ui.gameObject.SetActive(false);
+        farmed_ui.gameObject.SetActive(false);
     }
 
     public void tab_change()
@@ -54,6 +60,7 @@ public class item_sell : MonoBehaviour
         touch_x.SetActive(false);
         ask_ui.gameObject.SetActive(false);
         item_UI();
+        StartCoroutine(reward_effect());
     }
 
     public void sell_rsp()
@@ -63,17 +70,21 @@ public class item_sell : MonoBehaviour
         if (betting_rsp.rsp_result == 0)
         {
             Haenyeo.money += temp_money;
+            //plus_money.text = "+ " + (temp_money).ToString("N0");
         }
         else if (betting_rsp.rsp_result == 1)
         {
             Haenyeo.money += temp_money/2;
+            //plus_money.text = "+ " + (temp_money/2).ToString("N0");
         }
         else
         {
             Haenyeo.money += temp_money*2;
+            //plus_money.text = "+ " + (temp_money*2).ToString("N0");
         }
         Haenyeo.sea_item_number[temp_index] -= temp_num;
         item_UI();
+        StartCoroutine(reward_effect());
     }
 
 
@@ -89,6 +100,7 @@ public class item_sell : MonoBehaviour
         {
             if(Haenyeo.sea_item_number[i] > 0)
             {
+                if_no_wild++;
                 sea_items[i].gameObject.SetActive(true);
                 //sea_items[i].number_up_button.gameObject.SetActive(false);
                 //sea_items[i].number_down_button.gameObject.SetActive(false);
@@ -104,6 +116,10 @@ public class item_sell : MonoBehaviour
                 up(i);
                 down(i);
             }
+        }
+        if (if_no_wild == 0)
+        {
+            no_wild.gameObject.SetActive(true);
         }
     }
 
@@ -148,6 +164,7 @@ public class item_sell : MonoBehaviour
         ask_ui.SetActive(true);
         //sell_click.PlayOneShot(sell_click.clip);
         temp_index = item_index;
+        //plus_money.text = "+ " + (sea_items[item_index].raw_price * sea_items[item_index].sell_number).ToString("N0");
         sea_items[item_index].sell_price_text.text = (sea_items[item_index].raw_price * sea_items[item_index].sell_number).ToString("N0");
         temp_money = sea_items[item_index].raw_price * sea_items[item_index].sell_number; // 해녀돈 += 자원 팔 개수 * raw_price;
         temp_num = sea_items[item_index].sell_number; // 해녀가 가진 자원 개수 -= 자원 팔 개수
@@ -191,7 +208,36 @@ public class item_sell : MonoBehaviour
         }
     }
 
-    
+    IEnumerator reward_effect()
+    {
+        plus_money.gameObject.SetActive(true); //동전들 화면에 띄우기
+        plus_money.color = new Vector4(1, 1, 1, 1);    //투명도 0%인 상태
+        for (int i = 0; i < 10; i++)      //투명도 점점 없어짐
+        {
+            plus_money.rectTransform.localPosition = new Vector3(426, 312 + i, 0);
+            yield return new WaitForSeconds(0.0001f);
+        }
+        yield return new WaitForSeconds(0.001f);
+        StartCoroutine(FadeOut(plus_money));
+    }
+
+
+    IEnumerator FadeOut(Image image, float sec = 0) //페이드 아웃 되듯이 사라지는 이펙트 함수
+    {
+        for (float i = 1f; i >= 0; i -= 0.1f)
+        {
+            Color color = new Vector4(1, 1, 1, i);
+            image.color = color;
+            yield return new WaitForSeconds(sec);
+        }
+        image.gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.001f);
+        //image2.gameObject.SetActive(false);
+        //yield return new WaitForSeconds(0.05f);
+        //image3.gameObject.SetActive(true);
+    }
+
+
 
     public void data_save()
     {
@@ -218,15 +264,15 @@ public class item_sell : MonoBehaviour
 
         //해녀 보유한 자원 개수 초기화
 
-        Haenyeo.sea_item_number[0] = PlayerPrefs.GetInt("Haenyeo_sea_item_number0", 10);
-        Haenyeo.sea_item_number[1] = PlayerPrefs.GetInt("Haenyeo_sea_item_number1", 10);
-        Haenyeo.sea_item_number[2] = PlayerPrefs.GetInt("Haenyeo_sea_item_number2", 10);
-        Haenyeo.sea_item_number[3] = PlayerPrefs.GetInt("Haenyeo_sea_item_number3", 10);
-        Haenyeo.sea_item_number[4] = PlayerPrefs.GetInt("Haenyeo_sea_item_number4", 10);
-        Haenyeo.sea_item_number[5] = PlayerPrefs.GetInt("Haenyeo_sea_item_number5", 10);
-        Haenyeo.sea_item_number[6] = PlayerPrefs.GetInt("Haenyeo_sea_item_number6", 10);
-        Haenyeo.sea_item_number[7] = PlayerPrefs.GetInt("Haenyeo_sea_item_number7", 10);
-        Haenyeo.sea_item_number[8] = PlayerPrefs.GetInt("Haenyeo_sea_item_number8", 10);
+        Haenyeo.sea_item_number[0] = PlayerPrefs.GetInt("Haenyeo_sea_item_number0", 0);
+        Haenyeo.sea_item_number[1] = PlayerPrefs.GetInt("Haenyeo_sea_item_number1", 0);
+        Haenyeo.sea_item_number[2] = PlayerPrefs.GetInt("Haenyeo_sea_item_number2", 0);
+        Haenyeo.sea_item_number[3] = PlayerPrefs.GetInt("Haenyeo_sea_item_number3", 0);
+        Haenyeo.sea_item_number[4] = PlayerPrefs.GetInt("Haenyeo_sea_item_number4", 0);
+        Haenyeo.sea_item_number[5] = PlayerPrefs.GetInt("Haenyeo_sea_item_number5", 0);
+        Haenyeo.sea_item_number[6] = PlayerPrefs.GetInt("Haenyeo_sea_item_number6", 0);
+        Haenyeo.sea_item_number[7] = PlayerPrefs.GetInt("Haenyeo_sea_item_number7", 0);
+        Haenyeo.sea_item_number[8] = PlayerPrefs.GetInt("Haenyeo_sea_item_number8", 0);
 
     }
 }
