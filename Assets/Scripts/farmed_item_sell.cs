@@ -6,15 +6,18 @@ using UnityEngine.SceneManagement;
 
 public class farmed_item_sell : MonoBehaviour
 {
-    public sell_item_info[] sea_items;
+    public sell_item_info[] farmed_items;
     public Text Haenyeo_money;
 
     //사운드 이펙트
     public AudioSource bgm, sell_click, updown_click;
 
     public GameObject sell_ui, wild_ui, farmed_ui, no_farmed, return_ui;
-    //public int temp_index, temp_num, temp_money;
+
+    public Image plus_money;
+    public int temp_index, temp_num, temp_money;
     int if_no_farmed = 0;
+    
     private void Awake()
     {
         bgm.volume = PlayerPrefs.GetFloat("Bgm_volume", 1);
@@ -44,27 +47,25 @@ public class farmed_item_sell : MonoBehaviour
     // 해녀가 가진 양식자원만 보이도록 설정
     public void item_UI()
     {
-        //temp_num = 0;
-        //temp_money = 0;
-        //temp_index = -1;
+        temp_num = 0;
+        temp_money = 0;
+        temp_index = -1;
         item_noshow();
         Haenyeo_money.text = Haenyeo.money.ToString("N0");
-        for (int i = 0; i < sea_items.Length; i++)
+        for (int i = 0; i < farmed_items.Length; i++)
         {
             if (Haenyeo.farm_item_number[i] > 0)
             {
                 if_no_farmed++;
-                sea_items[i].gameObject.SetActive(true);
-                //sea_items[i].number_up_button.gameObject.SetActive(false);
-                //sea_items[i].number_down_button.gameObject.SetActive(false);
+                farmed_items[i].gameObject.SetActive(true);
 
-                sea_items[i].sell_number = 0; // 팔 자원개수 0으로 초기화
-                sea_items[i].sell_price = sea_items[i].sell_number * sea_items[i].raw_price;
-                sea_items[i].total_number = Haenyeo.farm_item_number[i];
+                farmed_items[i].sell_number = 0; // 팔 자원개수 0으로 초기화
+                farmed_items[i].sell_price = farmed_items[i].sell_number * farmed_items[i].raw_price;
+                farmed_items[i].total_number = Haenyeo.farm_item_number[i];
 
-                sea_items[i].sell_number_text.text = sea_items[i].sell_number.ToString();
-                sea_items[i].total_number_text.text = sea_items[i].total_number.ToString();
-                sea_items[i].sell_price_text.text = sea_items[i].sell_price.ToString();
+                farmed_items[i].sell_number_text.text = farmed_items[i].sell_number.ToString();
+                farmed_items[i].total_number_text.text = farmed_items[i].total_number.ToString();
+                farmed_items[i].sell_price_text.text = farmed_items[i].sell_price.ToString();
 
                 up(i);
                 down(i);
@@ -79,9 +80,9 @@ public class farmed_item_sell : MonoBehaviour
     //모든 자원창을 끔
     public void item_noshow()
     {
-        for (int i = 0; i < sea_items.Length; i++)
+        for (int i = 0; i < farmed_items.Length; i++)
         {
-            sea_items[i].gameObject.SetActive(false);
+            farmed_items[i].gameObject.SetActive(false);
         }
     }
 
@@ -89,10 +90,10 @@ public class farmed_item_sell : MonoBehaviour
     public void number_up(int item_index)
     {
         updown_click.PlayOneShot(updown_click.clip);
-        sea_items[item_index].sell_number++;
-        sea_items[item_index].sell_price += sea_items[item_index].raw_price;
-        sea_items[item_index].sell_number_text.text = sea_items[item_index].sell_number.ToString();
-        sea_items[item_index].sell_price_text.text = (sea_items[item_index].raw_price * sea_items[item_index].sell_number).ToString("N0");
+        farmed_items[item_index].sell_number++;
+        farmed_items[item_index].sell_price += farmed_items[item_index].raw_price;
+        farmed_items[item_index].sell_number_text.text = farmed_items[item_index].sell_number.ToString();
+        farmed_items[item_index].sell_price_text.text = (farmed_items[item_index].raw_price * farmed_items[item_index].sell_number).ToString("N0");
         up(item_index);
         down(item_index);
     }
@@ -101,10 +102,10 @@ public class farmed_item_sell : MonoBehaviour
     public void number_down(int item_index)
     {
         updown_click.PlayOneShot(updown_click.clip);
-        sea_items[item_index].sell_number--;
-        sea_items[item_index].sell_price -= sea_items[item_index].raw_price;
-        sea_items[item_index].sell_number_text.text = sea_items[item_index].sell_number.ToString();
-        sea_items[item_index].sell_price_text.text = (sea_items[item_index].raw_price * sea_items[item_index].sell_number).ToString("N0");
+        farmed_items[item_index].sell_number--;
+        farmed_items[item_index].sell_price -= farmed_items[item_index].raw_price;
+        farmed_items[item_index].sell_number_text.text = farmed_items[item_index].sell_number.ToString();
+        farmed_items[item_index].sell_price_text.text = (farmed_items[item_index].raw_price * farmed_items[item_index].sell_number).ToString("N0");
         up(item_index);
         down(item_index);
     }
@@ -113,27 +114,34 @@ public class farmed_item_sell : MonoBehaviour
     public void sell_button_click(int item_index)
     {
         //ask_ui.SetActive(true);
-        //sell_click.PlayOneShot(sell_click.clip);
-        //temp_index = item_index;
-        sea_items[item_index].sell_price_text.text = (sea_items[item_index].raw_price * sea_items[item_index].sell_number).ToString("N0");
-        //temp_money = sea_items[item_index].raw_price * sea_items[item_index].sell_number; // 해녀돈 += 자원 팔 개수 * raw_price;
-        //temp_num = sea_items[item_index].sell_number; // 해녀가 가진 자원 개수 -= 자원 팔 개수
+        sell_click.PlayOneShot(sell_click.clip);
+        temp_index = item_index;
+        farmed_items[item_index].sell_price_text.text = (farmed_items[item_index].raw_price * farmed_items[item_index].sell_number).ToString("N0");
+        temp_money = farmed_items[item_index].raw_price * farmed_items[item_index].sell_number; // 해녀돈 += 자원 팔 개수 * raw_price;
+        temp_num = farmed_items[item_index].sell_number; // 해녀가 가진 자원 개수 -= 자원 팔 개수
         //item_UI();
+        Haenyeo.money += temp_money;
+        Haenyeo.farm_item_number[temp_index] -= temp_num;
+        //touch_x.SetActive(false);
+        //ask_ui.gameObject.SetActive(false);
+        item_UI();
+        StartCoroutine(reward_effect());
+        data_save();
     }
 
     // 업버튼 활성화/비활성화 
     public void up(int item_index)
     {
-        sea_items[item_index].number_up_button.SetActive(true);
+        farmed_items[item_index].number_up_button.SetActive(true);
 
-        if (sea_items[item_index].sell_number < sea_items[item_index].total_number) // 총 자원보다 적으면 활성화
+        if (farmed_items[item_index].sell_number < farmed_items[item_index].total_number) // 총 자원보다 적으면 활성화
         {
-            sea_items[item_index].number_up_button.GetComponent<Button>().interactable = true;
+            farmed_items[item_index].number_up_button.GetComponent<Button>().interactable = true;
             //sea_items[item_index].number_up_button.SetActive(true);
         }
-        else if (sea_items[item_index].sell_number >= sea_items[item_index].total_number) // 총 자원보다 많거나 같아지면 비활성화 (안되는 부분)
+        else if (farmed_items[item_index].sell_number >= farmed_items[item_index].total_number) // 총 자원보다 많거나 같아지면 비활성화 (안되는 부분)
         {
-            sea_items[item_index].number_up_button.GetComponent<Button>().interactable = false;
+            farmed_items[item_index].number_up_button.GetComponent<Button>().interactable = false;
             //sea_items[item_index].number_up_button.SetActive(false);
         }
     }
@@ -142,22 +150,49 @@ public class farmed_item_sell : MonoBehaviour
     public void down(int item_index)
     {
 
-        sea_items[item_index].number_down_button.SetActive(true);
+        farmed_items[item_index].number_down_button.SetActive(true);
 
-        if (sea_items[item_index].sell_number > 0) // 팔 자원 개수가 0보다 많아지면 활성화
+        if (farmed_items[item_index].sell_number > 0) // 팔 자원 개수가 0보다 많아지면 활성화
         {
-            sea_items[item_index].number_down_button.GetComponent<Button>().interactable = true;
-            sea_items[item_index].sell_button.GetComponent<Button>().interactable = true;
+            farmed_items[item_index].number_down_button.GetComponent<Button>().interactable = true;
+            farmed_items[item_index].sell_button.GetComponent<Button>().interactable = true;
             //sea_items[item_index].number_down_button.SetActive(true);
         }
-        else if (sea_items[item_index].sell_number <= 0) // 팔 자원 개수가 0과 같거나 작아지면 비활성화 (안되는 부분)
+        else if (farmed_items[item_index].sell_number <= 0) // 팔 자원 개수가 0과 같거나 작아지면 비활성화 (안되는 부분)
         {
-            sea_items[item_index].number_down_button.GetComponent<Button>().interactable = false;
-            sea_items[item_index].sell_button.GetComponent<Button>().interactable = false;
+            farmed_items[item_index].number_down_button.GetComponent<Button>().interactable = false;
+            farmed_items[item_index].sell_button.GetComponent<Button>().interactable = false;
             //sea_items[item_index].number_down_button.SetActive(false);
         }
     }
+    IEnumerator reward_effect()
+    {
+        plus_money.gameObject.SetActive(true); //동전들 화면에 띄우기
+        plus_money.color = new Vector4(1, 1, 1, 1);    //투명도 0%인 상태
+        for (int i = 0; i < 10; i++)      //투명도 점점 없어짐
+        {
+            plus_money.rectTransform.localPosition = new Vector3(426, 312 + i, 0);
+            yield return new WaitForSeconds(0.0001f);
+        }
+        yield return new WaitForSeconds(0.001f);
+        StartCoroutine(FadeOut(plus_money));
+    }
 
+
+    IEnumerator FadeOut(Image image, float sec = 0) //페이드 아웃 되듯이 사라지는 이펙트 함수
+    {
+        for (float i = 1f; i >= 0; i -= 0.1f)
+        {
+            Color color = new Vector4(1, 1, 1, i);
+            image.color = color;
+            yield return new WaitForSeconds(sec);
+        }
+        image.gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.001f);
+        //image2.gameObject.SetActive(false);
+        //yield return new WaitForSeconds(0.05f);
+        //image3.gameObject.SetActive(true);
+    }
     public void data_save()
     {
         //데이터 저장

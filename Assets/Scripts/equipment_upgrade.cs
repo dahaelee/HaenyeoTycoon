@@ -427,26 +427,23 @@ public class equipment_upgrade : MonoBehaviour
     {
         if (Haenyeo.money >= suits[my_suit].next_upgrade_price && (my_suit != 2))
         {
-
             upgrade_click.PlayOneShot(upgrade_click.clip);
             Haenyeo.money -= suits[my_suit].next_upgrade_price;
-            PlayerPrefs.SetInt("PLAYER_SUIT", my_suit + 1);
+            if(my_suit == 0)
+            {
+                Haenyeo.hp_ratio = 0.67f;
+            }
+            if(my_suit == 1)
+            {
+                Haenyeo.hp_ratio = 0.5f;
+            }
+            my_suit++;
+            PlayerPrefs.SetInt("PLAYER_SUIT", my_suit);
             init_equipment();
             scroll_up(0);
             Haenyeo_money.text = Haenyeo.money.ToString("N0");
-            for (int i = 0; i < suits.Length; i++)
-            {
-                if (suits.Length - 1 == i)
-                {
-
-                }
-                else if (my_suit == i)
-                {
-                    // Haenyeo.diving_time += suits[i].time_up;      -수민 잠시 주석처리합니다
-
-                }
-            }
         }
+        data_save();
     }
 
     // 물안경 업그레이드 버튼 클릭
@@ -456,23 +453,21 @@ public class equipment_upgrade : MonoBehaviour
         {
             upgrade_click.PlayOneShot(upgrade_click.clip);
             Haenyeo.money -= goggles[my_goggle].next_upgrade_price;
-            PlayerPrefs.SetInt("PLAYER_GOGGLE", my_goggle + 1);
+            if (my_goggle == 0)
+            {
+                Haenyeo.coin_time = 7;
+            }
+            if (my_goggle == 1)
+            {
+                Haenyeo.coin_time = 6;
+            }
+            my_goggle++;
+            PlayerPrefs.SetInt("PLAYER_GOGGLE", my_goggle);
             init_equipment();
             scroll_up(1);
             Haenyeo_money.text = Haenyeo.money.ToString("N0");
-            for (int i = 0; i < goggles.Length; i++)
-            {
-                if (goggles.Length - 1 == i)
-                {
-
-                }
-                else if (my_goggle == i)
-                {
-                    //Haenyeo.diving_time += goggles[i].time_up;        -수민 잠시 주석처리 합니다
-
-                }
-            }
         }
+        data_save();
     }
 
 
@@ -483,26 +478,21 @@ public class equipment_upgrade : MonoBehaviour
         {
             upgrade_click.PlayOneShot(upgrade_click.clip);
             Haenyeo.money -= flippers[my_flipper].next_upgrade_price;
-            PlayerPrefs.SetInt("PLAYER_FLIPPER", my_flipper + 1);
+            if (my_flipper == 0)
+            {
+                Haenyeo.moving_speed = 8.4f;
+            }
+            if (my_flipper == 1)
+            {
+                Haenyeo.moving_speed = 9.8f;
+            }
+            my_flipper++;
+            PlayerPrefs.SetInt("PLAYER_FLIPPER", my_flipper);
             init_equipment();
             scroll_up(2);
             Haenyeo_money.text = Haenyeo.money.ToString("N0");
-            for (int i = 0; i < flippers.Length; i++)
-            {
-                if (flippers.Length - 1 == i)
-                {
-
-
-                }
-                else if (my_flipper == i)
-                {
-                    //Haenyeo.moving_speed *= (int)((flippers[i].speed_up * 0.01) + 1);
-                    // 스피드 변수가 int라서... 고민
-                    Haenyeo.moving_speed += 1;
-
-                }
-            }
         }
+        data_save();
     }
 
 
@@ -516,29 +506,29 @@ public class equipment_upgrade : MonoBehaviour
         //데이터 저장
 
         PlayerPrefs.SetInt("Haenyeo" + "_" + "money", Haenyeo.money);
-        PlayerPrefs.SetInt("Haenyeo_diving_time", Haenyeo.diving_time);
-        PlayerPrefs.SetInt("Haenyeo_moving_speed", Haenyeo.moving_speed);
         PlayerPrefs.SetInt("Haenyeo_level", Haenyeo.level);
         PlayerPrefs.SetInt("PLAYER_SUIT", my_suit);
         PlayerPrefs.SetInt("PLAYER_GOGGLE", my_goggle);
         PlayerPrefs.SetInt("PLAYER_FLIPPER", my_flipper);
 
+        PlayerPrefs.SetFloat("Haenyeo_moving_speed", Haenyeo.moving_speed);
+        PlayerPrefs.SetInt("Haenyeo_coin_time", Haenyeo.coin_time);
+        PlayerPrefs.SetFloat("Haenyeo_hp_ratio", Haenyeo.hp_ratio);
+
         PlayerPrefs.Save();
     }
 
-    public void data_load()
-    {
+    //public void data_load()
+    //{
 
-        Haenyeo.money = PlayerPrefs.GetInt("Haenyeo_money", 500000);
-        Haenyeo.debt = PlayerPrefs.GetInt("Haenyeo_debt", 10000000);
-        Haenyeo.diving_time = PlayerPrefs.GetInt("Haenyeo_diving_time", 60);
-        Haenyeo.moving_speed = PlayerPrefs.GetInt("Haenyeo_moving_speed", 5);
-        PlayerPrefs.SetInt("PLAYER_SUIT", my_suit);
-        PlayerPrefs.SetInt("PLAYER_GOGGLE", my_goggle);
-        PlayerPrefs.SetInt("PLAYER_FLIPPER", my_flipper);
+    //    Haenyeo.money = PlayerPrefs.GetInt("Haenyeo_money", 500000);
+    //    Haenyeo.debt = PlayerPrefs.GetInt("Haenyeo_debt", 10000000);
+    //    Haenyeo.moving_speed = PlayerPrefs.GetInt("Haenyeo_moving_speed", 5);
+    //    PlayerPrefs.SetInt("PLAYER_SUIT", my_suit);
+    //    PlayerPrefs.SetInt("PLAYER_GOGGLE", my_goggle);
+    //    PlayerPrefs.SetInt("PLAYER_FLIPPER", my_flipper);
 
-    }
-
+    //}
 }
 
 

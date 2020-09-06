@@ -56,7 +56,13 @@ public class farm_manager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //UnityEngine.Debug.Log("오리발 이동속도 : " + Haenyeo.moving_speed);
+        //UnityEngine.Debug.Log("해녀복 체력감소율 : " + Haenyeo.hp_ratio);
+        //UnityEngine.Debug.Log("물안경 코인간격 : " + Haenyeo.coin_time);
 
+        UnityEngine.Debug.Log("오리발 : " + equipment_upgrade.my_flipper + " 이동속도 : " + Haenyeo.moving_speed);
+        UnityEngine.Debug.Log("해녀복 : " + equipment_upgrade.my_suit + " 체력감소율 : " + Haenyeo.hp_ratio);
+        UnityEngine.Debug.Log("물안경 : " + equipment_upgrade.my_goggle + " 코인간격 : " + Haenyeo.coin_time);
 
         int isNew = PlayerPrefs.GetInt("isNew", 1);     //새로운거인지 확인
         if (isNew == 1)     //첫 시작이면 퀘스트 뜨게 함
@@ -749,6 +755,10 @@ public class farm_manager : MonoBehaviour
         PlayerPrefs.SetFloat("Haenyeo_hp", Haenyeo.hp);
         PlayerPrefs.SetString("lasttime", System.DateTime.Now.ToString());
 
+        PlayerPrefs.SetFloat("Haenyeo_moving_speed", Haenyeo.moving_speed);
+        PlayerPrefs.SetInt("Haenyeo_coin_time", Haenyeo.coin_time);
+        PlayerPrefs.SetFloat("Haenyeo_hp_ratio", Haenyeo.hp_ratio);
+
         if (is_repay_locked)
         {
             PlayerPrefs.SetInt("is_repay_locked", 1);
@@ -858,6 +868,10 @@ public class farm_manager : MonoBehaviour
             bgm_volume.value = PlayerPrefs.GetFloat("Bgm_volume", 1);
             effect_volume.value = PlayerPrefs.GetFloat("Effect_volume", 1);
 
+            Haenyeo.moving_speed = PlayerPrefs.GetFloat("Haenyeo_moving_speed", 7);
+            Haenyeo.coin_time = PlayerPrefs.GetInt("Haenyeo_coin_time", 8);
+            Haenyeo.hp_ratio = PlayerPrefs.GetFloat("Haenyeo_hp_ratio", 1);
+
 
             //해녀 보유한 자원 개수 초기화
 
@@ -883,7 +897,7 @@ public class farm_manager : MonoBehaviour
         }
         else
         {
-            Haenyeo.money = PlayerPrefs.GetInt("Haenyeo_money", 0);
+            Haenyeo.money = PlayerPrefs.GetInt("Haenyeo_money", 5000000); // 다해 : 돈 수정 !!! 0으로
             Haenyeo.debt = PlayerPrefs.GetInt("Haenyeo_debt", 5000000);
             Haenyeo.payed = PlayerPrefs.GetInt("Haenyeo_payed", 0);
             Haenyeo.interest = PlayerPrefs.GetInt("Haenyeo_interest", Haenyeo.interest);
@@ -895,6 +909,9 @@ public class farm_manager : MonoBehaviour
             bgm_volume.value = PlayerPrefs.GetFloat("Bgm_volume", 1);
             effect_volume.value = PlayerPrefs.GetFloat("Effect_volume", 1);
 
+            Haenyeo.moving_speed = PlayerPrefs.GetFloat("Haenyeo_moving_speed", 7);
+            Haenyeo.coin_time = PlayerPrefs.GetInt("Haenyeo_coin_time", 8);
+            Haenyeo.hp_ratio = PlayerPrefs.GetFloat("Haenyeo_hp_ratio", 1);
 
             //해녀 보유한 자원 개수 초기화
 
