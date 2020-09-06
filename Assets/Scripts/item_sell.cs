@@ -19,7 +19,10 @@ public class item_sell : MonoBehaviour
     public int temp_index, temp_num, temp_money;
     int if_no_wild = 0;
 
-
+    private void OnEnable()
+    {
+        item_UI();
+    }
     void Awake()
     {
         bgm.volume = PlayerPrefs.GetFloat("Bgm_volume", 1);
@@ -106,8 +109,6 @@ public class item_sell : MonoBehaviour
             {
                 if_no_wild++;
                 sea_items[i].gameObject.SetActive(true);
-                //sea_items[i].number_up_button.gameObject.SetActive(false);
-                //sea_items[i].number_down_button.gameObject.SetActive(false);
 
                 sea_items[i].sell_number = 0; // 팔 자원개수 0으로 초기화
                 sea_items[i].sell_price = sea_items[i].sell_number * sea_items[i].raw_price;

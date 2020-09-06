@@ -1159,7 +1159,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: sell_button_click
         m_Mode: 3
         m_Arguments:
@@ -1447,13 +1447,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: sell_button_click
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 8
+          m_IntArgument: 7
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1949,7 +1949,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD574 \uD30C \uB9AC"
+  m_Text: "\uC591\uC2DD \uD574\uD30C\uB9AC"
 --- !u!222 &85799361
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3690,7 +3690,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC804 \uBCF5"
+  m_Text: "\uC591\uC2DD \uC804\uBCF5"
 --- !u!222 &236023407
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4085,7 +4085,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC0C8 \uC6B0"
+  m_Text: "\uC591\uC2DD \uC0C8\uC6B0"
 --- !u!222 &253463148
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6285,7 +6285,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: sell_button_click
         m_Mode: 3
         m_Arguments:
@@ -9070,7 +9070,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC591 \uC2DD \uC870 \uAC1C"
+  m_Text: "\uC591\uC2DD \uC870\uAC1C"
 --- !u!222 &563238531
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10212,7 +10212,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uBB38 \uC5B4"
+  m_Text: "\uC591\uC2DD \uBB38\uC5B4"
 --- !u!222 &643761426
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11449,7 +11449,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: sell_button_click
         m_Mode: 3
         m_Arguments:
@@ -12751,7 +12751,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: number_up
         m_Mode: 3
         m_Arguments:
@@ -13411,7 +13411,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: number_down
         m_Mode: 3
         m_Arguments:
@@ -13686,7 +13686,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uBBF8 \uC5ED"
+  m_Text: "\uC591\uC2DD \uBBF8\uC5ED"
 --- !u!222 &897841531
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15541,7 +15541,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uBD88 \uAC00 \uC0AC \uB9AC\n"
+  m_Text: "\uC591\uC2DD \uBD88\uAC00\uC0AC\uB9AC"
 --- !u!222 &1049806940
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16771,7 +16771,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: number_down
         m_Mode: 3
         m_Arguments:
@@ -18253,7 +18253,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: number_down
         m_Mode: 3
         m_Arguments:
@@ -19387,7 +19387,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: number_up
         m_Mode: 3
         m_Arguments:
@@ -20422,7 +20422,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: number_down
         m_Mode: 3
         m_Arguments:
@@ -20543,7 +20543,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uAF43 \uAC8C"
+  m_Text: "\uC591\uC2DD \uAF43\uAC8C"
 --- !u!222 &1382402697
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20737,7 +20737,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: number_up
         m_Mode: 3
         m_Arguments:
@@ -21195,7 +21195,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: sell_button_click
         m_Mode: 3
         m_Arguments:
@@ -21327,7 +21327,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: number_up
         m_Mode: 3
         m_Arguments:
@@ -21459,7 +21459,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: number_up
         m_Mode: 3
         m_Arguments:
@@ -22276,7 +22276,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: number_down
         m_Mode: 3
         m_Arguments:
@@ -22487,7 +22487,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: number_down
         m_Mode: 3
         m_Arguments:
@@ -22619,7 +22619,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: number_down
         m_Mode: 3
         m_Arguments:
@@ -22845,7 +22845,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: number_down
         m_Mode: 3
         m_Arguments:
@@ -23886,7 +23886,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: number_down
         m_Mode: 3
         m_Arguments:
@@ -26586,7 +26586,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: sell_button_click
         m_Mode: 3
         m_Arguments:
@@ -27394,7 +27394,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: number_up
         m_Mode: 3
         m_Arguments:
@@ -27747,7 +27747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdac5182275b5564c9d42ceaa51fb045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sea_items:
+  farmed_items:
   - {fileID: 619958066}
   - {fileID: 602362455}
   - {fileID: 479876053}
@@ -27766,6 +27766,10 @@ MonoBehaviour:
   farmed_ui: {fileID: 1049519013}
   no_farmed: {fileID: 1459218833}
   return_ui: {fileID: 68409532}
+  plus_money: {fileID: 623976091}
+  temp_index: 0
+  temp_num: 0
+  temp_money: 0
 --- !u!1 &1822746621
 GameObject:
   m_ObjectHideFlags: 0
@@ -27847,7 +27851,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: number_up
         m_Mode: 3
         m_Arguments:
@@ -27980,7 +27984,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: sell_button_click
         m_Mode: 3
         m_Arguments:
@@ -28219,7 +28223,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uAC70 \uBD81 \uC774"
+  m_Text: "\uC591\uC2DD \uAC70\uBD81\uC774"
 --- !u!222 &1844181168
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -29734,7 +29738,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: sell_button_click
         m_Mode: 3
         m_Arguments:
@@ -30077,7 +30081,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: sell_button_click
         m_Mode: 3
         m_Arguments:
@@ -30446,7 +30450,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: number_up
         m_Mode: 3
         m_Arguments:
@@ -31055,7 +31059,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 581625442}
+      - m_Target: {fileID: 1812075176}
         m_MethodName: number_up
         m_Mode: 3
         m_Arguments:
