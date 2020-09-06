@@ -90,6 +90,10 @@ public class Haenyeo : MonoBehaviour
         {
             hp_bg.GetComponent<Image>().sprite = hp0;
         }
+        else if (hp < 0)
+        {
+            hp = 0;
+        }
     }
 
     void SetHP()
@@ -97,5 +101,6 @@ public class Haenyeo : MonoBehaviour
         
         
     }
+
 
 }

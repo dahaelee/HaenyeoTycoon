@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UI_manager : MonoBehaviour
 {
     public Image[] UIs;
+    public Text hp_minus;
     public static UIstate currentState = UIstate.None;
     
 
@@ -34,7 +35,7 @@ public class UI_manager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        hp_minus.gameObject.SetActive(false);
         //quest_list.gameObject.SetActive(false);
     }
 
@@ -78,5 +79,26 @@ public class UI_manager : MonoBehaviour
     {
         UIs[(int)index].gameObject.SetActive(false);
         // 여기선 current UI State를 어떻게 지정해야할지...?
+    }
+    public IEnumerator HPminus(int value)
+    {
+        Haenyeo.hp -= value;
+        hp_minus.text = "-" + value.ToString();
+        hp_minus.gameObject.SetActive(true);
+        Vector2 startPos = hp_minus.transform.localPosition;
+        Vector2 endPos = startPos + new Vector2(0, 40);
+        float LerpT = 0;
+        float speed = 3;
+
+        while (LerpT <= 1)
+        {
+            hp_minus.transform.position = Vector2.Lerp(startPos, endPos, LerpT);
+
+            LerpT += Time.deltaTime * speed;
+            yield return null;
+        }
+        yield return new WaitForSeconds(0.3f);
+        hp_minus.gameObject.SetActive(false);
+        hp_minus.transform.position = startPos;
     }
 }
