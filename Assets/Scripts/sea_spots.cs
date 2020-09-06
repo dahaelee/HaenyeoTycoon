@@ -38,7 +38,7 @@ public class sea_spots : MonoBehaviour
     void Update()
     {
         //움직이는 자원만 자원 종류에 따라 이동속도 다르게 초기화 
-        int speed = Haenyeo.moving_speed; 
+        float speed = Haenyeo.moving_speed; 
 
         if (this.gameObject.GetComponent<sea_item>().item_name == sea_item[3].name) //새우
         {
