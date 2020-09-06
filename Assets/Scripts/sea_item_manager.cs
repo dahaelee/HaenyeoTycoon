@@ -43,7 +43,8 @@ public class sea_item_manager : MonoBehaviour
         while (true)
         {
             creat_coin(clone_idx); // 코인 생성 함수 호출
-            coin_time = 3f; // 코인 리젠시간 (물안경 레벨에 따라 다르게 하기)
+
+            coin_time = Haenyeo.coin_time; // 물안경 레벨에 따라 코인 생성 시간 다르게 함
             yield return StartCoroutine(wait(coin_time)); //리젠시간만큼 대기 후 다시 루프 실행
             clone_idx++;
         }

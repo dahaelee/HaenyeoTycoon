@@ -22,7 +22,7 @@ public class sea_movement : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     {
         player_render.sprite = front_sprite; //해녀 이미지 정면으로 
         radius = rect_background.rect.width * 0.5f; //배경의 반지름
-        speed = (float)Haenyeo.moving_speed;
+        speed = Haenyeo.moving_speed;
         level = Haenyeo.level;
 
         min_bound1 = bound1.bounds.min;
