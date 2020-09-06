@@ -51,6 +51,12 @@ public class farm : MonoBehaviour
             PlayerPrefs.SetInt("farm" + farm_number + "_remaining_time", remaining_time);
         
     }
+    void Update()
+    {
+        if (is_money_on)
+        {
+        }
+    }
 
     //생성까지 시간 차감하며 기다리기
     public IEnumerator Wait_generating()
@@ -104,6 +110,7 @@ public class farm : MonoBehaviour
         //item2.gameObject.SetActive(false);
         //item3.gameObject.SetActive(false);
         this.money.gameObject.SetActive(true);
+        this.is_money_on = true;
         //farm.bubble_item.gameObject.SetActive(true);
     }
 
@@ -142,6 +149,7 @@ public class farm : MonoBehaviour
             item2.gameObject.SetActive(false);
             item3.gameObject.SetActive(false);
             this.money.gameObject.SetActive(true);
+            this.is_money_on = true;
             //farm.bubble_item.gameObject.SetActive(true);
         }
 
@@ -233,7 +241,7 @@ public class farm : MonoBehaviour
                 this.item1.sprite = Resources.Load<Sprite>(item.name);   //자원 이미지 바꾸기
                 this.item2.sprite = Resources.Load<Sprite>(item.name);   //자원 이미지 바꾸기
                 this.item3.sprite = Resources.Load<Sprite>(item.name);   //자원 이미지 바꾸기
-                //this.bubble_item.sprite = Resources.Load<Sprite>(item.name); // 버블에 뜨는 자원 이미지 바꾸기
+                this.money.sprite = Resources.Load<Sprite>(item.name); //양식 다된 버블안 이미지바뀜
                 if (time_interv.TotalSeconds > this.remaining_time)   //양식시간이 이미 지났는가?
                 {
                     this.remaining_time = 0;
