@@ -437,7 +437,8 @@ public class equipment_upgrade : MonoBehaviour
             {
                 Haenyeo.hp_ratio = 0.5f;
             }
-            PlayerPrefs.SetInt("PLAYER_SUIT", my_suit + 1);
+            my_suit++;
+            PlayerPrefs.SetInt("PLAYER_SUIT", my_suit);
             init_equipment();
             scroll_up(0);
             Haenyeo_money.text = Haenyeo.money.ToString("N0");
@@ -460,7 +461,8 @@ public class equipment_upgrade : MonoBehaviour
             {
                 Haenyeo.coin_time = 6;
             }
-            PlayerPrefs.SetInt("PLAYER_GOGGLE", my_goggle + 1);
+            my_goggle++;
+            PlayerPrefs.SetInt("PLAYER_GOGGLE", my_goggle);
             init_equipment();
             scroll_up(1);
             Haenyeo_money.text = Haenyeo.money.ToString("N0");
@@ -476,15 +478,16 @@ public class equipment_upgrade : MonoBehaviour
         {
             upgrade_click.PlayOneShot(upgrade_click.clip);
             Haenyeo.money -= flippers[my_flipper].next_upgrade_price;
-            if (my_goggle == 0)
+            if (my_flipper == 0)
             {
                 Haenyeo.moving_speed = 8.4f;
             }
-            if (my_goggle == 1)
+            if (my_flipper == 1)
             {
                 Haenyeo.moving_speed = 9.8f;
             }
-            PlayerPrefs.SetInt("PLAYER_FLIPPER", my_flipper + 1);
+            my_flipper++;
+            PlayerPrefs.SetInt("PLAYER_FLIPPER", my_flipper);
             init_equipment();
             scroll_up(2);
             Haenyeo_money.text = Haenyeo.money.ToString("N0");

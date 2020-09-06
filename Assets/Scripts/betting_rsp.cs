@@ -106,7 +106,7 @@ public class betting_rsp : MonoBehaviour
         {
             rsp_result = 2; // 이김
             seller_text.text = "이런~ 내가 졌구나. 기분이다! 다섯배로 쳐주마!";
-            win.PlayOneShot(win.clip);
+            //win.PlayOneShot(win.clip);
 
         }
     }
