@@ -3,23 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Diagnostics;
 
 public class start : MonoBehaviour
 {
-    public Image bg, seagall1, seagall2, seagall3, seagall4, seagall5;
+    public Image seagall1, seagall2, seagall3, seagall4, seagall5, start_button;
     public Text press_to_start;
-    public GameObject moving1, moving2;
+    public GameObject title, human, rock;
+    public GameObject[] cloud;
     public AudioSource bgm;
+
 
     void Start()
     {
-        bg.gameObject.SetActive(true);
+        StartCoroutine(Image_active());
+        start_button.gameObject.SetActive(false);
+        seagall1.gameObject.SetActive(false);
+        seagall2.gameObject.SetActive(false);
+        seagall3.gameObject.SetActive(false);
+        seagall4.gameObject.SetActive(false);
+        seagall5.gameObject.SetActive(false);
         press_to_start.gameObject.SetActive(false);
-        StartCoroutine("press");
-        StartCoroutine("seagall");
-        StartCoroutine(move(moving1));
-        StartCoroutine(move(moving2));
-        StartCoroutine(another_seagall());
+        title.gameObject.SetActive(false);
+        human.gameObject.SetActive(false);
+        rock.gameObject.SetActive(false);
+        cloud[0].gameObject.SetActive(false);
+        cloud[1].gameObject.SetActive(false);
+        cloud[2].gameObject.SetActive(false);
+
     }
 
     void Update()
@@ -29,8 +40,35 @@ public class start : MonoBehaviour
             Application.Quit();
         }
     }
+
+    IEnumerator Image_active()
+    {
+        yield return new WaitForSeconds(0.2f);
+        cloud[0].gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        cloud[1].gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        cloud[2].gameObject.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        rock.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.8f);
+        human.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.8f);
+        title.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.6f);
+        StartCoroutine(seagall());
+        StartCoroutine(another_seagall());
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(press());
+
+    }
+    IEnumerator start_game()
+    {
+        yield return new WaitForSeconds(1f);
+    }
     IEnumerator press()
     {
+        start_button.gameObject.SetActive(true);
         while (true)
         {
             yield return new WaitForSeconds(1f);
@@ -44,17 +82,15 @@ public class start : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             press_to_start.gameObject.SetActive(true);
             yield return new WaitForSeconds(5f);
-
-
-
         }
     }
+
 
     IEnumerator seagall()
     {
         while (true)
         {
-            
+
             seagall1.gameObject.SetActive(true);
             yield return new WaitForSeconds(1f);
             seagall1.gameObject.SetActive(false);
@@ -79,7 +115,7 @@ public class start : MonoBehaviour
             seagall2.gameObject.SetActive(true);
             yield return new WaitForSeconds(0.1f);
             seagall2.gameObject.SetActive(false);
-   
+
 
         }
     }
@@ -96,21 +132,21 @@ public class start : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
     }
-    
+
     IEnumerator move(GameObject posit)
     {
         float a = Random.Range(0, 100);
-        yield return new WaitForSeconds(a/100);
+        yield return new WaitForSeconds(a / 100);
         while (true)
         {
             for (int i = 0; i < 100; i++)
             {
-                posit.transform.localPosition = new Vector3(304, (float)(176+i*0.06+a/100), 0);
+                posit.transform.localPosition = new Vector3(304, (float)(176 + i * 0.06 + a / 100), 0);
                 yield return new WaitForSeconds(0.01f);
             }
             for (int i = 0; i < 100; i++)
             {
-                posit.transform.localPosition = new Vector3(304, (float)(182 - i * 0.06+a/100), 0);
+                posit.transform.localPosition = new Vector3(304, (float)(182 - i * 0.06 + a / 100), 0);
                 yield return new WaitForSeconds(0.01f);
             }
         }
@@ -118,7 +154,7 @@ public class start : MonoBehaviour
 
     public void next_scene()
     {
-        int isNew =PlayerPrefs.GetInt("isNew",1);
+        int isNew = PlayerPrefs.GetInt("isNew", 1);
         if (isNew == 0)     //처음이 아니면 바로 양식장 씬
         {
             SceneManager.LoadScene("farm");
