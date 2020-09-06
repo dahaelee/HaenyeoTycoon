@@ -77,18 +77,20 @@ public class store_home : MonoBehaviour
         StartCoroutine(UI_On(bubble_image, bubble_text));
     }
 
-    public static IEnumerator UI_On(Image image, Text text)
+    public IEnumerator UI_On(Image image, Text text)
     {
         yield return new WaitForSeconds(0.1f);
         image.gameObject.SetActive(true);
         text.gameObject.SetActive(true);
         for (int i = 0; i < 5; i++)
         {
-            image.rectTransform.localScale = new Vector3((float)(1.45 + i * 0.01), (float)(1.45 + i * 0.01), (float)(1.45 + i * 0.01));
+            image.rectTransform.localScale = new Vector3((float)(0.95 + i * 0.01), (float)(0.95 + i * 0.01), (float)(0.95 + i * 0.01));
             text.rectTransform.localScale = new Vector3((float)(0.95 + i * 0.01), (float)(0.95 + i * 0.01), (float)(0.95 + i * 0.01));
             yield return 0;
         }
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(1.5f);
+        image.gameObject.SetActive(false);
+        text.gameObject.SetActive(false);
     }
 
     public void data_save()
