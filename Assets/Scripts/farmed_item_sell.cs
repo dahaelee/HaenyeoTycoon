@@ -12,15 +12,15 @@ public class farmed_item_sell : MonoBehaviour
     //사운드 이펙트
     public AudioSource bgm, sell_click, updown_click;
 
-    public GameObject sell_ui, wild_ui, farmed_ui;
+    public GameObject sell_ui, wild_ui, farmed_ui, no_farmed, return_ui;
     //public int temp_index, temp_num, temp_money;
-
+    int if_no_farmed = 0;
     private void Awake()
     {
         bgm.volume = PlayerPrefs.GetFloat("Bgm_volume", 1);
         sell_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
         updown_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
-
+        if_no_farmed = 0;
         data_load();
         item_noshow();
         item_UI();
@@ -29,7 +29,9 @@ public class farmed_item_sell : MonoBehaviour
     public void return_to_home()
     {
         data_save();
-        sell_ui.gameObject.SetActive(false);
+        return_ui.SetActive(false);
+        farmed_ui.gameObject.SetActive(false);
+        wild_ui.gameObject.SetActive(false);
     }
 
     public void tab_change()
@@ -51,6 +53,7 @@ public class farmed_item_sell : MonoBehaviour
         {
             if (Haenyeo.farm_item_number[i] > 0)
             {
+                if_no_farmed++;
                 sea_items[i].gameObject.SetActive(true);
                 //sea_items[i].number_up_button.gameObject.SetActive(false);
                 //sea_items[i].number_down_button.gameObject.SetActive(false);
@@ -66,6 +69,10 @@ public class farmed_item_sell : MonoBehaviour
                 up(i);
                 down(i);
             }
+        }
+        if (if_no_farmed == 0)
+        {
+            no_farmed.gameObject.SetActive(true);
         }
     }
 
@@ -176,15 +183,15 @@ public class farmed_item_sell : MonoBehaviour
 
         //해녀 보유한 자원 개수 초기화
 
-        Haenyeo.farm_item_number[0] = PlayerPrefs.GetInt("Haenyeo_farm_item_number0", 10);
-        Haenyeo.farm_item_number[1] = PlayerPrefs.GetInt("Haenyeo_farm_item_number1", 10);
-        Haenyeo.farm_item_number[2] = PlayerPrefs.GetInt("Haenyeo_farm_item_number2", 10);
-        Haenyeo.farm_item_number[3] = PlayerPrefs.GetInt("Haenyeo_farm_item_number3", 10);
-        Haenyeo.farm_item_number[4] = PlayerPrefs.GetInt("Haenyeo_farm_item_number4", 10);
-        Haenyeo.farm_item_number[5] = PlayerPrefs.GetInt("Haenyeo_farm_item_number5", 10);
-        Haenyeo.farm_item_number[6] = PlayerPrefs.GetInt("Haenyeo_farm_item_number6", 10);
-        Haenyeo.farm_item_number[7] = PlayerPrefs.GetInt("Haenyeo_farm_item_number7", 10);
-        Haenyeo.farm_item_number[8] = PlayerPrefs.GetInt("Haenyeo_farm_item_number8", 10);
+        Haenyeo.farm_item_number[0] = PlayerPrefs.GetInt("Haenyeo_farm_item_number0", 0);
+        Haenyeo.farm_item_number[1] = PlayerPrefs.GetInt("Haenyeo_farm_item_number1", 0);
+        Haenyeo.farm_item_number[2] = PlayerPrefs.GetInt("Haenyeo_farm_item_number2", 0);
+        Haenyeo.farm_item_number[3] = PlayerPrefs.GetInt("Haenyeo_farm_item_number3", 0);
+        Haenyeo.farm_item_number[4] = PlayerPrefs.GetInt("Haenyeo_farm_item_number4", 0);
+        Haenyeo.farm_item_number[5] = PlayerPrefs.GetInt("Haenyeo_farm_item_number5", 0);
+        Haenyeo.farm_item_number[6] = PlayerPrefs.GetInt("Haenyeo_farm_item_number6", 0);
+        Haenyeo.farm_item_number[7] = PlayerPrefs.GetInt("Haenyeo_farm_item_number7", 0);
+        Haenyeo.farm_item_number[8] = PlayerPrefs.GetInt("Haenyeo_farm_item_number8", 0);
 
     }
 }
