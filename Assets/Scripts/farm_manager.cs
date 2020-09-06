@@ -431,7 +431,11 @@ public class farm_manager : MonoBehaviour
             {
                 Haenyeo.debt = 0;
             }
+            PlayerPrefs.SetInt("questReady", 1);
+
             Haenyeo.day++;
+            Haenyeo.hp = 100;
+            Haenyeo.todayState = Haenyeo.TodayState.day;
             is_repay_locked = true;
             is_sea_locked = false;      //바다 아이콘 활성화
             PlayerPrefs.SetInt("is_repay_locked", 1);
@@ -473,9 +477,13 @@ public class farm_manager : MonoBehaviour
     //최소송금액보다 부족할 경우에 이자늘어남과 함께 송금되는 함수
     public void repay_interest()
     {
+        PlayerPrefs.SetInt("questReady", 1);
+
         debt_sending.PlayOneShot(debt_sending.clip);
         Haenyeo.money -= sending_int;
         Haenyeo.day++;
+        Haenyeo.hp = 100;
+        Haenyeo.todayState = Haenyeo.TodayState.day;
         Haenyeo.debt -= sending_int;
         Haenyeo.payed += sending_int;
         if (Haenyeo.debt <= 0)

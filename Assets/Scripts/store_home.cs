@@ -18,6 +18,17 @@ public class store_home : MonoBehaviour
     //    upgrade_tab.SetActive(false);
     //    sell_tab.SetActive(true);
     //}
+
+    void Start()
+    {
+        int storeNew = PlayerPrefs.GetInt("storeNew", 1);
+        if (storeNew == 1)
+        {
+            quest_Data.tutorial_quest_list[3].state = -1;
+            PlayerPrefs.SetInt("storeNew", 0);
+        }
+    }
+
     public void buy_panel_click()
     {
         buy_tab.SetActive(true);

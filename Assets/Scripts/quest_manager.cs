@@ -14,7 +14,7 @@ public class quest_manager : MonoBehaviour
     public Text summary_text, type_text;
     public Image touch_x,touch;
     public Image[] quest_states;
-    public Button finish_active, finish_inactive;
+    public Button finish_active, finish_inactive,reward_active,reward_inactive;
 
     //퀘스트 popup 관련 오브젝트
     public GameObject popup;
@@ -31,7 +31,7 @@ public class quest_manager : MonoBehaviour
     {
         string tutorial_quest_load = PlayerPrefs.GetString("tutorial_quest", "new");
         string daily_quest_load = PlayerPrefs.GetString("daily_quest", "new");
-        
+
         if (!tutorial_quest_load.Equals("new"))
         {
             quest_Data.tutorial_quest_list = JsonUtility.FromJson<Tutorial_Serialization>(tutorial_quest_load).toList();
@@ -42,7 +42,9 @@ public class quest_manager : MonoBehaviour
 
     void Update()
     {
-        //give_daily_quest(); //일일 퀘스트 제공
+        int questReady = PlayerPrefs.GetInt("questReady", 1);
+        if(questReady==1)   give_daily_quest(); //일일 퀘스트 제공
+        daily_quest_check();
     }
 
     //퀘스트 목록 업데이트 
@@ -67,7 +69,7 @@ public class quest_manager : MonoBehaviour
 
             if (data.state != -1)   //퀘스트 목록에 추가할 퀘스트라면
             {
-                for (int j = 0; j < 3; j++) quest_states[i].gameObject.SetActive(false);
+                for (int j = 0; j < 3; j++) quest_states[j].gameObject.SetActive(false);
                 finish_inactive.gameObject.SetActive(false);
                 finish_active.gameObject.SetActive(false);
                 touch.gameObject.SetActive(false);
@@ -95,7 +97,7 @@ public class quest_manager : MonoBehaviour
                     new_exist.SetActive(true);
                     StartCoroutine("quest_icon_effect");
                 }
-                for (int j = 0; j < 3; j++) quest_states[i].gameObject.SetActive(false);
+                for (int j = 0; j < 3; j++) quest_states[j].gameObject.SetActive(false);
                 finish_inactive.gameObject.SetActive(false);
                 finish_active.gameObject.SetActive(false);
                 touch_x.gameObject.SetActive(false);
@@ -127,7 +129,7 @@ public class quest_manager : MonoBehaviour
     //퀘스트 목록에서 클릭했을 시
     public void quest_popup_open()
     {
-        //클릭한 오브젝트 찾아서 key 찾기
+        //클릭한 오브젝트 찾아서 idx 찾기
         string content_name = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject.name;
         int idx = Int32.Parse(content_name);
 
@@ -135,11 +137,18 @@ public class quest_manager : MonoBehaviour
         for (int i = 0; i < 3; i++) persons[i].SetActive(false);
         persons[data.person].SetActive(true);
         text.text = data.text; todo_text.text = data.todo; reward_text.text = data.reward;
-
+        
         //state변경 및 content update
-        quest_Data.daily_quest_list[idx].state = 1;
+        if(quest_Data.daily_quest_list[idx].state == 0 )quest_Data.daily_quest_list[idx].state = 1;
         quest_contents_update();
 
+        //reward button 활성화
+        reward_active.gameObject.SetActive(false);
+        reward_inactive.gameObject.SetActive(false);
+        if (quest_Data.daily_quest_list[idx].state == 2) reward_active.gameObject.SetActive(true);
+        else reward_inactive.gameObject.SetActive(true);
+
+        popup.name = idx.ToString();
         popup.SetActive(true);
     }
 
@@ -150,11 +159,67 @@ public class quest_manager : MonoBehaviour
 
     //일일 퀘스트 제공
     public void give_daily_quest()
-    {  
-         Daily_quest_form day_quest = new Daily_quest_form(1,"2","3",1,"2","3","1");        //임시, 수정
-         show_quest_box(day_quest); // 화면 어두워지고 텍스트창 뜨기
-         
+    {
+        PlayerPrefs.SetInt("questReady", 0);
+        switch (Haenyeo.day)
+        {
+            case 2:
+                quest_Data.daily_quest_list[0].state = 0;
+                show_quest_box(quest_Data.daily_quest_list[0]);
+                break;
+            case 3:
+                quest_Data.daily_quest_list[1].state = 0;
+                show_quest_box(quest_Data.daily_quest_list[1]);
+                break;
+            case 4:
+                quest_Data.daily_quest_list[2].state = 0;
+                show_quest_box(quest_Data.daily_quest_list[2]);
+                break;
+        }         
          quest_contents_update();
+    }
+
+    //일일 퀘스트 체크
+    public void daily_quest_check()
+    {
+        //todo 실시간 반영
+        quest_Data.daily_quest_list[0].todo = $"조개  {Haenyeo.sea_item_number[0]}/5";
+        quest_Data.daily_quest_list[1].todo = $"양식 미역  {Haenyeo.farm_item_number[1]}/3";
+        quest_Data.daily_quest_list[2].todo = $"새우 {Haenyeo.sea_item_number[3]}/2  꽃게  {Haenyeo.sea_item_number[5]}/1";
+
+        //퀘스트 완료 체크
+        if (quest_Data.daily_quest_list[0].state != -1 && Haenyeo.sea_item_number[0] >= 5) quest_Data.daily_quest_list[0].state = 2;
+        if (quest_Data.daily_quest_list[1].state != -1 && Haenyeo.farm_item_number[1] >= 3) quest_Data.daily_quest_list[1].state = 2;
+        if (quest_Data.daily_quest_list[2].state != -1 && Haenyeo.sea_item_number[3] >= 2 && Haenyeo.sea_item_number[5] >= 1) quest_Data.daily_quest_list[2].state = 2;
+    }
+
+    public void clicked_reward_button()
+    {
+        //클릭한 오브젝트 찾아서 idx 찾기
+        string content_name = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject.name;
+        int idx = Int32.Parse(content_name);
+        quest_Data.daily_quest_list[idx].state = -1;
+
+        //퀘스트에 따른 보상
+        switch (idx)
+        {
+            case 0:
+                Haenyeo.sea_item_number[0] -= 5;
+                Haenyeo.money += 50000;
+                break;
+            case 1:
+                Haenyeo.farm_item_number[1] -= 3;
+                Haenyeo.money += 80000;
+                break;
+            case 2:
+                Haenyeo.farm_item_number[3] -= 2;
+                Haenyeo.farm_item_number[5] -= 1;
+                Haenyeo.money += 100000;
+                break;
+        }
+        quest_Data.daily_quest_list[idx].state = -1;
+        popup.SetActive(false);
+        quest_contents_update();
     }
 
     //화면 어두워지면서 퀘스트 주는 거
