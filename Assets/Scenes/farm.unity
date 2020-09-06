@@ -1070,7 +1070,7 @@ GameObject:
   - component: {fileID: 51028252}
   - component: {fileID: 51028253}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: quest_Data
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
