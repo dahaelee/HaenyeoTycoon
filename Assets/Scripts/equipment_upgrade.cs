@@ -38,7 +38,7 @@ public class equipment_upgrade : MonoBehaviour
     public GameObject flipper_enable_button;   // 오리발 활성화 버튼
     public GameObject flipper_disable_button;  // 오리발 비활성화 버튼
 
-    public GameObject buy_ui;
+    public GameObject buy_ui, equip_ui, item_ui, return_ui;
 
     // 해녀가 장착하고 있는 장비
     public static int my_suit = 0;
@@ -51,12 +51,21 @@ public class equipment_upgrade : MonoBehaviour
     public void return_to_home()
     {
         data_save();
-        buy_ui.gameObject.SetActive(false);
+        return_ui.SetActive(false);
+        equip_ui.gameObject.SetActive(false);
+        item_ui.gameObject.SetActive(false);
     }
 
     public void tab_change()
     {
+        equip_ui.gameObject.SetActive(false);
+        item_ui.gameObject.SetActive(true);
+    }
 
+    public void tab_change_temp()
+    {
+        item_ui.gameObject.SetActive(false);
+        equip_ui.gameObject.SetActive(true);
     }
 
     void Update()
