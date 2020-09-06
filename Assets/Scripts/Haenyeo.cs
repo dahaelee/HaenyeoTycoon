@@ -10,7 +10,7 @@ using System.Runtime.Versioning;
 
 public class Haenyeo : MonoBehaviour
 {
-    public static int money, debt, farm_number, day, level, payed, coin_time;
+    public static int money, debt, diving_time, moving_speed, farm_number, day, level, payed, interest, coin_time; 
     public static float hp, moving_speed, hp_ratio;
     public static TodayState todayState = TodayState.day;
     public static int[] sea_item_number = new int[9]; //보유하고있는 자원 개수
@@ -65,6 +65,11 @@ public class Haenyeo : MonoBehaviour
     }
     void Update()
     {
+        if (hp <= 0)
+        {
+            hp = 0;
+        }
+
         hp_text.GetComponent<Text>().text = Mathf.CeilToInt(hp).ToString(); // 체력 소수점 부분 버림
         if (hp >= 90)
         {
@@ -89,10 +94,6 @@ public class Haenyeo : MonoBehaviour
         else if (hp < 10)
         {
             hp_bg.GetComponent<Image>().sprite = hp0;
-        }
-        else if (hp < 0)
-        {
-            hp = 0;
         }
     }
 
