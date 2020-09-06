@@ -432,6 +432,7 @@ public class farm_manager : MonoBehaviour
                 Haenyeo.debt = 0;
             }
             Haenyeo.day++;
+            Haenyeo.hp = 100;
             is_repay_locked = true;
             is_sea_locked = false;      //바다 아이콘 활성화
             PlayerPrefs.SetInt("is_repay_locked", 1);
