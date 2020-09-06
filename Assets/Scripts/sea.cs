@@ -171,8 +171,6 @@ public class sea : MonoBehaviour
         farm_manager.is_sea_locked = true;
         PlayerPrefs.SetInt("is_repay_locked", 0);
         PlayerPrefs.Save();
-        Debug.Log(PlayerPrefs.GetInt("is_sea_locked",1234));
-        Debug.Log(PlayerPrefs.GetInt("is_repay_locked", 1234));
         load_farm(); //양식장으로 이동
     }
 
