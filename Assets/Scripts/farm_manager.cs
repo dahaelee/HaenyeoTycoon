@@ -117,7 +117,23 @@ public class farm_manager : MonoBehaviour
         int item_num = farms[index].item.number;
         Haenyeo.farm_item_number[item_num]++;
         //양식장 비우기
+        StartCoroutine(farming_effect(index));
+
+    }
+
+    //버블 커지는 효과
+    public IEnumerator farming_effect(int index)
+    {
+        farms[index].money.transform.GetChild(0).transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        Vector3  d = farms[index].money.transform.GetChild(0).transform.localScale;
+        for (int i=0; i<10; i++)
+        {
+            d = new Vector3(d.x * 1.02f, d.y * 1.02f, d.z * 1.02f);
+            farms[index].money.transform.GetChild(0).transform.localScale = d;
+            yield return new WaitForSeconds(0.02f);
+        }
         farms[index].farmReset();
+        farms[index].money.transform.GetChild(0).transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
 
     }
 
@@ -168,7 +184,7 @@ public class farm_manager : MonoBehaviour
 
             farms[farm_index].isFarming = true;    //양식 시작한걸로 하기
             Haenyeo.sea_item_number[item_index] -= 1;   //자원 1개 차감 
-            Haenyeo.hp -= 1f;       //체력 1 줄어들기
+            StartCoroutine(UI_manager.HPminus(1));      //체력 -1 이펙트
             farms[farm_index].plus.gameObject.SetActive(false); //플러스 표시 빼기
 
             farms[farm_index].item = sea_item[item_index].GetComponent<sea_item>();    //양식장에 자원 넣기
@@ -179,7 +195,7 @@ public class farm_manager : MonoBehaviour
             farms[farm_index].item1.GetComponent<Animator>().runtimeAnimatorController = farmable_items[item_index].GetComponent<sea_item>().anim.runtimeAnimatorController;    //자원 애니메이터 넣기
             farms[farm_index].item2.GetComponent<Animator>().runtimeAnimatorController = farmable_items[item_index].GetComponent<sea_item>().anim.runtimeAnimatorController;    //자원 애니메이터 넣기
             farms[farm_index].item3.GetComponent<Animator>().runtimeAnimatorController = farmable_items[item_index].GetComponent<sea_item>().anim.runtimeAnimatorController;    //자원 애니메이터 넣기
-            //farms[farm_index].bubble_item.sprite = = Resources.Load<Sprite>(sea_item[item_index].name);
+            farms[farm_index].money.sprite = Resources.Load<Sprite>(sea_item[item_index].name); //버블 속 자원 아이템 이미지 바꾸기
 
             farms[farm_index].item1.gameObject.SetActive(true);
             farms[farm_index].item2.gameObject.SetActive(false);
