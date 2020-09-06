@@ -20,7 +20,9 @@ public class betting_rsp : MonoBehaviour
     public string[] rsp_text;
     public Text seller_text;
     public Image bubble_seller;
-    
+
+    public AudioSource bgm, win, lose;
+
     public void initial_rsp()
     {
         result_mask.SetActive(false);
@@ -98,11 +100,13 @@ public class betting_rsp : MonoBehaviour
         {
             rsp_result = 1; // 짐
             seller_text.text = "아이고~ 어쩌니. 아저씨가 이겨버렸네. 내기는 내기니까, 반값으로 잘 받아가마 해녀야~";
+            lose.PlayOneShot(lose.clip);
         }
         else
         {
             rsp_result = 2; // 이김
             seller_text.text = "이런~ 내가 졌구나. 기분이다! 다섯배로 쳐주마!";
+            win.PlayOneShot(win.clip);
 
         }
     }
@@ -143,6 +147,8 @@ public class betting_rsp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        win.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+        lose.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
         rsp_talk();
         initial_rsp();
         result_mask.SetActive(false);
