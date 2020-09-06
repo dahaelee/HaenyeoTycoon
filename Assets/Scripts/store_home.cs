@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class store_home : MonoBehaviour
 {
     //public Button change_to_upgrade, change_to_sell;
-    public GameObject sell_tab, buy_tab;
 
     //public void upgrade_tab_click()
     //{
