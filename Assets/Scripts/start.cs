@@ -30,6 +30,7 @@ public class start : MonoBehaviour
         cloud[0].gameObject.SetActive(false);
         cloud[1].gameObject.SetActive(false);
         cloud[2].gameObject.SetActive(false);
+        cloud[3].gameObject.SetActive(false);
 
     }
 
@@ -49,17 +50,23 @@ public class start : MonoBehaviour
         cloud[1].gameObject.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         cloud[2].gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        cloud[3].gameObject.SetActive(true);
         yield return new WaitForSeconds(1f);
         rock.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.8f);
         human.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.8f);
         title.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.6f);
+
+        yield return new WaitForSeconds(0.8f);
         StartCoroutine(seagall());
         StartCoroutine(another_seagall());
-        yield return new WaitForSeconds(1f);
+
+        yield return new WaitForSeconds(0.8f);
         StartCoroutine(press());
+
+        
 
     }
     IEnumerator start_game()
@@ -71,7 +78,6 @@ public class start : MonoBehaviour
         start_button.gameObject.SetActive(true);
         while (true)
         {
-            yield return new WaitForSeconds(1f);
             press_to_start.gameObject.SetActive(true);
             yield return new WaitForSeconds(0.1f);
             press_to_start.gameObject.SetActive(false);
