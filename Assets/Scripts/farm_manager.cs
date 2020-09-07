@@ -56,14 +56,6 @@ public class farm_manager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //UnityEngine.Debug.Log("오리발 이동속도 : " + Haenyeo.moving_speed);
-        //UnityEngine.Debug.Log("해녀복 체력감소율 : " + Haenyeo.hp_ratio);
-        //UnityEngine.Debug.Log("물안경 코인간격 : " + Haenyeo.coin_time);
-
-        UnityEngine.Debug.Log("오리발 : " + equipment_upgrade.my_flipper + " 이동속도 : " + Haenyeo.moving_speed);
-        UnityEngine.Debug.Log("해녀복 : " + equipment_upgrade.my_suit + " 체력감소율 : " + Haenyeo.hp_ratio);
-        UnityEngine.Debug.Log("물안경 : " + equipment_upgrade.my_goggle + " 코인간격 : " + Haenyeo.coin_time);
-
         int isNew = PlayerPrefs.GetInt("isNew", 1);     //새로운거인지 확인
         if (isNew == 1)     //첫 시작이면 퀘스트 뜨게 함
         {
@@ -749,7 +741,6 @@ public class farm_manager : MonoBehaviour
         PlayerPrefs.SetInt("Haenyeo_payed", Haenyeo.payed);
         PlayerPrefs.SetInt("Haenyeo_interest", Haenyeo.interest);
         PlayerPrefs.SetInt("Haenyeo_diving_time", Haenyeo.diving_time);
-        PlayerPrefs.SetInt("Haenyeo_moving_speed", Haenyeo.moving_speed);
         PlayerPrefs.SetInt("Haenyeo_day", Haenyeo.day);
         PlayerPrefs.SetInt("Haenyeo_level", Haenyeo.level);
         PlayerPrefs.SetFloat("Haenyeo_hp", Haenyeo.hp);
@@ -861,7 +852,6 @@ public class farm_manager : MonoBehaviour
             Haenyeo.payed = PlayerPrefs.GetInt("Haenyeo_payed", 0);
             Haenyeo.interest = PlayerPrefs.GetInt("Haenyeo_interest", Haenyeo.interest);
             Haenyeo.diving_time = PlayerPrefs.GetInt("Haenyeo_diving_time", 70);
-            Haenyeo.moving_speed = PlayerPrefs.GetInt("Haenyeo_moving_speed", 7);
             Haenyeo.day = PlayerPrefs.GetInt("Haenyeo_day", 1);
             Haenyeo.level = PlayerPrefs.GetInt("Haenyeo_level", 2);
             Haenyeo.hp = PlayerPrefs.GetFloat("Haenyeo_hp", 100);
@@ -897,12 +887,11 @@ public class farm_manager : MonoBehaviour
         }
         else
         {
-            Haenyeo.money = PlayerPrefs.GetInt("Haenyeo_money", 5000000); // 다해 : 돈 수정 !!! 0으로
+            Haenyeo.money = PlayerPrefs.GetInt("Haenyeo_money", 0); 
             Haenyeo.debt = PlayerPrefs.GetInt("Haenyeo_debt", 5000000);
             Haenyeo.payed = PlayerPrefs.GetInt("Haenyeo_payed", 0);
             Haenyeo.interest = PlayerPrefs.GetInt("Haenyeo_interest", Haenyeo.interest);
             Haenyeo.diving_time = PlayerPrefs.GetInt("Haenyeo_diving_time", 60);
-            Haenyeo.moving_speed = PlayerPrefs.GetInt("Haenyeo_moving_speed", 7);
             Haenyeo.day = PlayerPrefs.GetInt("Haenyeo_day", 1);
             Haenyeo.level = PlayerPrefs.GetInt("Haenyeo_level", 3); // 다해 : 바다 다 열려고 레벨 3으로 설정 해놨음
             Haenyeo.hp = PlayerPrefs.GetFloat("Haenyeo_hp", 100);

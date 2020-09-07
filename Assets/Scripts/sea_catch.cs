@@ -13,7 +13,7 @@ public class sea_catch : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public float catch_min, catch_max, speed;
     public bool catchable;
     public int difficulty, idx; //채집할 자원의 인덱스
-    public AudioSource item_catch, item_fail;
+    public AudioSource item_catch, item_fail, ink_1, ink_2;
 
     void Start()
     {
@@ -40,6 +40,8 @@ public class sea_catch : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         component = obj.GetComponent<sea>();
         item_catch.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
         item_fail.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+        ink_1.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+        ink_2.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
     }
 
     void Update()
@@ -256,6 +258,7 @@ public class sea_catch : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         // 먹물 작은 거 두개 커지면서 튀기기
         for (int i = 0; i < 2; i++)
         {
+            ink_1.PlayOneShot(ink_1.clip);
             time = 0f;
             inks[i].gameObject.SetActive(true);
             while (inks[i].transform.localScale.x < 50f)
@@ -265,10 +268,11 @@ public class sea_catch : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 inks[i].transform.localScale = new Vector3(scale, scale, 1);
                 yield return null;
             }
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.15f);
         }
 
         // 먹물 큰 거 한개 커지면서 튀기기
+        ink_2.PlayOneShot(ink_2.clip);
         time = 0f;
         ink3.gameObject.SetActive(true);
         while (ink3.transform.localScale.x < 100f)

@@ -7,7 +7,7 @@ public class sea_movement : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 {
     public RectTransform rect_background, rect_joystick, rect_screen;
     public float radius, speed, distance, clamped_1, clamped_2, clamped_3, clamped_length;
-    public GameObject player;
+    public GameObject player, block_touch;
     public Vector3 move_position; //이동 좌표
     public Vector2 value;
     public Camera cam;
@@ -40,7 +40,8 @@ public class sea_movement : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     void Update()
     {
-        keyboard_move(); // 키보드로 움직이기 위한 함수
+        if(!block_touch.activeSelf)
+            keyboard_move(); // 키보드로 움직이기 위한 함수
 
         player.GetComponent<Rigidbody2D>().AddForce(move_position * 100);
 
