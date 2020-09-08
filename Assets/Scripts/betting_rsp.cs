@@ -21,7 +21,13 @@ public class betting_rsp : MonoBehaviour
     public Text seller_text;
     public Image bubble_seller;
 
-    public AudioSource bgm, win, lose;
+    public AudioSource win, lose;
+
+    public void Awake()
+    {
+        win.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+        lose.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+    }
 
     public void initial_rsp()
     {
@@ -63,7 +69,7 @@ public class betting_rsp : MonoBehaviour
         text.gameObject.SetActive(true);
         for (int i = 0; i < 5; i++)
         {
-            image.rectTransform.localScale = new Vector3((float)(1.45 + i * 0.01), (float)(1.45 + i * 0.01), (float)(1.45 + i * 0.01));
+            image.rectTransform.localScale = new Vector3((float)(1.30 + i * 0.01), (float)(1.30 + i * 0.01), (float)(1.30 + i * 0.01));
             text.rectTransform.localScale = new Vector3((float)(0.95 + i * 0.01), (float)(0.95 + i * 0.01), (float)(0.95 + i * 0.01));
             yield return 0;
         }
@@ -106,7 +112,7 @@ public class betting_rsp : MonoBehaviour
         {
             rsp_result = 2; // 이김
             seller_text.text = "이런~ 내가 졌구나. 기분이다! 다섯배로 쳐주마!";
-            //win.PlayOneShot(win.clip);
+            win.PlayOneShot(win.clip);
 
         }
     }
@@ -147,8 +153,8 @@ public class betting_rsp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        win.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
-        lose.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+        //win.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+        //lose.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
         rsp_talk();
         initial_rsp();
         result_mask.SetActive(false);
