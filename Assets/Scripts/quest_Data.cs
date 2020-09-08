@@ -73,13 +73,28 @@ public class quest_Data : MonoBehaviour
     [SerializeField] public static List<Tutorial_quest_form> tutorial_quest_list = new List<Tutorial_quest_form>();  //튜토리얼 퀘스트 리스트
     [SerializeField] public static List<Daily_quest_form> daily_quest_list = new List<Daily_quest_form>();  //일일 퀘스트 리스트
 
+    //빚 관련
+    public enum quest_debt
+    {
+        debt1=500000,
+        debt2=2000000,
+        debt3=5000000
+    }
+
+    public enum quest_endDay
+    {
+        endDay1=5,
+        endDay2=10,
+        endDay3=15
+    }
+
     public void newStart()
     {
         tutorial_quest_list.Clear();
         daily_quest_list.Clear();
 
         //튜토리얼 퀘스트 추가
-        tutorial_quest_list.Add(new Tutorial_quest_form(-1, "사채업자의 빚재촉", "5일동안 50만원 갚기"));  
+        tutorial_quest_list.Add(new Tutorial_quest_form(-1, "사채업자의 빚재촉", "5일동안 최소 50만원 이상 상환하기"));  
         tutorial_quest_list.Add(new Tutorial_quest_form(-1, "아빠의 가르침", "바다에서 자원 1개 이상 채집하기"));
         tutorial_quest_list.Add(new Tutorial_quest_form(-1, "아빠의 가르침", "자원 양식하기"));
         tutorial_quest_list.Add(new Tutorial_quest_form(-1, "아빠의 가르침", "상점 방문하기"));

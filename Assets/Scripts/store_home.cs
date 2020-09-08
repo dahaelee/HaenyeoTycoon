@@ -7,26 +7,59 @@ public class store_home : MonoBehaviour
 {
     void Start()
     {
-        int storeNew = PlayerPrefs.GetInt("storeNew", 1);
+        int storeNew = PlayerPrefs.GetInt("storeNew", 0);
         if (storeNew == 1)
         {
             quest_Data.tutorial_quest_list[3].state = -1;
             PlayerPrefs.SetInt("storeNew", 0);
+
+            //간단 상점 튜토
+            tuto_text = new string[]
+                {
+                    "오~ 너가 해녀로구나",
+                    "여기는 물건을 파고 살 수 있는 상점이란다!!",
+                    "재밌는 물건이 많으니 어서 둘러보렴",
+                    "특히 자연산 자원을 팔 때는 나와 내기를 할 수 있단다 허허!",
+                    "그럼~ 앞으로 잘 부탁한다 해녀야!!"
+                };
+            bg.SetActive(true);
+            bubble_image.gameObject.SetActive(true);
+            bubble_text.gameObject.SetActive(true);
+            bubble_text.text = tuto_text[0];
+            step = 1;
         }
     }
 
-    public GameObject sell_tab, buy_tab,return_from_buy, return_from_sell;
+    public void tuto_click()
+    {
+        if (step != 0)
+        {
+            if (step >= tuto_text.Length)
+            {
+                bg.SetActive(false);
+                bubble_image.gameObject.SetActive(false);
+                bubble_text.gameObject.SetActive(false);
+                step = 0;
+                return;
+            }
+            bubble_text.text = tuto_text[step];
+            step++;
+        }
+    }
+
+    public GameObject sell_tab, buy_tab,return_from_buy, return_from_sell, bg;
     public int rand_text = -1;
-    public string[] seller_text;
+    public string[] seller_text,tuto_text;
     public Text bubble_text;
     public Image bubble_image;
     public AudioSource bgm;
     public AudioSource seller_rand;
     public AudioClip[] seller_sound;
+    public static int step;
 
     public void Awake()
     {
-        bgm.volume = PlayerPrefs.GetFloat("Bgm_volume", 1);
+        //bgm.volume = PlayerPrefs.GetFloat("Bgm_volume", 1);
         //seller_temp.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
         //seller_rand = GetComponent<AudioSource>();
         //seller_rand.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
