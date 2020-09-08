@@ -5,19 +5,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class store_home : MonoBehaviour
 {
-    //public Button change_to_upgrade, change_to_sell;
-
-    //public void upgrade_tab_click()
-    //{
-    //    sell_tab.SetActive(false);
-    //    upgrade_tab.SetActive(true);
-    //}
-    //public void sell_tab_click()
-    //{
-    //    upgrade_tab.SetActive(false);
-    //    sell_tab.SetActive(true);
-    //}
-
     void Start()
     {
         int storeNew = PlayerPrefs.GetInt("storeNew", 1);
@@ -33,9 +20,21 @@ public class store_home : MonoBehaviour
     public string[] seller_text;
     public Text bubble_text;
     public Image bubble_image;
+    public AudioSource bgm;
+    public AudioSource seller_rand;
+    public AudioClip[] seller_sound;
 
     public void Awake()
     {
+        bgm.volume = PlayerPrefs.GetFloat("Bgm_volume", 1);
+        //seller_temp.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+        //seller_rand = GetComponent<AudioSource>();
+        //seller_rand.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+        //for (int i = 0; i < seller_sound.Length; i++)
+        //{
+        //    seller_sound[i].volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+        //}
+
         bubble_image.gameObject.SetActive(false);
         bubble_text.gameObject.SetActive(false);
     }
@@ -69,12 +68,17 @@ public class store_home : MonoBehaviour
         };
         rand_text = Random.Range(0, seller_text.Length);
         bubble_text.text = seller_text[rand_text];
+        //seller_rand.clip = seller_sound[Random.Range(0, seller_sound.Length)];
+        //seller_rand.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
     }
 
     public void seller_click()
     {
+        seller_rand.PlayOneShot(seller_sound[Random.Range(0, seller_sound.Length)]);
+        seller_rand.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
         seller_talk();
         StartCoroutine(UI_On(bubble_image, bubble_text));
+
     }
 
     public IEnumerator UI_On(Image image, Text text)
@@ -88,7 +92,7 @@ public class store_home : MonoBehaviour
             text.rectTransform.localScale = new Vector3((float)(0.95 + i * 0.01), (float)(0.95 + i * 0.01), (float)(0.95 + i * 0.01));
             yield return 0;
         }
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2.5f);
         image.gameObject.SetActive(false);
         text.gameObject.SetActive(false);
     }

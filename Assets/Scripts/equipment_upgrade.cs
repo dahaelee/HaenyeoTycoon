@@ -18,7 +18,7 @@ public class equipment_upgrade : MonoBehaviour
     private float suit_movepos, goggle_movepos, flipper_movepos;
     private bool suit_IsScroll = false, goggle_IsScroll = false, flipper_IsScroll = false;
     // 사운드 이펙트
-    public AudioSource bgm, upgrade_click;
+    public AudioSource upgrade_click;
 
     public Text Haenyeo_money;
     public GameObject playerprefs_delete;
@@ -226,7 +226,7 @@ public class equipment_upgrade : MonoBehaviour
         {
             flippers[2].gameObject.transform.SetAsLastSibling();
         }
-        bgm.volume = PlayerPrefs.GetFloat("Bgm_volume", 1);
+        //bgm.volume = PlayerPrefs.GetFloat("Bgm_volume", 1);
         upgrade_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
 
         // 임의로 해녀 돈 조정

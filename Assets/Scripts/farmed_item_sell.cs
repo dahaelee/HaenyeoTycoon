@@ -10,20 +10,20 @@ public class farmed_item_sell : MonoBehaviour
     public Text Haenyeo_money;
 
     //사운드 이펙트
-    public AudioSource bgm, sell_click, updown_click;
+    public AudioSource sell_click, updown_click;
 
     public GameObject sell_ui, wild_ui, farmed_ui, no_farmed, return_ui;
 
     public Image plus_money;
     public int temp_index, temp_num, temp_money;
-    int if_no_farmed = 0;
+    //int if_no_farmed = 0;
     
     private void Awake()
     {
-        bgm.volume = PlayerPrefs.GetFloat("Bgm_volume", 1);
+        //bgm.volume = PlayerPrefs.GetFloat("Bgm_volume", 1);
         sell_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
         updown_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
-        if_no_farmed = 0;
+        //if_no_farmed = 0;
         data_load();
         item_noshow();
         item_UI();
@@ -52,11 +52,13 @@ public class farmed_item_sell : MonoBehaviour
         temp_index = -1;
         item_noshow();
         Haenyeo_money.text = Haenyeo.money.ToString("N0");
+        no_farmed.gameObject.SetActive(true);
         for (int i = 0; i < farmed_items.Length; i++)
         {
             if (Haenyeo.farm_item_number[i] > 0)
             {
-                if_no_farmed++;
+                //if_no_farmed++;
+                no_farmed.gameObject.SetActive(false);
                 farmed_items[i].gameObject.SetActive(true);
 
                 farmed_items[i].sell_number = 0; // 팔 자원개수 0으로 초기화
@@ -71,10 +73,10 @@ public class farmed_item_sell : MonoBehaviour
                 down(i);
             }
         }
-        if (if_no_farmed == 0)
-        {
-            no_farmed.gameObject.SetActive(true);
-        }
+        //if (if_no_farmed == 0)
+        //{
+        //    no_farmed.gameObject.SetActive(true);
+        //}
     }
 
     //모든 자원창을 끔
