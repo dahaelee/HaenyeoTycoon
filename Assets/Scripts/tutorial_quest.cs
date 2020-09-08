@@ -7,15 +7,16 @@ using UnityEngine.UI;
 public class tutorial_quest : MonoBehaviour
 {
     //공통 오브젝트
-    public GameObject quest_ui,quest_box;
+    public GameObject quest_ui,quest_box,debt_text_parent;
     public Image touch_bg, quest_bg,text_box,next_triangle;
     public Text text;
     public static int step, quest_num;
     public static int IsQuest, item_num = 0;     //퀘스트 확인용
+    public AudioSource item_click, icon_click;
 
     //farm object
     public GameObject hilight_parent, bubble_parent;
-    public Image[] hilight;
+    public Image[] hilight,debt_texts;
     public Image sache, speech_bubble;
     public Text bubble_text;
     public string[] tutorial_texts;
@@ -30,11 +31,14 @@ public class tutorial_quest : MonoBehaviour
         bubble_parent.gameObject.SetActive(false);
         sea_icon_fake.gameObject.SetActive(false);
         quest_ui.gameObject.SetActive(false);
+        debt_text_parent.SetActive(false);
     }
 
     //다음 텍스트
     public void Next_text()
     {
+        item_click.PlayOneShot(item_click.clip);
+
         step++;
         switch (quest_num)
         {
@@ -45,7 +49,8 @@ public class tutorial_quest : MonoBehaviour
                 switch (step)
                 {
                     case 2:
-                        text.text = "우선 5일을 주마.\n기간 안에 50만원을 갚지 못한다면.. \n어떻게 되는진 말하지 않아도 알겠지 ? ";
+                        debt_texts[0].gameObject.SetActive(false);
+                        debt_texts[1].gameObject.SetActive(true);
                         break;
                     default:
                         Initialize();
@@ -89,6 +94,7 @@ public class tutorial_quest : MonoBehaviour
     public void Sache1()
     {
         Initialize();
+        debt_text_parent.SetActive(true);
         touch_bg.gameObject.SetActive(true);
         quest_bg.gameObject.SetActive(true);
         quest_box.SetActive(true);
@@ -99,7 +105,8 @@ public class tutorial_quest : MonoBehaviour
         GameObject.Find("quest_manager").GetComponent<quest_manager>().quest_contents_update();//실시간 반영
 
         step = 1; quest_num = 1;
-        text.text = "너가 대신 아버지빚을 갚겠다고? \n마음은 기특하지만,\n과연 너가 돈을 갚을 수 있을진 의심이 되는군";
+        debt_texts[0].gameObject.SetActive(true);
+        debt_texts[1].gameObject.SetActive(false);
     }
 
     //아빠 1 - 게임 ui 설명
@@ -130,12 +137,13 @@ public class tutorial_quest : MonoBehaviour
         GameObject.Find("quest_manager").GetComponent<quest_manager>().quest_contents_update(); //실시간 반영
         step = 1; quest_num = 2;
         bubble_parent.transform.position = new Vector3(640, 450, 0); // 화면 상단 위치
-        bubble_text.text = "아빠 때문에 네가 고생하는 것 같아 마음이 편하지가 않구나..\n아직 양식장 구성에 대해 잘 모를테니 몇가지 설명을 해주마..";
+        bubble_text.text = tutorial_texts[0];
     }
 
     //fake_sea_icon 눌렀을 때 함수
     public void sea_open()
     {
+        icon_click.PlayOneShot(icon_click.clip);
         Initialize();
         PlayerPrefs.SetInt("isQuest", 3);
         SceneManager.LoadScene("sea"); // 바다로 이동
@@ -197,6 +205,7 @@ public class tutorial_quest : MonoBehaviour
                     step = 1; quest_num = 3;
                     bubble_parent.transform.position = new Vector3(640, 450, 0); // 화면 상단 위치
                     bubble_text.text = "그렇지~ 자원은 그렇게 양식하는 거란다.. 상점도 한번 둘러보겠니?";
+                    PlayerPrefs.SetInt("storeNew", 1);
 
                     item_num = 0;
                     PlayerPrefs.SetInt("isQuest", 5);
@@ -208,6 +217,7 @@ public class tutorial_quest : MonoBehaviour
     //quest_ui open
     public void quest_ui_open()
     {
+        icon_click.PlayOneShot(icon_click.clip);
         GameObject.Find("quest_manager").GetComponent<quest_manager>().quest_contents_update(); //실시간 반영
         quest_bg.gameObject.SetActive(true);
         quest_ui.gameObject.SetActive(true);
