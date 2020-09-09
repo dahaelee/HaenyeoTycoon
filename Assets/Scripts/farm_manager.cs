@@ -705,7 +705,6 @@ public class farm_manager : MonoBehaviour
     //게임 설정 창 UI
     public void setting()
     {
-        Haenyeo.hp -= 1;
         icon_click.PlayOneShot(icon_click.clip);        //아이콘 클릭시 사운드
         StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.setting));
     }
