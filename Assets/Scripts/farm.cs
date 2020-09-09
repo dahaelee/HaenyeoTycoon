@@ -106,9 +106,6 @@ public class farm : MonoBehaviour
             this.remaining_time--;
         }
         this.isFarming = false;
-        //item1.gameObject.SetActive(false);
-        //item2.gameObject.SetActive(false);
-        //item3.gameObject.SetActive(false);
         this.money.gameObject.SetActive(true);
         this.is_money_on = true;
         //farm.bubble_item.gameObject.SetActive(true);
@@ -145,9 +142,6 @@ public class farm : MonoBehaviour
                 this.remaining_time--;
             }
             this.isFarming = false;
-            item1.gameObject.SetActive(false);
-            item2.gameObject.SetActive(false);
-            item3.gameObject.SetActive(false);
             this.money.gameObject.SetActive(true);
             this.is_money_on = true;
             //farm.bubble_item.gameObject.SetActive(true);

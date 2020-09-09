@@ -23,7 +23,7 @@ public class farm_manager : MonoBehaviour
     public Text[] item_count;
     //사운드 관련 필드
     public AudioSource bgm, button_click, popup_click, expand_click, request_denied, get_money, trashing, next_day, debt_sending, num_pad, icon_click, item_click, farm_money;
-    public Image repay_icon;
+    public Image repay_icon, farm_night;
     public Image[] items;
 
     IEnumerator current_Info;
@@ -84,6 +84,14 @@ public class farm_manager : MonoBehaviour
         }
 
         UI_manager.AllUIoff();
+        if (Haenyeo.todayState == Haenyeo.TodayState.night)
+        {
+            farm_night.gameObject.SetActive(true);
+        }
+        else
+        {
+            farm_night.gameObject.SetActive(false);
+        }
 
     }
     void Update()
@@ -100,6 +108,10 @@ public class farm_manager : MonoBehaviour
         bgm_sound_ctrl();
         if (Haenyeo.hp <= 0)
         {
+            if(Haenyeo.todayState == Haenyeo.TodayState.day)
+            {
+                StartCoroutine(GoNight());
+            }
             if (!is_repayAnim_Activated)
             {
                 StartCoroutine(repayAnim());
@@ -405,10 +417,60 @@ public class farm_manager : MonoBehaviour
 
     }
 
+    public IEnumerator GoNight()
+    {
+        UnityEngine.Debug.Log("night");
+        Haenyeo.todayState = Haenyeo.TodayState.night;
+        StartCoroutine(fadein(farm_night));
+        yield return new WaitForSeconds(0f);
+    }
+
+    public IEnumerator GoDay()
+    {
+        Haenyeo.todayState = Haenyeo.TodayState.day;
+        StartCoroutine(fadeout(farm_night));
+        yield return new WaitForSeconds(0f);
+    }
+
+    public IEnumerator fadein(Image img)
+    {
+        float time = 0;
+        Color fadecolor = img.color;
+        fadecolor.a = 0f;
+        img.color = fadecolor;
+        img.gameObject.SetActive(true);
+        while (img.color.a <=1) {
+            time += Time.deltaTime ;
+
+            fadecolor.a = Mathf.Lerp(0, 1, time);
+            img.color = fadecolor;
+            yield return null; 
+        }
+    }
+
+    public IEnumerator fadeout(Image img)
+    {
+        float time = 0;
+        Color fadecolor = img.color;
+        fadecolor.a = 1f;
+        img.color = fadecolor;
+        img.gameObject.SetActive(true);
+        while (img.color.a >= 0)
+        {
+            time += Time.deltaTime ;
+
+            fadecolor.a = Mathf.Lerp(1, 0, time);
+            img.color = fadecolor;
+            yield return null;
+        }
+        img.gameObject.SetActive(false);
+    }
+
+
+
     //하루정산 UI 띄우기
     public void today_work()
     {
-        Haenyeo.todayState = Haenyeo.TodayState.night;
         icon_click.PlayOneShot(icon_click.clip);
         UI_manager.AllUIoff();
         entire_debt.text = Haenyeo.debt.ToString();
@@ -529,6 +591,9 @@ public class farm_manager : MonoBehaviour
                     StartCoroutine("happy_ending");
                 }
             }
+            StartCoroutine(GoDay());    //다음날로 바뀌는 이펙트
+
+            
 
         }
 
@@ -587,6 +652,7 @@ public class farm_manager : MonoBehaviour
                 StartCoroutine("happy_ending");
             }
         }
+        StartCoroutine(GoDay());    //다음날로 바뀌는 이펙트
 
     }
 
