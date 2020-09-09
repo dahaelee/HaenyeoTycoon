@@ -984,7 +984,7 @@ public class farm_manager : MonoBehaviour
 
             Haenyeo.moving_speed = PlayerPrefs.GetFloat("Haenyeo_moving_speed", 7);
             Haenyeo.coin_time = PlayerPrefs.GetInt("Haenyeo_coin_time", 8);
-            Haenyeo.hp_ratio = PlayerPrefs.GetFloat("Haenyeo_hp_ratio", 1);
+            Haenyeo.hp_ratio = PlayerPrefs.GetFloat("Haenyeo_hp_ratio", 2);
 
             //해녀 보유한 자원 개수 초기화
 

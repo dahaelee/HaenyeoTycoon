@@ -411,11 +411,11 @@ public class equipment_upgrade : MonoBehaviour
             Haenyeo.money -= suits[my_suit].next_upgrade_price;
             if(my_suit == 0)
             {
-                Haenyeo.hp_ratio = 0.67f;
+                Haenyeo.hp_ratio = 1f;
             }
             if(my_suit == 1)
             {
-                Haenyeo.hp_ratio = 0.5f;
+                Haenyeo.hp_ratio = 0.75f;
             }
             my_suit++;
             PlayerPrefs.SetInt("PLAYER_SUIT", my_suit);
