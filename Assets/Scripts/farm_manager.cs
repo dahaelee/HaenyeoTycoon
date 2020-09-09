@@ -581,9 +581,9 @@ public class farm_manager : MonoBehaviour
             }
             else
             {
-                if(Haenyeo.day==5) GameObject.Find("tutorial_quest").GetComponent<tutorial_quest>().sache_come(5);
-                if (Haenyeo.day == 15) GameObject.Find("tutorial_quest").GetComponent<tutorial_quest>().sache_come(15);
-                if (Haenyeo.day == 30) GameObject.Find("tutorial_quest").GetComponent<tutorial_quest>().sache_come(30);
+                if(Haenyeo.day==6) GameObject.Find("tutorial_quest").GetComponent<tutorial_quest>().sache_come(5);
+                if (Haenyeo.day == 16) GameObject.Find("tutorial_quest").GetComponent<tutorial_quest>().sache_come(15);
+                if (Haenyeo.day == 31) GameObject.Find("tutorial_quest").GetComponent<tutorial_quest>().sache_come(30);
 
                 if (Haenyeo.day > limit_day && Haenyeo.debt > 0)
                 {
@@ -642,9 +642,9 @@ public class farm_manager : MonoBehaviour
         }
         else
         {
-            if (Haenyeo.day == 5) GameObject.Find("tutorial_quest").GetComponent<tutorial_quest>().sache_come(5);
-            if (Haenyeo.day == 15) GameObject.Find("tutorial_quest").GetComponent<tutorial_quest>().sache_come(15);
-            if (Haenyeo.day == 30) GameObject.Find("tutorial_quest").GetComponent<tutorial_quest>().sache_come(30);
+            if (Haenyeo.day == 6) GameObject.Find("tutorial_quest").GetComponent<tutorial_quest>().sache_come(5);
+            if (Haenyeo.day == 16) GameObject.Find("tutorial_quest").GetComponent<tutorial_quest>().sache_come(15);
+            if (Haenyeo.day == 31) GameObject.Find("tutorial_quest").GetComponent<tutorial_quest>().sache_come(30);
 
             if (Haenyeo.day > limit_day && Haenyeo.debt > 0)
             {
