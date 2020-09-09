@@ -121,7 +121,8 @@ public class sea_movement : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         }
 
         // WASD 키에서 손을 뗐고, 아무 키도 눌리고 있지 않을 때 
-        if ((Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S)) && (!Input.anyKey)) 
+        if (( Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S) ) 
+            && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D) )
         {
             rect_joystick.localPosition = Vector3.zero; //스틱을 원위치
             move_position = Vector3.zero; //이동 좌표 초기화
