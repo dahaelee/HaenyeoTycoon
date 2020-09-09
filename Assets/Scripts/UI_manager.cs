@@ -28,6 +28,7 @@ public class UI_manager : MonoBehaviour
         today_work, //하루 정산
         no_item,
         no_HP,
+        todayFinished,
         None
     }
 
@@ -57,7 +58,7 @@ public class UI_manager : MonoBehaviour
     }
 
     //UI 창 오픈하는 코드와 이펙트
-    public IEnumerator UI_On(UIstate uistate, bool AutoUIOff = false)
+    public IEnumerator UI_On(UIstate uistate, bool AutoUIOff = false, float seconds = 2f)
     {
         currentState = uistate;
         yield return new WaitForSeconds(0.1f);
@@ -70,7 +71,7 @@ public class UI_manager : MonoBehaviour
         }
         if (AutoUIOff)
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(seconds);
             AllUIoff();
         }
 
