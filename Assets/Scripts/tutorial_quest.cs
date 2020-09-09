@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class tutorial_quest : MonoBehaviour
 {
     //공통 오브젝트
-    public GameObject quest_ui,quest_box,debt_text_parent;
+    public GameObject quest_ui,quest_box,debt_text_parent,beta_ending;
     public Image touch_bg, quest_bg,text_box,next_triangle;
     public Text text,hilight_text;
     public static int step, quest_num;
@@ -93,7 +93,11 @@ public class tutorial_quest : MonoBehaviour
                     text.text = "보스가 널 찾으신다.\n저 상가로 들어가서 암호코드 [만반잘부]를 입력하도록 해";
                     hilight_text.text = "엔딩코드 : 만반잘부";
                 }
-                if (step == 3) { } //StartCoroutine(bgm_change(story_bgm, farm_bgm));
+                if (step == 3)
+                {
+                    //StartCoroutine(bgm_change(story_bgm, farm_bgm));
+                    beta_ending.SetActive(true);
+                }
                 break;
         }
     }
@@ -244,7 +248,7 @@ public class tutorial_quest : MonoBehaviour
                 }
                 else
                 {
-                    text.text = "고작 이런 것도 못하는 네가 무슨 수로 아버지 빚을 갚겠다고..\n너에 대한 신뢰를 잃었다";
+                    text.text = "고작 이런 것도 못하는 네가 무슨 수로 아버지 빚을 갚겠다고..\n\n너에 대한 신뢰를 잃었다";
                 }
                 break;
         }
