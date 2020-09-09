@@ -29,6 +29,7 @@ public class UI_manager : MonoBehaviour
         no_item,
         no_HP,
         todayFinished,
+        quest,
         None
     }
 

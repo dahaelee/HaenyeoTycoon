@@ -111,6 +111,8 @@ public class tutorial_quest : MonoBehaviour
         quest_bg.gameObject.SetActive(true);
         quest_box.SetActive(true);
         sache.gameObject.SetActive(true);
+        hilight_text.text = "";
+        text.text = "";
         
         quest_Data.tutorial_quest_list[0].state = 1;    //진행중인 퀘스트로 변경
         GameObject.Find("quest_manager").GetComponent<quest_manager>().quest_contents_update();//실시간 반영

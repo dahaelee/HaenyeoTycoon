@@ -26,6 +26,12 @@ public class sea_coin : MonoBehaviour
             {
                 StartCoroutine("gold_effect");
                 Haenyeo.money += 20000; //해녀 돈 추가
+
+                //효민 - daily quest 관련
+                if (quest_Data.daily_quest_list[3].state != -1 && quest_Data.daily_quest_list[3].state != 2)
+                {
+                    PlayerPrefs.SetInt("quest_gold", PlayerPrefs.GetInt("quest_gold") + 1);
+                }
             }
 
             if (this.gameObject.GetComponent<SpriteRenderer>().sprite.name == "coin_silver")
