@@ -17,7 +17,6 @@ public class item_sell : MonoBehaviour
 
     public Image plus_money;
     public int temp_index, temp_num, temp_money;
-    //int if_no_wild = 0;
 
     private void OnEnable()
     {
@@ -25,10 +24,8 @@ public class item_sell : MonoBehaviour
     }
     void Awake()
     {
-        //bgm.volume = PlayerPrefs.GetFloat("Bgm_volume", 1);
         sell_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
         updown_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
-        //if_no_wild = 0;
         data_load();
         item_noshow();
         item_UI();        
@@ -106,7 +103,6 @@ public class item_sell : MonoBehaviour
         {
             if(Haenyeo.sea_item_number[i] > 0)
             {
-                //if_no_wild++;
                 no_wild.gameObject.SetActive(false);
                 sea_items[i].gameObject.SetActive(true);
 
@@ -122,10 +118,6 @@ public class item_sell : MonoBehaviour
                 down(i);
             }
         }
-        //if (if_no_wild == 0)
-        //{
-        //    no_wild.gameObject.SetActive(true);
-        //}
     }
 
     //모든 자원창을 끔

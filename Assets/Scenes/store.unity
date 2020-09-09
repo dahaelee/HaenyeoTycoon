@@ -534,10 +534,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   equipment_info_obj: {fileID: 678841621}
   next_upgrade_price: 100000
-  speed_up: 5
-  time_up: -1
   equip_name: {fileID: 1790948370}
-  isInfoClick: 0
 --- !u!114 &20751086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2221,10 +2218,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   equipment_info_obj: {fileID: 53171859}
   next_upgrade_price: -1
-  speed_up: -1
-  time_up: -1
   equip_name: {fileID: 24981458}
-  isInfoClick: 0
 --- !u!114 &104077627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2983,10 +2977,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   equipment_info_obj: {fileID: 1796019929}
   next_upgrade_price: 100000
-  speed_up: -1
-  time_up: 4
   equip_name: {fileID: 1242679346}
-  isInfoClick: 0
 --- !u!114 &157615446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3751,10 +3742,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   equipment_info_obj: {fileID: 227811773}
   next_upgrade_price: 50000
-  speed_up: -1
-  time_up: 2
   equip_name: {fileID: 166842296}
-  isInfoClick: 0
 --- !u!114 &240043669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4617,10 +4605,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   equipment_info_obj: {fileID: 1733290238}
   next_upgrade_price: -1
-  speed_up: -1
-  time_up: -1
   equip_name: {fileID: 1955000062}
-  isInfoClick: 0
 --- !u!114 &284590154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10326,9 +10311,13 @@ MonoBehaviour:
   tuto_text: []
   bubble_text: {fileID: 1694012773}
   bubble_image: {fileID: 922333929}
-  bgm: {fileID: 0}
-  seller_rand: {fileID: 0}
-  seller_sound: []
+  bgm: {fileID: 671084251}
+  panel: {fileID: 1708347834}
+  seller_rand: {fileID: 259201712}
+  seller_sound:
+  - {fileID: 8300000, guid: 235a46e1211313244839abf7c6c165a8, type: 3}
+  - {fileID: 8300000, guid: c268d753cd39d394c97d58fde57c8c24, type: 3}
+  - {fileID: 8300000, guid: 97557ee6c5ce6284b8b9eb9e82a0b9fd, type: 3}
 --- !u!1 &643761423
 GameObject:
   m_ObjectHideFlags: 0
@@ -15789,10 +15778,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   equipment_info_obj: {fileID: 1672752631}
   next_upgrade_price: -1
-  speed_up: -1
-  time_up: -1
   equip_name: {fileID: 1724066517}
-  isInfoClick: 0
 --- !u!114 &1050588038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18845,7 +18831,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 1bb85679881fc45408dbb95e82241a65, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 20907a69b0ce72349b7146a1cb0cc4dc, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -21298,6 +21284,7 @@ Transform:
   - {fileID: 2025549516}
   - {fileID: 1259189998}
   - {fileID: 259201711}
+  - {fileID: 1708347833}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -22910,10 +22897,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   equipment_info_obj: {fileID: 203494199}
   next_upgrade_price: 50000
-  speed_up: 3
-  time_up: -1
   equip_name: {fileID: 1029277383}
-  isInfoClick: 0
 --- !u!114 &1507481020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24336,10 +24320,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   equipment_info_obj: {fileID: 1714339252}
   next_upgrade_price: 200000
-  speed_up: -1
-  time_up: 10
   equip_name: {fileID: 1197908215}
-  isInfoClick: 0
 --- !u!114 &1585137066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24586,10 +24567,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   equipment_info_obj: {fileID: 1141743449}
   next_upgrade_price: 100000
-  speed_up: -1
-  time_up: 5
   equip_name: {fileID: 1475673043}
-  isInfoClick: 0
 --- !u!114 &1604183257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25719,6 +25697,133 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1705638104}
   m_CullTransparentMesh: 0
+--- !u!1 &1708347832
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1708347833}
+  - component: {fileID: 1708347834}
+  m_Layer: 0
+  m_Name: panel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1708347833
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708347832}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1415893208}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1708347834
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708347832}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 16a25776147069b48b2c7812f5dd7a09, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1714339249
 GameObject:
   m_ObjectHideFlags: 0
@@ -30012,7 +30117,6 @@ MonoBehaviour:
   count: 3
   upgrade_click: {fileID: 1745343290}
   Haenyeo_money: {fileID: 1792136521}
-  playerprefs_delete: {fileID: 0}
   suits:
   - {fileID: 157615445}
   - {fileID: 1585137065}
