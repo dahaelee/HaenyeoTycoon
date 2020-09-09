@@ -14,7 +14,7 @@ public class farm_manager : MonoBehaviour
     public GameObject[] farmable_items;
     public GameObject sea_item_parent;
     public static GameObject[] sea_item;
-    public Text name_info, time_info, day, money, debt, debt_repay, money_repay, sending_amount_repay, entire_debt,interest,payed,balance,nday,nday_debt;
+    public Text name_info, time_info, day, money, debt, debt_repay, money_repay, sending_amount_repay, entire_debt,interest,payed,balance,today;
     public int chosen_item, chosen_farm, trash_farm_num, activation_cost, sending_int, sending_limit, limit_day;
     public bool is_chosen;
     public static bool is_sea_locked, is_repay_locked, is_repayAnim_Activated;
@@ -473,12 +473,11 @@ public class farm_manager : MonoBehaviour
     {
         icon_click.PlayOneShot(icon_click.clip);
         UI_manager.AllUIoff();
-        entire_debt.text = Haenyeo.debt.ToString();
-        interest.text = Haenyeo.interest.ToString();
-        payed.text = Haenyeo.payed.ToString();
-        balance.text = (Haenyeo.debt - Haenyeo.payed).ToString();
-        nday.text = "5";
-        nday_debt.text = "500,000";
+        entire_debt.text = string.Format("{0:#,###0}", Haenyeo.debt);
+        interest.text = string.Format("{0:#,###0}", Haenyeo.interest);
+        payed.text = string.Format("{0:#,###0}", Haenyeo.payed);
+        balance.text = string.Format("{0:#,###0}", (Haenyeo.debt - Haenyeo.payed)); 
+        today.text = Haenyeo.day.ToString();
         StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.today_work));
 
     }
