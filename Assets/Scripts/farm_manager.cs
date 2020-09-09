@@ -23,6 +23,7 @@ public class farm_manager : MonoBehaviour
     public Text[] item_count;
     //사운드 관련 필드
     public AudioSource bgm, button_click, popup_click, expand_click, request_denied, get_money, trashing, next_day, debt_sending, num_pad, icon_click, item_click, farm_money;
+    public AudioClip farm_night_BGM, farm_day_BGM;
     public Image repay_icon, farm_night;
     public Image[] items;
 
@@ -115,6 +116,11 @@ public class farm_manager : MonoBehaviour
             if (!is_repayAnim_Activated)
             {
                 StartCoroutine(repayAnim());
+            }
+            if(bgm.clip.name == "BGM_farm")
+            {
+                bgm.clip = farm_night_BGM;
+                bgm.Play();
             }
         }
         else
@@ -418,16 +424,21 @@ public class farm_manager : MonoBehaviour
     }
 
     public IEnumerator GoNight()
+ 
     {
-        UnityEngine.Debug.Log("night");
         Haenyeo.todayState = Haenyeo.TodayState.night;
         StartCoroutine(fadein(farm_night));
-        yield return new WaitForSeconds(0f);
+        yield return new WaitForSeconds(0.5f);
+        StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.todayFinished, true, 3f));
+        yield return new WaitForSeconds(2f);
+
     }
 
     public IEnumerator GoDay()
     {
         Haenyeo.todayState = Haenyeo.TodayState.day;
+        bgm.clip = farm_day_BGM;
+        bgm.Play();
         StartCoroutine(fadeout(farm_night));
         yield return new WaitForSeconds(0f);
     }
@@ -923,7 +934,7 @@ public class farm_manager : MonoBehaviour
             Haenyeo.money = PlayerPrefs.GetInt("Haenyeo_money", 50000);
             Haenyeo.debt = PlayerPrefs.GetInt("Haenyeo_debt", 1000000);
             Haenyeo.payed = PlayerPrefs.GetInt("Haenyeo_payed", 0);
-            Haenyeo.interest = PlayerPrefs.GetInt("Haenyeo_interest", Haenyeo.interest);
+            Haenyeo.interest = PlayerPrefs.GetInt("Haenyeo_interest", 0);
             Haenyeo.diving_time = PlayerPrefs.GetInt("Haenyeo_diving_time", 70);
             Haenyeo.day = PlayerPrefs.GetInt("Haenyeo_day", 1);
             Haenyeo.level = PlayerPrefs.GetInt("Haenyeo_level", 2);
@@ -963,7 +974,7 @@ public class farm_manager : MonoBehaviour
             Haenyeo.money = PlayerPrefs.GetInt("Haenyeo_money", 0); 
             Haenyeo.debt = PlayerPrefs.GetInt("Haenyeo_debt", 5000000);
             Haenyeo.payed = PlayerPrefs.GetInt("Haenyeo_payed", 0);
-            Haenyeo.interest = PlayerPrefs.GetInt("Haenyeo_interest", Haenyeo.interest);
+            Haenyeo.interest = PlayerPrefs.GetInt("Haenyeo_interest", 0);
             Haenyeo.diving_time = PlayerPrefs.GetInt("Haenyeo_diving_time", 60);
             Haenyeo.day = PlayerPrefs.GetInt("Haenyeo_day", 1);
             Haenyeo.level = PlayerPrefs.GetInt("Haenyeo_level", 3); // 다해 : 바다 다 열려고 레벨 3으로 설정 해놨음
