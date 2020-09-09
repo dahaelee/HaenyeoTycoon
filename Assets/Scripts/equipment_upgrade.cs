@@ -21,7 +21,6 @@ public class equipment_upgrade : MonoBehaviour
     public AudioSource upgrade_click;
 
     public Text Haenyeo_money;
-    public GameObject playerprefs_delete;
 
     public equipment_info[] suits;
     public equipment_info[] goggles;
@@ -81,7 +80,7 @@ public class equipment_upgrade : MonoBehaviour
             suit_disable_button.SetActive(true);
             suit_enable_button.SetActive(false);
         }
-        if ((Haenyeo.money >= goggles[my_suit].next_upgrade_price))
+        if ((Haenyeo.money >= goggles[my_goggle].next_upgrade_price))
         {
             goggle_disable_button.SetActive(false);
             goggle_enable_button.SetActive(true);
@@ -226,12 +225,8 @@ public class equipment_upgrade : MonoBehaviour
         {
             flippers[2].gameObject.transform.SetAsLastSibling();
         }
-        //bgm.volume = PlayerPrefs.GetFloat("Bgm_volume", 1);
         upgrade_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
-
-        // 임의로 해녀 돈 조정
-        //Haenyeo.money += 5000000;
-
+        
         Haenyeo_money.text = Haenyeo.money.ToString("N0");
         //init_equipment();
 
@@ -253,7 +248,6 @@ public class equipment_upgrade : MonoBehaviour
                     flipper_pos = List[i].localPosition.y;
                     flipper_movepos = List[i].rect.yMax - List[i].rect.yMax / count;
                     break;
-
             }
         }
     }
@@ -270,7 +264,6 @@ public class equipment_upgrade : MonoBehaviour
         {
             if (i == my_suit)
             {
-                // suits[i].gameObject.SetActive(true);
                 suits[i].equip_name.gameObject.SetActive(true);
 
                 if (suits.Length - 1 == i)    // 업그레이드가 최대치인 경우
@@ -280,7 +273,6 @@ public class equipment_upgrade : MonoBehaviour
                     for (int j = 0; j < suit_upgrade_price_text.Length; j++)
                     {
                         suit_upgrade_price_text[j].text = "Max";
-
                     }
                 }
                 else
@@ -300,15 +292,12 @@ public class equipment_upgrade : MonoBehaviour
                     {
                         suit_upgrade_price_text[j].text = suits[i].next_upgrade_price.ToString("N0");   // "NO" 적으면 돈처럼 콤마 표시. 
                     }
-                    //for (int j = 0; j < suits[j].time_up.)
                 }
             }
             else
             {
-                //suits[i].gameObject.SetActive(false);
                 suits[i].equip_name.gameObject.SetActive(false);
             }
-            //suits[i].equipment_info_obj.SetActive(false);
         }
 
         // 물안경
@@ -316,8 +305,8 @@ public class equipment_upgrade : MonoBehaviour
         {
             if (i == my_goggle)
             {
-                //goggles[i].gameObject.SetActive(true);
                 goggles[i].equip_name.gameObject.SetActive(true);
+
                 if (goggles.Length - 1 == i)    // 업그레이드가 최대치인 경우
                 {
                     goggle_enable_button.SetActive(false);
@@ -331,11 +320,13 @@ public class equipment_upgrade : MonoBehaviour
                 {
                     if (Haenyeo.money >= goggles[i].next_upgrade_price) // 업그레이드에 필요한 돈이 충분하다면
                     {
+                        //Debug.Log("I can buy");
                         goggle_enable_button.SetActive(true);
                         goggle_disable_button.SetActive(false);
                     }
                     else
                     {
+                        //Debug.Log("I cannot buy");
                         goggle_enable_button.SetActive(false);
                         goggle_disable_button.SetActive(true);
                     }
@@ -348,10 +339,8 @@ public class equipment_upgrade : MonoBehaviour
             }
             else
             {
-                // goggles[i].gameObject.SetActive(false);
                 goggles[i].equip_name.gameObject.SetActive(false);
             }
-            //goggles[i].equipment_info_obj.SetActive(false);
         }
 
         // 오리발
@@ -359,8 +348,8 @@ public class equipment_upgrade : MonoBehaviour
         {
             if (i == my_flipper)
             {
-                //flippers[i].gameObject.SetActive(true);
                 flippers[i].equip_name.gameObject.SetActive(true);
+
                 if (flippers.Length - 1 == i)    // 업그레이드가 최대치인 경우
                 {
                     flipper_enable_button.SetActive(false);
@@ -391,10 +380,8 @@ public class equipment_upgrade : MonoBehaviour
             }
             else
             {
-                //flippers[i].gameObject.SetActive(false);
                 flippers[i].equip_name.gameObject.SetActive(false);
             }
-            //flippers[i].equipment_info_obj.SetActive(false);
         }
 
     }
@@ -403,13 +390,7 @@ public class equipment_upgrade : MonoBehaviour
     public void suit_info()
     {
         suits[my_suit].equipment_info_obj.gameObject.SetActive(!suits[my_suit].equipment_info_obj.gameObject.activeSelf);
-        //if (suits[my_suit].equipment_info_obj.gameObject.activeSelf)
-        //    suits[my_suit].equipment_info_obj.gameObject.SetActive(false);
-        //else
-        //    suits[my_suit].equipment_info_obj.gameObject.SetActive(true);
-
     }
-
     // 물안경 레이아웃 켜기/끄기
     public void goggle_info()
     {
@@ -420,7 +401,6 @@ public class equipment_upgrade : MonoBehaviour
     {
         flippers[my_flipper].equipment_info_obj.gameObject.SetActive(!flippers[my_flipper].equipment_info_obj.gameObject.activeSelf);
     }
-
 
     // 해녀복 업그레이드 버튼 클릭
     public void suit_upgrade_click()
@@ -496,11 +476,6 @@ public class equipment_upgrade : MonoBehaviour
     }
 
 
-    public void delete_click()
-    {
-        PlayerPrefs.DeleteAll();
-    }
-
     public void data_save()
     {
         //데이터 저장
@@ -527,7 +502,6 @@ public class equipment_upgrade : MonoBehaviour
     //    PlayerPrefs.SetInt("PLAYER_SUIT", my_suit);
     //    PlayerPrefs.SetInt("PLAYER_GOGGLE", my_goggle);
     //    PlayerPrefs.SetInt("PLAYER_FLIPPER", my_flipper);
-
     //}
 }
 

@@ -16,14 +16,11 @@ public class farmed_item_sell : MonoBehaviour
 
     public Image plus_money;
     public int temp_index, temp_num, temp_money;
-    //int if_no_farmed = 0;
     
     private void Awake()
     {
-        //bgm.volume = PlayerPrefs.GetFloat("Bgm_volume", 1);
         sell_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
         updown_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
-        //if_no_farmed = 0;
         data_load();
         item_noshow();
         item_UI();
@@ -57,7 +54,6 @@ public class farmed_item_sell : MonoBehaviour
         {
             if (Haenyeo.farm_item_number[i] > 0)
             {
-                //if_no_farmed++;
                 no_farmed.gameObject.SetActive(false);
                 farmed_items[i].gameObject.SetActive(true);
 
@@ -73,10 +69,6 @@ public class farmed_item_sell : MonoBehaviour
                 down(i);
             }
         }
-        //if (if_no_farmed == 0)
-        //{
-        //    no_farmed.gameObject.SetActive(true);
-        //}
     }
 
     //모든 자원창을 끔

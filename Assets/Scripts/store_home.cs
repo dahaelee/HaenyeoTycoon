@@ -52,21 +52,15 @@ public class store_home : MonoBehaviour
     public string[] seller_text,tuto_text;
     public Text bubble_text;
     public Image bubble_image;
-    public AudioSource bgm;
+    public AudioSource bgm, panel;
     public AudioSource seller_rand;
     public AudioClip[] seller_sound;
     public static int step;
 
     public void Awake()
     {
-        //bgm.volume = PlayerPrefs.GetFloat("Bgm_volume", 1);
-        //seller_temp.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
-        //seller_rand = GetComponent<AudioSource>();
-        //seller_rand.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
-        //for (int i = 0; i < seller_sound.Length; i++)
-        //{
-        //    seller_sound[i].volume = PlayerPrefs.GetFloat("Effect_volume", 1);
-        //}
+        bgm.volume = PlayerPrefs.GetFloat("Bgm_volume", 1);
+        panel.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
 
         bubble_image.gameObject.SetActive(false);
         bubble_text.gameObject.SetActive(false);
@@ -74,11 +68,13 @@ public class store_home : MonoBehaviour
     
     public void buy_panel_click()
     {
+        panel.PlayOneShot(panel.clip);
         return_from_buy.SetActive(true);
         buy_tab.SetActive(true);
     }
     public void sell_panel_click()
     {
+        panel.PlayOneShot(panel.clip);
         return_from_sell.SetActive(true);
         sell_tab.SetActive(true);
     }
@@ -101,8 +97,6 @@ public class store_home : MonoBehaviour
         };
         rand_text = Random.Range(0, seller_text.Length);
         bubble_text.text = seller_text[rand_text];
-        //seller_rand.clip = seller_sound[Random.Range(0, seller_sound.Length)];
-        //seller_rand.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
     }
 
     public void seller_click()
