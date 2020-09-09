@@ -805,6 +805,7 @@ public class farm_manager : MonoBehaviour
     public void farm_reset()
     {
         button_click.PlayOneShot(button_click.clip);
+        Haenyeo.todayState = Haenyeo.TodayState.day;
         PlayerPrefs.DeleteAll();
         for (int i = 0; i < farms.Length; i++)
         {
@@ -945,8 +946,7 @@ public class farm_manager : MonoBehaviour
             Haenyeo.moving_speed = PlayerPrefs.GetFloat("Haenyeo_moving_speed", 7);
             Haenyeo.coin_time = PlayerPrefs.GetInt("Haenyeo_coin_time", 8);
             Haenyeo.hp_ratio = PlayerPrefs.GetFloat("Haenyeo_hp_ratio", 1);
-
-
+            
             //해녀 보유한 자원 개수 초기화
 
             Haenyeo.sea_item_number[0] = PlayerPrefs.GetInt("Haenyeo_sea_item_number0", 0);

@@ -17,7 +17,7 @@ public class farm : MonoBehaviour
     public Image plus, farming_effect;
     public Image item1, item2, item3, locked_bg, lock_img, money;
     public Text farm_price, item_count;
-    public IEnumerator item_generating;   //양식 하고있는 함수 코루틴
+    public IEnumerator item_generating, item1coroutine, item2coroutine, item3coroutine;   //양식 하고있는 함수 코루틴
 
 
     void Start()
@@ -64,7 +64,11 @@ public class farm : MonoBehaviour
         this.isFarming = true;
         this.farm_opportunity--;
         this.remaining_time = this.item.farm_time;
-
+        if (item1coroutine == null)
+        {
+            item1coroutine = itemAnim(this, this.item1);
+            StartCoroutine(item1coroutine);
+        }
         this.item1.gameObject.SetActive(true);
         this.item2.gameObject.SetActive(false);
         this.item3.gameObject.SetActive(false);
@@ -88,6 +92,11 @@ public class farm : MonoBehaviour
             if ((this.remaining_time < (this.item.farm_time / 3) * 2) && (this.remaining_time >= this.item.farm_time / 3))
             {
                 this.item2.gameObject.SetActive(true);
+                if (item2coroutine == null)
+                {
+                    item2coroutine = itemAnim(this, this.item2);
+                    StartCoroutine(item2coroutine);
+                }
                 if (!item2_effect_On)
                 {
                     item2_effect_On = true;
@@ -96,6 +105,11 @@ public class farm : MonoBehaviour
             if (this.remaining_time < this.item.farm_time / 3)
             {
                 this.item3.gameObject.SetActive(true);
+                if (item3coroutine == null)
+                {
+                    item3coroutine = itemAnim(this, this.item3);
+                    StartCoroutine(item3coroutine);
+                }
                 if (!item3_effect_On)
                 {
                     item3_effect_On = true;
@@ -122,19 +136,32 @@ public class farm : MonoBehaviour
         else if (this.isFarming)
         {
             this.item1.gameObject.SetActive(true);
+            if (item1coroutine == null)
+            {
+                item1coroutine = itemAnim(this, this.item1);
+                StartCoroutine(item1coroutine);
+            }
             this.item2.gameObject.SetActive(false);
             this.item3.gameObject.SetActive(false);
             while (this.remaining_time > 0)
             {
                 if (this.remaining_time < (this.item.farm_time / 3) * 2)
                 {
-
+                    if (item2coroutine == null)
+                    {
+                        item2coroutine = itemAnim(this, this.item2);
+                        StartCoroutine(item2coroutine);
+                    }
                     this.item2.gameObject.SetActive(true);
 
                 }
                 if (this.remaining_time < this.item.farm_time / 3)
                 {
-
+                    if (item3coroutine == null)
+                    {
+                        item3coroutine = itemAnim(this, this.item3);
+                        StartCoroutine(item3coroutine);
+                    }
                     this.item3.gameObject.SetActive(true);
                 }
                 yield return new WaitForSeconds(1);
@@ -147,6 +174,23 @@ public class farm : MonoBehaviour
             //farm.bubble_item.gameObject.SetActive(true);
         }
 
+    }
+
+    public IEnumerator itemAnim(farm farm, Image img)
+    {
+
+        while (farm.item_generating != null)
+        {
+            UnityEngine.Debug.Log("coroutine");
+            img.sprite = Resources.Load<Sprite>("items_anim/"+this.item.name+"1");
+            yield return new WaitForSeconds(0.5f);
+            img.sprite = Resources.Load<Sprite>("items_anim/" + this.item.name + "2");
+            yield return new WaitForSeconds(0.5f);
+            img.sprite = Resources.Load<Sprite>("items_anim/" + this.item.name + "1");
+            yield return new WaitForSeconds(0.5f);
+            img.sprite = Resources.Load<Sprite>("items_anim/" + this.item.name + "2");
+            yield return new WaitForSeconds(4f);
+        }
     }
 
 
@@ -165,6 +209,12 @@ public class farm : MonoBehaviour
         if (item_generating != null)
         {
             StopCoroutine(item_generating);
+            StopCoroutine(item1coroutine);
+            StopCoroutine(item2coroutine);
+            StopCoroutine(item3coroutine);
+            item1coroutine = null;
+            item2coroutine = null;
+            item3coroutine = null;
             item_generating = null;
         }
     }
