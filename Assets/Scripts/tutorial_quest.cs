@@ -9,10 +9,10 @@ public class tutorial_quest : MonoBehaviour
     //공통 오브젝트
     public GameObject quest_ui,quest_box,debt_text_parent;
     public Image touch_bg, quest_bg,text_box,next_triangle;
-    public Text text;
+    public Text text,hilight_text;
     public static int step, quest_num;
     public static int IsQuest, item_num = 0;     //퀘스트 확인용
-    public AudioSource item_click, icon_click;
+    public AudioSource item_click, icon_click, farm_bgm, story_bgm;
 
     //farm object
     public GameObject hilight_parent, bubble_parent;
@@ -87,6 +87,14 @@ public class tutorial_quest : MonoBehaviour
             case 3:
                 Initialize();
                 break;
+            case 4:
+                if (step == 2)
+                {
+                    text.text = "보스가 널 찾으신다.\n저 상가로 들어가서 암호코드 [만반잘부]를 입력하도록 해";
+                    hilight_text.text = "엔딩코드 : 만반잘부";
+                }
+                if (step == 3) { } //StartCoroutine(bgm_change(story_bgm, farm_bgm));
+                break;
         }
     }
 
@@ -99,7 +107,6 @@ public class tutorial_quest : MonoBehaviour
         quest_bg.gameObject.SetActive(true);
         quest_box.SetActive(true);
         sache.gameObject.SetActive(true);
-        bubble_parent.gameObject.SetActive(false);
         
         quest_Data.tutorial_quest_list[0].state = 1;    //진행중인 퀘스트로 변경
         GameObject.Find("quest_manager").GetComponent<quest_manager>().quest_contents_update();//실시간 반영
@@ -214,6 +221,35 @@ public class tutorial_quest : MonoBehaviour
         }
     }
 
+    //5,15,30일 사채업자 찾아옴
+    public void sache_come(int day)
+    {
+        //StartCoroutine(bgm_change(farm_bgm, story_bgm));  //bgm 변경
+
+        Initialize();
+        touch_bg.gameObject.SetActive(true);
+        quest_bg.gameObject.SetActive(true);
+        quest_box.SetActive(true);
+        sache.gameObject.SetActive(true);
+        hilight_text.text = "";
+
+        step = 1; quest_num = 4;
+
+        switch (day)
+        {
+            case 5:
+                if (Haenyeo.payed >= 500000)    //5일동안 갚기 성공
+                {
+                    text.text = "네 아버지보다 너가 나은 것 같구나\n너의 능력은 이것으로 확인 한 것 같다";
+                }
+                else
+                {
+                    text.text = "고작 이런 것도 못하는 네가 무슨 수로 아버지 빚을 갚겠다고..\n너에 대한 신뢰를 잃었다";
+                }
+                break;
+        }
+    }
+
     //quest_ui open
     public void quest_ui_open()
     {
@@ -238,6 +274,17 @@ public class tutorial_quest : MonoBehaviour
     public void Start()
     {
         StartCoroutine("triangle_effect");
+    }
+
+    //bgm change
+    public IEnumerator bgm_change(AudioSource from, AudioSource to)
+    {
+        for (int j = 0; j < 10; j++)
+        {
+            from.volume -= 0.1f;
+            to.volume += 0.1f;
+            yield return new WaitForSeconds(0.05f);
+        }
     }
 
     //삼각형 깜박깜박 이펙트
