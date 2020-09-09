@@ -5,16 +5,21 @@ using UnityEngine;
 public class sea_coin : MonoBehaviour
 {
     public GameObject gold_string, silver_string, bronze_string;
+    public AudioSource coin;
 
     public void Start()
     {
         gold_string.gameObject.SetActive(false);
         silver_string.gameObject.SetActive(false);
         bronze_string.gameObject.SetActive(false);
+
+        coin.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
     }
 
     public void OnTriggerEnter2D(Collider2D col) // 해녀와 충돌하면
     {
+        coin.PlayOneShot(coin.clip);
+
         if (col.gameObject.CompareTag("haenyeo"))
         {
             if (this.gameObject.GetComponent<SpriteRenderer>().sprite.name == "coin_gold")
