@@ -270,9 +270,9 @@ public class quest_manager : MonoBehaviour
         int time = 0;
         while (time < 5)
         {
-            quest_icon.gameObject.transform.Rotate(Vector3.back * 10);
+            quest_icon.gameObject.transform.Rotate(Vector3.back * 5);
             yield return new WaitForSeconds(0.2f);
-            quest_icon.gameObject.transform.Rotate(Vector3.forward * 10);
+            quest_icon.gameObject.transform.Rotate(Vector3.forward * 5);
             yield return new WaitForSeconds(0.2f);
             time++;
         }
