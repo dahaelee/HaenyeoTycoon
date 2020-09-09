@@ -18,10 +18,10 @@ public class sea_coin : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D col) // 해녀와 충돌하면
     {
-        coin.PlayOneShot(coin.clip);
-
         if (col.gameObject.CompareTag("haenyeo"))
         {
+            coin.PlayOneShot(coin.clip);
+
             if (this.gameObject.GetComponent<SpriteRenderer>().sprite.name == "coin_gold")
             {
                 StartCoroutine("gold_effect");
