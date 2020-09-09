@@ -159,9 +159,7 @@ public class item_sell : MonoBehaviour
     {
         touch_x.SetActive(true);
         ask_ui.SetActive(true);
-        //sell_click.PlayOneShot(sell_click.clip);
         temp_index = item_index;
-        //plus_money.text = "+ " + (sea_items[item_index].raw_price * sea_items[item_index].sell_number).ToString("N0");
         sea_items[item_index].sell_price_text.text = (sea_items[item_index].raw_price * sea_items[item_index].sell_number).ToString("N0");
         temp_money = sea_items[item_index].raw_price * sea_items[item_index].sell_number; // 해녀돈 += 자원 팔 개수 * raw_price;
         temp_num = sea_items[item_index].sell_number; // 해녀가 가진 자원 개수 -= 자원 팔 개수
@@ -177,12 +175,10 @@ public class item_sell : MonoBehaviour
         if (sea_items[item_index].sell_number < sea_items[item_index].total_number) // 총 자원보다 적으면 활성화
         {
             sea_items[item_index].number_up_button.GetComponent<Button>().interactable = true;
-            //sea_items[item_index].number_up_button.SetActive(true);
         }
         else if (sea_items[item_index].sell_number >= sea_items[item_index].total_number) // 총 자원보다 많거나 같아지면 비활성화 (안되는 부분)
         {
             sea_items[item_index].number_up_button.GetComponent<Button>().interactable = false;
-            //sea_items[item_index].number_up_button.SetActive(false);
         }
     }
 
@@ -196,13 +192,11 @@ public class item_sell : MonoBehaviour
         {
             sea_items[item_index].number_down_button.GetComponent<Button>().interactable = true;
             sea_items[item_index].sell_button.GetComponent<Button>().interactable = true;
-            //sea_items[item_index].number_down_button.SetActive(true);
         }
         else if (sea_items[item_index].sell_number <= 0) // 팔 자원 개수가 0과 같거나 작아지면 비활성화 (안되는 부분)
         {
             sea_items[item_index].number_down_button.GetComponent<Button>().interactable = false;
             sea_items[item_index].sell_button.GetComponent<Button>().interactable = false;
-            //sea_items[item_index].number_down_button.SetActive(false);
         }
     }
 
@@ -230,9 +224,6 @@ public class item_sell : MonoBehaviour
         }
         image.gameObject.SetActive(false);
         yield return new WaitForSeconds(0.001f);
-        //image2.gameObject.SetActive(false);
-        //yield return new WaitForSeconds(0.05f);
-        //image3.gameObject.SetActive(true);
     }
 
 

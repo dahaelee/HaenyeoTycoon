@@ -405,6 +405,10 @@ public class equipment_upgrade : MonoBehaviour
     // 해녀복 업그레이드 버튼 클릭
     public void suit_upgrade_click()
     {
+        for (int i = 0; i < suits.Length; i++)
+        {
+            suits[i].equipment_info_obj.gameObject.SetActive(false);
+        }
         if (Haenyeo.money >= suits[my_suit].next_upgrade_price && (my_suit != 2))
         {
             upgrade_click.PlayOneShot(upgrade_click.clip);
@@ -429,6 +433,10 @@ public class equipment_upgrade : MonoBehaviour
     // 물안경 업그레이드 버튼 클릭
     public void goggle_upgrade_click()
     {
+        for (int i = 0; i < goggles.Length; i++)
+        {
+            goggles[i].equipment_info_obj.gameObject.SetActive(false);
+        }
         if (Haenyeo.money >= goggles[my_goggle].next_upgrade_price && (my_goggle != 2))
         {
             upgrade_click.PlayOneShot(upgrade_click.clip);
@@ -454,6 +462,10 @@ public class equipment_upgrade : MonoBehaviour
     // 오리발 업그레이드 버튼 클릭
     public void flipper_upgrade_click()
     {
+        for (int i = 0; i < flippers.Length; i++)
+        {
+            flippers[i].equipment_info_obj.gameObject.SetActive(false);
+        }
         if (Haenyeo.money >= flippers[my_flipper].next_upgrade_price && (my_flipper != 2))
         {
             upgrade_click.PlayOneShot(upgrade_click.clip);
