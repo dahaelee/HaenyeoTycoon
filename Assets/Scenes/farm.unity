@@ -729,7 +729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5cd127ea2ca5dd49af68f4378ab3a95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raw_price: 5000
+  raw_price: 7000
   farm_price: 18000
   farm_time: 60
   number: 5
@@ -6293,8 +6293,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5cd127ea2ca5dd49af68f4378ab3a95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raw_price: 2500
-  farm_price: 10000
+  raw_price: 3000
+  farm_price: 9500
   farm_time: 20
   number: 2
   item_name: starfish
@@ -6701,7 +6701,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raw_price: 2000
-  farm_price: 8000
+  farm_price: 5000
   farm_time: 10
   number: 1
   item_name: seaweed
@@ -13048,8 +13048,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5cd127ea2ca5dd49af68f4378ab3a95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raw_price: 12000
-  farm_price: 50000
+  raw_price: 15000
+  farm_price: 38000
   farm_time: 90
   number: 8
   item_name: turtle
@@ -17596,7 +17596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raw_price: 1500
-  farm_price: 6000
+  farm_price: 3500
   farm_time: 6
   number: 0
   item_name: shell
@@ -20945,8 +20945,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5cd127ea2ca5dd49af68f4378ab3a95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raw_price: 4000
-  farm_price: 15000
+  raw_price: 5000
+  farm_price: 13000
   farm_time: 45
   number: 4
   item_name: jellyfish
@@ -21864,8 +21864,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5cd127ea2ca5dd49af68f4378ab3a95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raw_price: 5000
-  farm_price: 25000
+  raw_price: 9000
+  farm_price: 24000
   farm_time: 75
   number: 6
   item_name: octopus
@@ -25698,7 +25698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5cd127ea2ca5dd49af68f4378ab3a95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raw_price: 9000
+  raw_price: 12000
   farm_price: 30000
   farm_time: 75
   number: 7
@@ -29123,8 +29123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5cd127ea2ca5dd49af68f4378ab3a95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raw_price: 3000
-  farm_price: 12000
+  raw_price: 4000
+  farm_price: 10000
   farm_time: 30
   number: 3
   item_name: shrimp
