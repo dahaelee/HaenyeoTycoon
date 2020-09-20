@@ -7,7 +7,7 @@ public class store_home : MonoBehaviour
 {
     void Start()
     {
-        int storeNew = PlayerPrefs.GetInt("storeNew", 0);
+        int storeNew = PlayerPrefs.GetInt("storeNew", 1);
         if (storeNew == 1)
         {
             quest_Data.tutorial_quest_list[3].state = -1;

@@ -181,7 +181,6 @@ public class farm : MonoBehaviour
 
         while (farm.item_generating != null)
         {
-            UnityEngine.Debug.Log("coroutine");
             img.sprite = Resources.Load<Sprite>("items_anim/"+this.item.name+"1");
             yield return new WaitForSeconds(0.5f);
             img.sprite = Resources.Load<Sprite>("items_anim/" + this.item.name + "2");

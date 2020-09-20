@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class tutorial_quest : MonoBehaviour
 {
     //공통 오브젝트
-    public GameObject quest_ui,quest_box,debt_text_parent,beta_ending;
+    public GameObject quest_ui,quest_box,debt_text_parent;
     public Image touch_bg, quest_bg,text_box,next_triangle;
     public Text text,hilight_text;
     public static int step, quest_num;
@@ -90,14 +90,14 @@ public class tutorial_quest : MonoBehaviour
             case 4:
                 if (step == 2)
                 {
-                    text.text = "보스가 널 찾으신다.\n저 상가로 들어가서 암호코드 [만반잘부]를 입력하도록 해";
-                    hilight_text.text = "엔딩코드 : 만반잘부";
+                    text.text = "다음은 15일 까지 누적 송금액이 200만원 이상이 되도록 해";
+                    hilight_text.text = "15일 까지 200만원 이상 송금하기";
                 }
                 if (step == 3)
                 {
-                    //StartCoroutine(bgm_change(story_bgm, farm_bgm));
-                    beta_ending.SetActive(true);
+                    SceneManager.LoadScene("ending_bad");
                 }
+                else Initialize();
                 break;
         }
     }
@@ -218,7 +218,9 @@ public class tutorial_quest : MonoBehaviour
                     step = 1; quest_num = 3;
                     bubble_parent.transform.position = new Vector3(640, 450, 0); // 화면 상단 위치
                     bubble_text.text = "그렇지~ 자원은 그렇게 양식하는 거란다.. 상점도 한번 둘러보겠니?";
-                    PlayerPrefs.SetInt("storeNew", 1);
+                    //PlayerPrefs.SetInt("storeNew", 1);
+
+                    if(PlayerPrefs.GetInt("storeNew",1)==0) quest_Data.tutorial_quest_list[3].state = -1;
 
                     item_num = 0;
                     PlayerPrefs.SetInt("isQuest", 5);
@@ -250,6 +252,7 @@ public class tutorial_quest : MonoBehaviour
                 }
                 else
                 {
+                    step = 2;
                     text.text = "고작 이런 것도 못하는 네가 무슨 수로 아버지 빚을 갚겠다고..\n\n너에 대한 신뢰를 잃었다";
                 }
                 break;
