@@ -50,8 +50,17 @@ public class quest_manager : MonoBehaviour
     void Update()
     {
         int questReady = PlayerPrefs.GetInt("questReady", 1);
-        if(questReady==1)   give_daily_quest(); //일일 퀘스트 제공
-        daily_quest_check();
+        int doneFlag = PlayerPrefs.GetInt("doneFlag", 0);
+
+        if (questReady==1)   give_daily_quest(); //일일 퀘스트 제공
+
+        todo_update();  //todo문 업데이트
+        for (int idx = 0; idx < quest_Data.daily_quest_list.Count; idx++)
+        {
+            if(quest_Data.daily_quest_list[idx].state != -1)  daily_quest_check(idx);
+        }
+
+        done_check();
     }
 
     //퀘스트 목록 업데이트 
@@ -193,31 +202,55 @@ public class quest_manager : MonoBehaviour
          quest_contents_update();
     }
 
-    //일일 퀘스트 체크
-    public void daily_quest_check()
+    public void todo_update()
     {
-        //todo 실시간 반영
-        quest_Data.daily_quest_list[0].todo = $"조개  {Haenyeo.sea_item_number[0]}/5";
+        quest_Data.daily_quest_list[0].todo = $"조개  {Haenyeo.sea_item_number[0]}/3";
         quest_Data.daily_quest_list[1].todo = $"양식 미역  {Haenyeo.farm_item_number[1]}/3";
-        quest_Data.daily_quest_list[2].todo = $"새우 {Haenyeo.sea_item_number[3]}/4  꽃게  {Haenyeo.sea_item_number[5]}/2  문어 {Haenyeo.sea_item_number[6]}/2";
+        quest_Data.daily_quest_list[2].todo = $"새우 {Haenyeo.sea_item_number[3]}/4 ";
         quest_Data.daily_quest_list[3].todo = $"금화 {PlayerPrefs.GetInt("quest_gold", 0)}/3";
-
-        //퀘스트 완료 체크
-        if (Haenyeo.sea_item_number[0] >= 5) daily_quest_done(0);
-        if (Haenyeo.farm_item_number[1] >= 3) daily_quest_done(1);
-        if (Haenyeo.sea_item_number[3] >= 4 && Haenyeo.sea_item_number[5] >= 2 && Haenyeo.sea_item_number[6]>=2) daily_quest_done(2);
-        if (PlayerPrefs.GetInt("quest_gold", 0) >= 3) daily_quest_done(3);
     }
 
-    //퀘스트 다했을 때
-    public void daily_quest_done(int idx)
+    //일일 퀘스트 체크
+    public void daily_quest_check(int idx)
     {
-        if (quest_Data.daily_quest_list[idx].state != -1 && quest_Data.daily_quest_list[idx].state != 2)
+        switch (idx)
         {
-            quest_Data.daily_quest_list[idx].state = 2;
+            case 0:
+                if (Haenyeo.sea_item_number[0] >= 3) quest_Data.daily_quest_list[idx].state = 2;
+                else if(quest_Data.daily_quest_list[idx].state !=0 ) quest_Data.daily_quest_list[idx].state = 1;
+                break;
+            case 1:
+                if (Haenyeo.farm_item_number[1] >= 3) quest_Data.daily_quest_list[idx].state = 2;
+                else if (quest_Data.daily_quest_list[idx].state != 0) quest_Data.daily_quest_list[idx].state = 1;
+                break;
+            case 2:
+                if (Haenyeo.sea_item_number[3] >= 4) quest_Data.daily_quest_list[idx].state = 2;
+                else if (quest_Data.daily_quest_list[idx].state != 0) quest_Data.daily_quest_list[idx].state = 1;
+                break;
+            case 3:
+                if (PlayerPrefs.GetInt("quest_gold", 0) >= 3) quest_Data.daily_quest_list[idx].state = 2;
+                else if (quest_Data.daily_quest_list[idx].state != 0) quest_Data.daily_quest_list[idx].state = 1;
+                break;
+        }
+    }
+
+    public void done_check()
+    {
+        bool flag = false;
+        int effect_flag = PlayerPrefs.GetInt("effect_flag", 0);
+
+        for (int idx = 0; idx < quest_Data.daily_quest_list.Count; idx++)
+        {
+            if (quest_Data.daily_quest_list[idx].state == 2) flag = true;
+        }
+
+        if (flag && effect_flag==0)
+        {
             done_exist.SetActive(true);
+            PlayerPrefs.SetInt("effect_flag", 1);
             StartCoroutine("quest_icon_effect");
         }
+        if(!flag) done_exist.SetActive(false);
     }
 
     public void clicked_reward_button()
@@ -290,6 +323,10 @@ public class quest_manager : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
             time++;
         }
+
+        yield return new WaitForSeconds(3.0f);
+
+        PlayerPrefs.SetInt("effect_flag", 0);
     }
 
     //보상 버튼 이펙트
