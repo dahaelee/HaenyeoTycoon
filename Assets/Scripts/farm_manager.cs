@@ -87,6 +87,8 @@ public class farm_manager : MonoBehaviour
         UI_manager.AllUIoff();
         if (Haenyeo.todayState == Haenyeo.TodayState.night)
         {
+            Color color = new Vector4(1, 1, 1, 1);
+            farm_night.color = color;
             farm_night.gameObject.SetActive(true);
         }
         else
@@ -325,6 +327,11 @@ public class farm_manager : MonoBehaviour
     //양식 정보 보여주기
     public void farming_info(int index) //양식장 index 파라미터
     {
+        if (current_Info != null)
+        {
+            StopCoroutine(current_Info);
+        }
+        current_Info = null;
         if (farms[index].isFarming)
         {
             popup_click.PlayOneShot(popup_click.clip);      //팝업창 사운드
@@ -353,7 +360,9 @@ public class farm_manager : MonoBehaviour
         
         if (UI_manager.currentState != UI_manager.UIstate.trash)
         {
+            UI_manager.AllUIoff();
             StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.trash));
+            UnityEngine.Debug.Log("trash 열어라");
         }
     }
 
@@ -369,7 +378,6 @@ public class farm_manager : MonoBehaviour
     //양식장 확장하기
     public void Ask_expand_farm(int index)
     {
- 
         popup_click.PlayOneShot(popup_click.clip);
         chosen_farm = index;
         if (UI_manager.currentState != UI_manager.UIstate.expand)
@@ -445,12 +453,13 @@ public class farm_manager : MonoBehaviour
 
     public IEnumerator fadein(Image img)
     {
+        img.gameObject.SetActive(false);    //이코드 이상할수도...
         float time = 0;
         Color fadecolor = img.color;
         fadecolor.a = 0f;
         img.color = fadecolor;
         img.gameObject.SetActive(true);
-        while (img.color.a <=1) {
+        while (img.color.a <1) {
             time += Time.deltaTime ;
 
             fadecolor.a = Mathf.Lerp(0, 1, time);
@@ -466,15 +475,21 @@ public class farm_manager : MonoBehaviour
         fadecolor.a = 1f;
         img.color = fadecolor;
         img.gameObject.SetActive(true);
-        while (img.color.a >= 0)
+        while (img.color.a > 0)
         {
             time += Time.deltaTime ;
 
             fadecolor.a = Mathf.Lerp(1, 0, time);
             img.color = fadecolor;
+            UnityEngine.Debug.Log(img.color.a);
             yield return null;
         }
+        yield return new WaitForSeconds(0.5f);
+        fadecolor.a = 1f;
+        img.color = fadecolor;
+        
         img.gameObject.SetActive(false);
+
     }
 
 
@@ -487,7 +502,7 @@ public class farm_manager : MonoBehaviour
         entire_debt.text = string.Format("{0:#,###0}", Haenyeo.debt);
         interest.text = string.Format("{0:#,###0}", Haenyeo.interest);
         payed.text = string.Format("{0:#,###0}", Haenyeo.payed);
-        balance.text = string.Format("{0:#,###0}", (Haenyeo.debt - Haenyeo.payed)); 
+        balance.text = string.Format("{0:#,###0}", (Haenyeo.debt - Haenyeo.payed + Haenyeo.interest)); 
         today.text = Haenyeo.day.ToString();
         StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.today_work));
 

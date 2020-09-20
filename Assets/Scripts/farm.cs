@@ -28,7 +28,7 @@ public class farm : MonoBehaviour
     }
 
         void OnDisable()
-        {
+        {/*
             if (is_farm_Activated)
             {
                 PlayerPrefs.SetInt("farm" + farm_number + "_is_farm_activated", 1);     //true면 1저장
@@ -49,13 +49,11 @@ public class farm : MonoBehaviour
             }
             PlayerPrefs.SetInt("farm" + farm_number + "_opportunity", farm_opportunity);
             PlayerPrefs.SetInt("farm" + farm_number + "_remaining_time", remaining_time);
-        
+        */
+        farm_data_save();
     }
     void Update()
     {
-        if (is_money_on)
-        {
-        }
     }
 
     //생성까지 시간 차감하며 기다리기
@@ -120,8 +118,9 @@ public class farm : MonoBehaviour
             this.remaining_time--;
         }
         this.isFarming = false;
-        this.money.gameObject.SetActive(true);
         this.is_money_on = true;
+        this.money.gameObject.SetActive(true);
+        farm_data_save();
         //farm.bubble_item.gameObject.SetActive(true);
     }
 
@@ -129,9 +128,29 @@ public class farm : MonoBehaviour
     //게임 다시 시작할 때 셋팅용으로 쓰는 함수
     IEnumerator Wait_generating_start()
     {
+
         if (this.is_money_on)
         {
+            this.money.sprite = Resources.Load<Sprite>(this.item.name); //양식 다된 버블안 이미지바뀜
             this.money.gameObject.SetActive(true);
+            if (item1coroutine == null)
+            {
+                item1coroutine = itemAnim(this, this.item1);
+                StartCoroutine(item1coroutine);
+            }
+            this.item1.gameObject.SetActive(true);
+            if (item2coroutine == null)
+            {
+                item2coroutine = itemAnim(this, this.item2);
+                StartCoroutine(item2coroutine);
+            }
+            this.item2.gameObject.SetActive(true);
+            if (item3coroutine == null)
+            {
+                item3coroutine = itemAnim(this, this.item3);
+                StartCoroutine(item3coroutine);
+            }
+            this.item3.gameObject.SetActive(true);
         }
         else if (this.isFarming)
         {
@@ -173,6 +192,7 @@ public class farm : MonoBehaviour
             this.is_money_on = true;
             //farm.bubble_item.gameObject.SetActive(true);
         }
+        farm_data_save();
 
     }
 
@@ -181,7 +201,6 @@ public class farm : MonoBehaviour
 
         while (farm.item_generating != null)
         {
-            UnityEngine.Debug.Log("coroutine");
             img.sprite = Resources.Load<Sprite>("items_anim/"+this.item.name+"1");
             yield return new WaitForSeconds(0.5f);
             img.sprite = Resources.Load<Sprite>("items_anim/" + this.item.name + "2");
@@ -200,6 +219,7 @@ public class farm : MonoBehaviour
         this.item = null;
         this.isFarming = false;         //양식중 아님으로 바꾸기
         this.farm_opportunity = 5;          //양식 횟수 초기화
+        this.is_money_on = false;
         this.item1.gameObject.SetActive(false);     //자원들 다 안보이게 하기
         this.item2.gameObject.SetActive(false);
         this.item3.gameObject.SetActive(false);
@@ -217,6 +237,7 @@ public class farm : MonoBehaviour
             item3coroutine = null;
             item_generating = null;
         }
+        farm_data_save();
     }
 
 
@@ -250,10 +271,19 @@ public class farm : MonoBehaviour
         if (PlayerPrefs.GetInt("farm" + farm_number + "_isFarming", 0) != 0)    //양식 중이었는지 확인
         {
             this.isFarming = true;
+           
         }
         else
         {
             this.isFarming = false;
+        }
+        if(PlayerPrefs.GetInt("farm" + farm_number + "_is_money_on", 0) != 0)
+        {
+            this.is_money_on = true;
+        }
+        else
+        {
+            this.is_money_on = false;
         }
         this.farm_opportunity = PlayerPrefs.GetInt("farm" + farm_number + "_opportunity", 1);   //양식 횟수 받아오기 없으면 초기화 1
         this.remaining_time = PlayerPrefs.GetInt("farm" + farm_number + "_remaining_time", 0);  //남은 시간 받아오기 없으면 초기화 0
@@ -309,6 +339,11 @@ public class farm : MonoBehaviour
                     StartCoroutine(this.item_generating);
                 }
             }
+            else if(is_money_on)
+            {
+                this.item_generating = this.Wait_generating_start();
+                StartCoroutine(this.item_generating);
+            }
             else
             {                                           //양식중이 아니면 자원 선택 가능하게 해두기
                 this.plus.gameObject.SetActive(true);
@@ -322,6 +357,50 @@ public class farm : MonoBehaviour
         }
     }
 
+    void farm_data_save()
+    {
+            if (this.item != null)
+            {
+                PlayerPrefs.SetInt("farm" + this.farm_number + "_sea_item", this.item.number);
+            }
+            if (this.is_farm_Activated)
+            {
+                PlayerPrefs.SetInt("farm" + this.farm_number + "_is_farm_activated", 1);     //true면 1저장
+            }
+            else
+            {
+                if (this.farm_number == 2 || this.farm_number == 3 || this.farm_number == 4 || this.farm_number == 5)
+                {
+                    PlayerPrefs.SetInt("farm" + this.farm_number + "_is_farm_activated", 1);
+                }
+                else
+                {
+                    PlayerPrefs.SetInt("farm" + this.farm_number + "_is_farm_activated", 0);
+                }
+            }
+
+            if (this.isFarming)
+            {
+                PlayerPrefs.SetInt("farm" + this.farm_number + "_isFarming", 1);     //true면 1저장
+            }
+            else
+            {
+                PlayerPrefs.SetInt("farm" + this.farm_number + "_isFarming", 0);
+            }
+            if (this.is_money_on)
+            {
+                PlayerPrefs.SetInt("farm" + this.farm_number + "_is_money_on", 1);     //true면 1저장
+            UnityEngine.Debug.Log("is money on!");
+            }
+            else
+            {
+                PlayerPrefs.SetInt("farm" + this.farm_number + "_is_money_on", 0);
+            }
+            PlayerPrefs.SetInt("farm" + this.farm_number + "_opportunity", this.farm_opportunity);
+            PlayerPrefs.SetInt("farm" + this.farm_number + "_remaining_time", this.remaining_time);
+        
+        PlayerPrefs.Save();
+    }
     
 
 
