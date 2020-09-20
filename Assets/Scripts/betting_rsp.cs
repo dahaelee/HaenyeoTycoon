@@ -55,8 +55,15 @@ public class betting_rsp : MonoBehaviour
         {
             "허허~ 이번엔 무엇을 내볼까~?",
             "흐음, 가위를 내볼까나?",
+            "흐음, 바위를 내볼까나?",
+            "흐음, 보를 내볼까나?",
+            "가위를 내보는건 어떠냐?",
+            "바위를 내보는건 어떠냐?",
             "보를 내보는건 어떠냐?",
-            "왠지 주먹이 내고 싶은걸?"
+            "왠지 가위가 내고 싶은걸?",
+            "왠지 바위가 내고 싶은걸?",
+            "왠지 보가 내고 싶은걸?",
+            "허허~ 아무거나 내보렴!"
         };
         rand_text = Random.Range(0, rsp_text.Length);
         seller_text.text = rsp_text[rand_text];
