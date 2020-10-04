@@ -71,7 +71,7 @@ public class sea : MonoBehaviour
 
         if (!block_touch.gameObject.activeSelf) //터치 방지가 비활성화 상태일 때만
         {
-            Haenyeo.hp -= Time.deltaTime * Haenyeo.hp_ratio; //시간의 흐름에 따라 체력 감소 (아이템 별로 수치 조정하기)
+            Haenyeo.hp -= Time.deltaTime; //1초당 1씩 체력 감소
         }
 
         if (Haenyeo.hp <= 0) //체력이 0보다 작아지면
