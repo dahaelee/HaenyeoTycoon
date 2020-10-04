@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Cam_Manager : MonoBehaviour
 {
     public Camera mainCam;
+    public Slider swtich;
     bool isMoving = false;
     Vector3 farm_position = new Vector3(-640,0,-1000), beach_position = new Vector3(640,0,-1000);
 
@@ -13,7 +15,7 @@ public class Cam_Manager : MonoBehaviour
     
 
     void Update()
-    {
+    {/*
         if (Input.GetMouseButtonDown(0))
         {
             startPos = Input.mousePosition;
@@ -33,13 +35,18 @@ public class Cam_Manager : MonoBehaviour
                 }
             }
         }
+        */
     }
 
-    //스와이프와 터치
-    public void Swipe1()
+    public void switcher()
     {
-        
+        if (swtich.value == 0)
+        {
+            
+        }
     }
+
+
 
     public void go_farm_func()
     {
