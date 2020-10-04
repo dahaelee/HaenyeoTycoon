@@ -415,11 +415,9 @@ public class equipment_upgrade : MonoBehaviour
             Haenyeo.money -= suits[my_suit].next_upgrade_price;
             if(my_suit == 0)
             {
-                Haenyeo.hp_ratio = 1f;
             }
             if(my_suit == 1)
             {
-                Haenyeo.hp_ratio = 0.75f;
             }
             my_suit++;
             PlayerPrefs.SetInt("PLAYER_SUIT", my_suit);
@@ -500,7 +498,6 @@ public class equipment_upgrade : MonoBehaviour
 
         PlayerPrefs.SetFloat("Haenyeo_moving_speed", Haenyeo.moving_speed);
         PlayerPrefs.SetInt("Haenyeo_coin_time", Haenyeo.coin_time);
-        PlayerPrefs.SetFloat("Haenyeo_hp_ratio", Haenyeo.hp_ratio);
 
         PlayerPrefs.Save();
     }
