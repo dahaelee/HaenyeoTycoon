@@ -586,11 +586,6 @@ public class farm_manager : MonoBehaviour
             is_repay_locked = true;
             is_sea_locked = false;      //바다 아이콘 활성화
             PlayerPrefs.SetInt("is_repay_locked", 1);
-
-            if (Haenyeo.day == 6) GameObject.Find("tutorial_quest").GetComponent<tutorial_quest>().sache_come(5);
-            if (Haenyeo.day == 16) GameObject.Find("tutorial_quest").GetComponent<tutorial_quest>().sache_come(15);
-            if (Haenyeo.day == 31) GameObject.Find("tutorial_quest").GetComponent<tutorial_quest>().sache_come(30);
-
             if (Haenyeo.day > limit_day && Haenyeo.debt > 0)
             {
                 StartCoroutine("bad_ending");
@@ -634,11 +629,7 @@ public class farm_manager : MonoBehaviour
         UI_manager.AllUIoff();
         is_repay_locked = true;
         is_sea_locked = false;      //바다 아이콘 활성화
-
-        if (Haenyeo.day == 6) GameObject.Find("tutorial_quest").GetComponent<tutorial_quest>().sache_come(5);
-        if (Haenyeo.day == 16) GameObject.Find("tutorial_quest").GetComponent<tutorial_quest>().sache_come(15);
-        if (Haenyeo.day == 31) GameObject.Find("tutorial_quest").GetComponent<tutorial_quest>().sache_come(30);
-
+        
         if (Haenyeo.day > limit_day && Haenyeo.debt > 0)
         {
             StartCoroutine("bad_ending");
