@@ -10,7 +10,7 @@ public class store_home : MonoBehaviour
         int storeNew = PlayerPrefs.GetInt("storeNew", 1);
         if (storeNew == 1)
         {
-            quest_Data.tutorial_quest_list[3].state = -1;
+            quest_Data.tutorial_quest_list[2].state = -1;
             PlayerPrefs.SetInt("storeNew", 0);
 
             //간단 상점 튜토
