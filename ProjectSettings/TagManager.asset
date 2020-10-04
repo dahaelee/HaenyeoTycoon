@@ -50,3 +50,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: background
+    uniqueID: 76866983
+    locked: 0
+  - name: item
+    uniqueID: 3313124407
+    locked: 0
+  - name: haenyeo
+    uniqueID: 3820752963
+    locked: 0
+  - name: canvas
+    uniqueID: 4226189221
+    locked: 0
