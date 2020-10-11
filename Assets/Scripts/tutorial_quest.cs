@@ -63,7 +63,7 @@ public class tutorial_quest : MonoBehaviour
                     quest_bg.gameObject.SetActive(false);
                     hilight[0].gameObject.SetActive(true);
 
-                    bubble_parent.transform.position = new Vector3(640, 260, 0); // 화면 하단 위치
+                    //bubble_parent.transform.position = new Vector3(640, 260, 0); // 화면 하단 위치
                     bubble_text.text = tutorial_texts[2];
                 }
                 else
@@ -75,7 +75,7 @@ public class tutorial_quest : MonoBehaviour
                         bubble_text.text = tutorial_texts[step - 1];
                     }
                     //말풍선 위치 조정
-                    if (step == 6) bubble_parent.transform.position = new Vector3(640, 450, 0);
+                    //if (step == 6) bubble_parent.transform.position = new Vector3(640, 450, 0);
                     if (step == 9)
                     {
                         bubble_text.text = tutorial_texts[step - 1];
@@ -140,7 +140,7 @@ public class tutorial_quest : MonoBehaviour
         quest_Data.tutorial_quest_list[0].state = 1;    //진행중인 퀘스트로 변경
         GameObject.Find("quest_manager").GetComponent<quest_manager>().quest_contents_update(); //실시간 반영
         step = 1; quest_num = 2;
-        bubble_parent.transform.position = new Vector3(640, 450, 0); // 화면 상단 위치
+        //bubble_parent.transform.position = new Vector3(640, 450, 0); // 화면 상단 위치
         bubble_text.text = tutorial_texts[0];
     }
 
@@ -183,7 +183,7 @@ public class tutorial_quest : MonoBehaviour
                     GameObject.Find("quest_manager").GetComponent<quest_manager>().quest_contents_update(); ; //실시간 반영
 
                     step = 1; quest_num = 3;
-                    bubble_parent.transform.position = new Vector3(640, 450, 0); // 화면 상단 위치
+                    //bubble_parent.transform.position = new Vector3(640, 450, 0); // 화면 상단 위치
                     bubble_text.text = "역시 우리 해녀로구나.. 이제 잡은 자원을 양식해보렴";
 
                     item_num = 0;
@@ -207,7 +207,7 @@ public class tutorial_quest : MonoBehaviour
                     GameObject.Find("quest_manager").GetComponent<quest_manager>().quest_contents_update(); //실시간 반영
 
                     step = 1; quest_num = 3;
-                    bubble_parent.transform.position = new Vector3(640, 450, 0); // 화면 상단 위치
+                    //bubble_parent.transform.position = new Vector3(640, 450, 0); // 화면 상단 위치
                     bubble_text.text = "그렇지~ 자원은 그렇게 양식하는 거란다.. 상점도 한번 둘러보겠니?";
                     //PlayerPrefs.SetInt("storeNew", 1);
 

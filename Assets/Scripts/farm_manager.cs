@@ -565,7 +565,7 @@ public class farm_manager : MonoBehaviour
         if (sending_int < sending_limit)
         {
             button_click.PlayOneShot(button_click.clip);
-            interest_warning.text = "10만원보다 적은 금액 송금시\n 이자"+((int)((Haenyeo.debt + Haenyeo.interest - Haenyeo.payed) * 0.03)).ToString()+"원이 붙습니다.";
+            interest_warning.text = "10만원보다 적은 금액 송금시\n 이자" + ((int)((Haenyeo.debt + Haenyeo.interest - Haenyeo.payed) * 0.03)).ToString() + "원이 붙습니다.";
             StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.interest_warning));
         }
         else
@@ -608,6 +608,17 @@ public class farm_manager : MonoBehaviour
 
         }
 
+    }
+
+    //효민- 활성화된 양식장 개수 세는 함수
+    public int Activated_farm_number()
+    {
+        int number = 0;
+        for (int i = 0; i < farms.Length; i++)
+        {
+            if (farms[i].is_farm_Activated) number++;
+        }
+        return number;
     }
 
     //최소송금액보다 부족할 경우에 이자늘어남과 함께 송금되는 함수

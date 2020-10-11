@@ -29,8 +29,8 @@ public class quest_manager : MonoBehaviour
     public Text hilight_text,box_text;
 
     //reward effect 관련 오브젝트
-    public GameObject reward_image;
-    public Text  reward_money;
+    public Image reward_item,reward_money,reward_image;
+    public Text  money_text;
     
     void Start()
     {
@@ -45,6 +45,13 @@ public class quest_manager : MonoBehaviour
         }
 
         quest_contents_update();
+
+        //sprite 설정
+        Sprite net = Resources.Load<Sprite>("net");
+        Sprite bonus = Resources.Load<Sprite>("bonus");
+        Sprite ball1 = Resources.Load<Sprite>("ball1");
+        Sprite ball2 = Resources.Load<Sprite>("ball2");
+        Sprite ball3 = Resources.Load<Sprite>("ball3");
     }
 
     //퀘스트 목록 업데이트 
@@ -80,7 +87,7 @@ public class quest_manager : MonoBehaviour
 
                 type_text.text = data.type; summary_text.text = data.summary;
 
-                GameObject temp_content = Instantiate(content, new Vector3(0, 0, 0), Quaternion.identity);
+                GameObject temp_content = Instantiate(content, new Vector3(0, 0, -376), Quaternion.identity);
                 temp_content.transform.SetParent(content_parent.transform);
                 temp_content.SetActive(true);
             }
@@ -108,7 +115,7 @@ public class quest_manager : MonoBehaviour
                 type_text.text = data.type; summary_text.text = data.summary;
 
                 //content와 popup복제해서 부모 설정하기
-                GameObject temp_content = Instantiate(content, new Vector3(0, 0, 0), Quaternion.identity);
+                GameObject temp_content = Instantiate(content, new Vector3(0, 0, -376), Quaternion.identity);
                 temp_content.transform.SetParent(content_parent.transform);
                 temp_content.name = i.ToString();      //이름을 인덱스로 설정
                 temp_content.SetActive(true);
@@ -233,10 +240,22 @@ public class quest_manager : MonoBehaviour
     }
 
     //보상 버튼 이펙트
-    public IEnumerator reward_effect(int value)
+    public IEnumerator reward_effect(string reward, int value)
     {
-        reward_money.text =value.ToString();
-        reward_image.SetActive(true);
+        if (reward == "money")
+        {
+            reward_item.gameObject.SetActive(false);
+            reward_money.gameObject.SetActive(true);
+        }
+        else
+        {
+            reward_item.GetComponent<Image>().sprite = Resources.Load<Sprite>(reward);
+            reward_item.gameObject.SetActive(true);
+            reward_money.gameObject.SetActive(false);
+        }
+
+        reward_image.gameObject.SetActive(true);
+        money_text.text =value.ToString();
         Vector2 startPos = reward_image.transform.localPosition;
         Vector2 endPos = startPos + new Vector2(0, 40);
         float LerpT = 0;
