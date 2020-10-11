@@ -114,6 +114,12 @@ public class betting_rsp : MonoBehaviour
             rsp_result = 1; // 짐
             seller_text.text = "아이고~ 어쩌니. 아저씨가 이겨버렸네. 내기는 내기니까, 반값으로 잘 받아가마 해녀야~";
             lose.PlayOneShot(lose.clip);
+
+            //효민 - 5번 퀘스트 관련
+            if (quest_Data.daily_quest_list[5].state != -1 && quest_Data.daily_quest_list[5].state != 2)
+            {
+                if (PlayerPrefs.GetInt("quest5", 0) >= 0) PlayerPrefs.SetInt("quest5", PlayerPrefs.GetInt("quest5") - 1);
+            }
         }
         else
         {
@@ -121,6 +127,11 @@ public class betting_rsp : MonoBehaviour
             seller_text.text = "이런~ 내가 졌구나. 기분이다! 다섯배로 쳐주마!";
             win.PlayOneShot(win.clip);
 
+            //효민 - 5번 퀘스트 관련
+            if (quest_Data.daily_quest_list[5].state != -1 && quest_Data.daily_quest_list[5].state != 2)
+            {
+                if (PlayerPrefs.GetInt("quest5", 0) < 3) PlayerPrefs.SetInt("quest5", PlayerPrefs.GetInt("quest5") + 1);
+            }
         }
     }
     

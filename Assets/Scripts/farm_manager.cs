@@ -484,7 +484,7 @@ public class farm_manager : MonoBehaviour
 
             fadecolor.a = Mathf.Lerp(1, 0, time);
             img.color = fadecolor;
-            UnityEngine.Debug.Log(img.color.a);
+            //UnityEngine.Debug.Log(img.color.a);
             yield return null;
         }
         yield return new WaitForSeconds(0.5f);

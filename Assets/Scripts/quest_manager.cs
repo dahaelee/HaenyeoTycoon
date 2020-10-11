@@ -47,22 +47,6 @@ public class quest_manager : MonoBehaviour
         quest_contents_update();
     }
 
-    void Update()
-    {
-        int questReady = PlayerPrefs.GetInt("questReady", 1);
-        int doneFlag = PlayerPrefs.GetInt("doneFlag", 0);
-
-        if (questReady==1)   give_daily_quest(); //일일 퀘스트 제공
-
-        todo_update();  //todo문 업데이트
-        for (int idx = 0; idx < quest_Data.daily_quest_list.Count; idx++)
-        {
-            if(quest_Data.daily_quest_list[idx].state != -1)  daily_quest_check(idx);
-        }
-
-        done_check();
-    }
-
     //퀘스트 목록 업데이트 
     public void quest_contents_update()
     {
@@ -174,65 +158,7 @@ public class quest_manager : MonoBehaviour
     public void quest_popup_close()
     {
        popup.SetActive(false);
-    }
-
-    //일일 퀘스트 제공
-    public void give_daily_quest()
-    {
-        PlayerPrefs.SetInt("questReady", 0);
-        switch (Haenyeo.day)
-        {
-            case 2:
-                quest_Data.daily_quest_list[0].state = 0;
-                show_quest_box(quest_Data.daily_quest_list[0]);
-                break;
-            case 3:
-                quest_Data.daily_quest_list[1].state = 0;
-                show_quest_box(quest_Data.daily_quest_list[1]);
-                break;
-            case 4:
-                quest_Data.daily_quest_list[2].state = 0;
-                show_quest_box(quest_Data.daily_quest_list[2]);
-                break;
-            case 5:
-                quest_Data.daily_quest_list[3].state = 0;
-                show_quest_box(quest_Data.daily_quest_list[3]);
-                break;
-        }         
-         quest_contents_update();
-    }
-
-    public void todo_update()
-    {
-        quest_Data.daily_quest_list[0].todo = $"조개  {Haenyeo.sea_item_number[0]}/3";
-        quest_Data.daily_quest_list[1].todo = $"양식 미역  {Haenyeo.farm_item_number[1]}/3";
-        quest_Data.daily_quest_list[2].todo = $"새우 {Haenyeo.sea_item_number[3]}/4 ";
-        quest_Data.daily_quest_list[3].todo = $"금화 {PlayerPrefs.GetInt("quest_gold", 0)}/3";
-    }
-
-    //일일 퀘스트 체크
-    public void daily_quest_check(int idx)
-    {
-        switch (idx)
-        {
-            case 0:
-                if (Haenyeo.sea_item_number[0] >= 3) quest_Data.daily_quest_list[idx].state = 2;
-                else if(quest_Data.daily_quest_list[idx].state !=0 ) quest_Data.daily_quest_list[idx].state = 1;
-                break;
-            case 1:
-                if (Haenyeo.farm_item_number[1] >= 3) quest_Data.daily_quest_list[idx].state = 2;
-                else if (quest_Data.daily_quest_list[idx].state != 0) quest_Data.daily_quest_list[idx].state = 1;
-                break;
-            case 2:
-                if (Haenyeo.sea_item_number[3] >= 4) quest_Data.daily_quest_list[idx].state = 2;
-                else if (quest_Data.daily_quest_list[idx].state != 0) quest_Data.daily_quest_list[idx].state = 1;
-                break;
-            case 3:
-                if (PlayerPrefs.GetInt("quest_gold", 0) >= 3) quest_Data.daily_quest_list[idx].state = 2;
-                else if (quest_Data.daily_quest_list[idx].state != 0) quest_Data.daily_quest_list[idx].state = 1;
-                break;
-        }
-    }
+    } 
 
     public void done_check()
     {
@@ -263,30 +189,7 @@ public class quest_manager : MonoBehaviour
         quest_Data.daily_quest_list[idx].state = -1;
 
         //퀘스트에 따른 보상
-        switch (idx)
-        {
-            case 0:
-                Haenyeo.sea_item_number[0] -= 5;
-                Haenyeo.money += 20000;
-                StartCoroutine(reward_effect(20000));
-                break;
-            case 1:
-                Haenyeo.farm_item_number[1] -= 3;
-                Haenyeo.money += 30000;
-                StartCoroutine(reward_effect(30000));
-                break;
-            case 2:
-                Haenyeo.farm_item_number[3] -= 2;
-                Haenyeo.farm_item_number[5] -= 1;
-                Haenyeo.money += 50000;
-                StartCoroutine(reward_effect(50000));
-                break;
-            case 3:
-                PlayerPrefs.DeleteKey("quest_gold");
-                Haenyeo.money += 50000;
-                StartCoroutine(reward_effect(50000));
-                break;
-        }
+        GameObject.Find("daily_quest_manager").GetComponent<daily_quest_manager>().quest_reward(idx);
         quest_Data.daily_quest_list[idx].state = -1;
     }
 
@@ -330,7 +233,7 @@ public class quest_manager : MonoBehaviour
     }
 
     //보상 버튼 이펙트
-    IEnumerator reward_effect(int value)
+    public IEnumerator reward_effect(int value)
     {
         reward_money.text =value.ToString();
         reward_image.SetActive(true);

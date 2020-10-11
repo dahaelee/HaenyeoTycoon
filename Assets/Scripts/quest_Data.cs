@@ -106,7 +106,8 @@ public class quest_Data : MonoBehaviour
         daily_quest_list.Add(new Daily_quest_form(-1, "양식 미역 3번 수확하기", "양식의 달인", 1, "해녀 생활을 훌륭하게 잘 해내고 있구나\n양식 하는 건 아직 미숙하던데\n미역 3번만 수확해 보겠니?", "", "3만원"));
         daily_quest_list.Add(new Daily_quest_form(-1, "새우 4개 채집하기", "오늘의 점심", 1, "해녀야,, 오늘따라 새우구이가 끌리지 않니..?\n새우 4개만 가져와 주렴 ..\n그럼.. 부탁할게..", "", "5만원"));
         daily_quest_list.Add(new Daily_quest_form(-1, "바다에서 금화 3개 모으기", "바다에서 돈모으기", 1, "해녀야 바다에서 가끔식 동전이 떨어지는 걸 봤니?\n금화를 먹으면 2만원을 얻게 된단다\n꽤나 쏠쏠한 수입이 될 거야..!!", "", "5만원"));
-
+        daily_quest_list.Add(new Daily_quest_form(-1, "해파리 3개 채집하기", "제철 해산물", 2, "옆 가게에서 해파리 냉채 메뉴를 게시했다더구나!!\n해파리를 얼른 준비해 놔야겠어\n해녀야 너가 도와주겠니?", "", "3만원"));
+        daily_quest_list.Add(new Daily_quest_form(-1, "내기 연속 3번 이기기", "내기의 달인", 2, "너의 가위바위보 솜씨가 예사롭지 않더구나\n나의 승부욕을 자극하고 있어\n내기 조건을 하나 추가하도록 하지", "", "싹쓸이 그물 3개 "));
 
         //첫 튜토 시작
         GameObject.Find("tutorial_quest").GetComponent<tutorial_quest>().Sache1();
