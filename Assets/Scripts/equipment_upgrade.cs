@@ -17,6 +17,7 @@ public class equipment_upgrade : MonoBehaviour
     private float suit_pos, goggle_pos, flipper_pos;
     private float suit_movepos, goggle_movepos, flipper_movepos;
     private bool suit_IsScroll = false, goggle_IsScroll = false, flipper_IsScroll = false;
+
     // 사운드 이펙트
     public AudioSource upgrade_click;
 
@@ -59,12 +60,6 @@ public class equipment_upgrade : MonoBehaviour
     {
         equip_ui.gameObject.SetActive(false);
         item_ui.gameObject.SetActive(true);
-    }
-
-    public void tab_change_temp()
-    {
-        item_ui.gameObject.SetActive(false);
-        equip_ui.gameObject.SetActive(true);
     }
 
     void Update()
