@@ -9,6 +9,8 @@ public class sea : MonoBehaviour
     public float time_remaining, time_max, countdown;
     public Image return_to_farms_ui, show_mesh_ui, timeover_return_ui, block_touch, start_button;
     public Image text_window, next_triangle;
+    public Sprite[] depth_arr; // 깊이바 이미지 배열
+    public Image depth, location; // 깊이바 이미지, 위치 표시 이미지
     public Text countdown_text;
     public GameObject[] items_got; //그물망 속 자원 배열 
     public int[] item_num; //그물망 속 자원개수 배열
@@ -58,6 +60,9 @@ public class sea : MonoBehaviour
         button_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
         ready.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
         go.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+
+        // 해녀 레벨에 따라 깊이바 이미지 변경
+        depth.gameObject.GetComponent<Image>().sprite = depth_arr[Haenyeo.level-1];
     }
 
     void Update()
@@ -66,7 +71,7 @@ public class sea : MonoBehaviour
 
         if (!block_touch.gameObject.activeSelf) //터치 방지가 비활성화 상태일 때만
         {
-            Haenyeo.hp -= Time.deltaTime * Haenyeo.hp_ratio; //시간의 흐름에 따라 체력 감소 (아이템 별로 수치 조정하기)
+            Haenyeo.hp -= Time.deltaTime; //1초당 1씩 체력 감소
         }
 
         if (Haenyeo.hp <= 0) //체력이 0보다 작아지면
@@ -81,14 +86,10 @@ public class sea : MonoBehaviour
             {
                 countdown = 0; //마이너스값이 뜨지 않도록 0으로 
                 timeover_return_ui.gameObject.SetActive(false); //카운트다운 팝업창 비활성화
-                farm_manager.is_repay_locked = false;
-                farm_manager.is_sea_locked = true;
-                PlayerPrefs.SetInt("is_repay_locked", 0);
                 PlayerPrefs.Save();
                 load_farm(); //양식장으로 이동
             }
         }
-        
 
         if (haenyeo.transform.position.x < -475) //해녀의 위치가 화면 왼쪽 끝으로 가면
         {
@@ -102,6 +103,9 @@ public class sea : MonoBehaviour
         {
             gagebar.transform.localPosition = new Vector3((475 - haenyeo.transform.position.x)/100, 0.85f, -1f); //게이지바가 화면을 넘어가지 않도록 조정
         }
+
+        // 해녀 깊이바 위치표시 이동
+        location.transform.localPosition = new Vector3(3f, haenyeo.transform.position.y * 0.182f - 131.04f, 0f);
     }
 
     //깊어질수록 햇빛의 투명도 증가시키기  

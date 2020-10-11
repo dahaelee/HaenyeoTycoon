@@ -9,12 +9,11 @@ using System.Diagnostics;
 public class farm_manager : MonoBehaviour
 {
     public UI_manager UI_manager;       //UI 관련 매니저
-    public bool isTest = false;
     public farm[] farms;
     public GameObject[] farmable_items;
     public GameObject sea_item_parent;
     public static GameObject[] sea_item;
-    public Text name_info, time_info, day, money, debt, debt_repay, money_repay, sending_amount_repay, entire_debt,interest,payed,balance,today;
+    public Text name_info, time_info, day, money, debt, debt_repay, money_repay, sending_amount_repay, entire_debt, interest, payed, balance, today, interest_warning;
     public int chosen_item, chosen_farm, trash_farm_num, activation_cost, sending_int, sending_limit, limit_day;
     public bool is_chosen;
     public static bool is_sea_locked, is_repay_locked, is_repayAnim_Activated;
@@ -24,7 +23,7 @@ public class farm_manager : MonoBehaviour
     //사운드 관련 필드
     public AudioSource bgm, button_click, popup_click, expand_click, request_denied, get_money, trashing, next_day, debt_sending, num_pad, icon_click, item_click, farm_money;
     public AudioClip farm_night_BGM, farm_day_BGM;
-    public Image repay_icon, farm_night;
+    public Image repay_icon, farm_night, repay_inactive, sea_inactive;
     public Image[] items;
 
     IEnumerator current_Info;
@@ -44,7 +43,7 @@ public class farm_manager : MonoBehaviour
     void OnEnable()
     {
         sea_item = new GameObject[9];
-        for(int i=0; i < sea_item.Length; i++)
+        for (int i = 0; i < sea_item.Length; i++)
         {
             sea_item[i] = sea_item_parent.transform.GetChild(i).gameObject;
         }
@@ -77,7 +76,7 @@ public class farm_manager : MonoBehaviour
         money.GetComponent<Text>().text = Haenyeo.money.ToString();
         debt.GetComponent<Text>().text = Haenyeo.debt.ToString();
 
-        for(int i=0; i < sea_item.Length; i++)
+        for (int i = 0; i < sea_item.Length; i++)
         {
             sea_item[i].transform.GetChild(2).GetComponent<Text>().text = sea_item[i].GetComponent<sea_item>().item_name_kor;
             sea_item[i].transform.GetChild(3).GetComponent<Text>().text = sea_item[i].GetComponent<sea_item>().farm_price.ToString();
@@ -101,7 +100,7 @@ public class farm_manager : MonoBehaviour
     {
         day.GetComponent<Text>().text = "D-" + (limit_day - Haenyeo.day + 1).ToString();
         money.GetComponent<Text>().text = string.Format("{0:#,###0}", Haenyeo.money);
-        debt.GetComponent<Text>().text = string.Format("{0:#,###0}", Haenyeo.debt+Haenyeo.interest-Haenyeo.payed);
+        debt.GetComponent<Text>().text = string.Format("{0:#,###0}", Haenyeo.debt + Haenyeo.interest - Haenyeo.payed);
         if (Input.GetKeyUp(KeyCode.Escape))
         {
             StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.ask_quit));
@@ -111,7 +110,9 @@ public class farm_manager : MonoBehaviour
         bgm_sound_ctrl();
         if (Haenyeo.hp <= 0)
         {
-            if(Haenyeo.todayState == Haenyeo.TodayState.day)
+            sea_inactive.gameObject.SetActive(true);    //바다 못가요
+            repay_inactive.gameObject.SetActive(false);    //바다 못가요
+            if (Haenyeo.todayState == Haenyeo.TodayState.day)
             {
                 StartCoroutine(GoNight());
             }
@@ -119,7 +120,7 @@ public class farm_manager : MonoBehaviour
             {
                 StartCoroutine(repayAnim());
             }
-            if(bgm.clip.name == "BGM_farm")
+            if (bgm.clip.name == "BGM_farm")
             {
                 bgm.clip = farm_night_BGM;
                 bgm.Play();
@@ -127,6 +128,8 @@ public class farm_manager : MonoBehaviour
         }
         else
         {
+            sea_inactive.gameObject.SetActive(false);
+            repay_inactive.gameObject.SetActive(true);    //바다 못가요
             is_repayAnim_Activated = false;
         }
     }
@@ -148,8 +151,8 @@ public class farm_manager : MonoBehaviour
     public IEnumerator farming_effect(int index)
     {
         farms[index].money.transform.GetChild(0).transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-        Vector3  d = farms[index].money.transform.GetChild(0).transform.localScale;
-        for (int i=0; i<10; i++)
+        Vector3 d = farms[index].money.transform.GetChild(0).transform.localScale;
+        for (int i = 0; i < 10; i++)
         {
             d = new Vector3(d.x * 1.02f, d.y * 1.02f, d.z * 1.02f);
             farms[index].money.transform.GetChild(0).transform.localScale = d;
@@ -225,14 +228,14 @@ public class farm_manager : MonoBehaviour
 
             farms[farm_index].isFarming = true;    //양식 시작한걸로 하기
             Haenyeo.sea_item_number[item_index] -= 1;   //자원 1개 차감 
-            StartCoroutine(UI_manager.HPminus(1));      //체력 -1 이펙트
+                                                        //            StartCoroutine(UI_manager.HPminus(1));      //체력 -1 이펙트
             farms[farm_index].plus.gameObject.SetActive(false); //플러스 표시 빼기
 
             farms[farm_index].item = sea_item[item_index].GetComponent<sea_item>();    //양식장에 자원 넣기
             farms[farm_index].item1.sprite = Resources.Load<Sprite>(sea_item[item_index].name);   //자원 이미지 바꾸기
             farms[farm_index].item2.sprite = Resources.Load<Sprite>(sea_item[item_index].name);   //자원 이미지 바꾸기
             farms[farm_index].item3.sprite = Resources.Load<Sprite>(sea_item[item_index].name);   //자원 이미지 바꾸기
-            
+
             farms[farm_index].item1.GetComponent<Animator>().runtimeAnimatorController = farmable_items[item_index].GetComponent<sea_item>().anim.runtimeAnimatorController;    //자원 애니메이터 넣기
             farms[farm_index].item2.GetComponent<Animator>().runtimeAnimatorController = farmable_items[item_index].GetComponent<sea_item>().anim.runtimeAnimatorController;    //자원 애니메이터 넣기
             farms[farm_index].item3.GetComponent<Animator>().runtimeAnimatorController = farmable_items[item_index].GetComponent<sea_item>().anim.runtimeAnimatorController;    //자원 애니메이터 넣기
@@ -259,7 +262,6 @@ public class farm_manager : MonoBehaviour
     {
         if (Haenyeo.hp <= 0)
         {
-            UnityEngine.Debug.Log("open");
             if (UI_manager.currentState != UI_manager.UIstate.no_HP)
             {
                 StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.no_HP, true));
@@ -357,7 +359,7 @@ public class farm_manager : MonoBehaviour
     public void Ask_trash()
     {
         button_click.PlayOneShot(button_click.clip);    //버튼클릭 사운드
-        
+
         if (UI_manager.currentState != UI_manager.UIstate.trash)
         {
             UI_manager.AllUIoff();
@@ -415,7 +417,7 @@ public class farm_manager : MonoBehaviour
     //수확까지 남은 시간 보여주기
     IEnumerator Farm_remaining_time(int index)
     {
-        while (UI_manager.currentState==UI_manager.UIstate.farm_info)
+        while (UI_manager.currentState == UI_manager.UIstate.farm_info)
         {
             if ((farms[index].remaining_time / 60) > 0)
             {
@@ -432,7 +434,7 @@ public class farm_manager : MonoBehaviour
     }
 
     public IEnumerator GoNight()
- 
+
     {
         Haenyeo.todayState = Haenyeo.TodayState.night;
         StartCoroutine(fadein(farm_night));
@@ -459,12 +461,13 @@ public class farm_manager : MonoBehaviour
         fadecolor.a = 0f;
         img.color = fadecolor;
         img.gameObject.SetActive(true);
-        while (img.color.a <1) {
-            time += Time.deltaTime ;
+        while (img.color.a < 1)
+        {
+            time += Time.deltaTime;
 
             fadecolor.a = Mathf.Lerp(0, 1, time);
             img.color = fadecolor;
-            yield return null; 
+            yield return null;
         }
     }
 
@@ -477,7 +480,7 @@ public class farm_manager : MonoBehaviour
         img.gameObject.SetActive(true);
         while (img.color.a > 0)
         {
-            time += Time.deltaTime ;
+            time += Time.deltaTime;
 
             fadecolor.a = Mathf.Lerp(1, 0, time);
             img.color = fadecolor;
@@ -487,7 +490,7 @@ public class farm_manager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         fadecolor.a = 1f;
         img.color = fadecolor;
-        
+
         img.gameObject.SetActive(false);
 
     }
@@ -502,7 +505,7 @@ public class farm_manager : MonoBehaviour
         entire_debt.text = string.Format("{0:#,###0}", Haenyeo.debt);
         interest.text = string.Format("{0:#,###0}", Haenyeo.interest);
         payed.text = string.Format("{0:#,###0}", Haenyeo.payed);
-        balance.text = string.Format("{0:#,###0}", (Haenyeo.debt - Haenyeo.payed + Haenyeo.interest)); 
+        balance.text = string.Format("{0:#,###0}", (Haenyeo.debt - Haenyeo.payed + Haenyeo.interest));
         today.text = Haenyeo.day.ToString();
         StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.today_work));
 
@@ -562,6 +565,7 @@ public class farm_manager : MonoBehaviour
         if (sending_int < sending_limit)
         {
             button_click.PlayOneShot(button_click.clip);
+            interest_warning.text = "10만원보다 적은 금액 송금시\n 이자"+((int)((Haenyeo.debt + Haenyeo.interest - Haenyeo.payed) * 0.03)).ToString()+"원이 붙습니다.";
             StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.interest_warning));
         }
         else
@@ -582,40 +586,25 @@ public class farm_manager : MonoBehaviour
             is_repay_locked = true;
             is_sea_locked = false;      //바다 아이콘 활성화
             PlayerPrefs.SetInt("is_repay_locked", 1);
-            if (isTest)
+            if (Haenyeo.day > limit_day && Haenyeo.debt > 0)
             {
-                if (Haenyeo.day > 30)
-                {
-                    StartCoroutine("bad_ending");
-                }
-
-                if (Haenyeo.debt < 1)
-                {
-                    StartCoroutine("happy_ending");
-                }
+                StartCoroutine("bad_ending");
             }
-            else
+
+            if (Haenyeo.day > limit_day && Haenyeo.debt < 1)
             {
+                StartCoroutine("happy_ending");
 
-                if (Haenyeo.day > limit_day && Haenyeo.debt > 0)
-                {
-                    StartCoroutine("bad_ending");
-                }
-
-                if (Haenyeo.day > limit_day && Haenyeo.debt < 1)
-                {
-                    StartCoroutine("happy_ending");
-
-                }
-
-                if (Haenyeo.debt < 1)
-                {
-                    StartCoroutine("happy_ending");
-                }
             }
+
+            if (Haenyeo.debt < 1)
+            {
+                StartCoroutine("happy_ending");
+            }
+
             StartCoroutine(GoDay());    //다음날로 바뀌는 이펙트
 
-            
+
 
         }
 
@@ -636,40 +625,25 @@ public class farm_manager : MonoBehaviour
         {
             Haenyeo.debt = 0;
         }
-        Haenyeo.interest += (int)((Haenyeo.debt+Haenyeo.interest-Haenyeo.payed) * 0.03);     //이자율 3%
+        Haenyeo.interest += (int)((Haenyeo.debt + Haenyeo.interest - Haenyeo.payed) * 0.03);     //이자율 3%
         UI_manager.AllUIoff();
         is_repay_locked = true;
         is_sea_locked = false;      //바다 아이콘 활성화
-        if (isTest)
+        
+        if (Haenyeo.day > limit_day && Haenyeo.debt > 0)
         {
-            if (Haenyeo.day > 5)
-            {
-                StartCoroutine("bad_ending");
-            }
-
-            if (Haenyeo.debt < 1)
-            {
-                StartCoroutine("happy_ending");
-            }
+            StartCoroutine("bad_ending");
         }
-        else
+
+        if (Haenyeo.day > limit_day && Haenyeo.debt < 1)
         {
+            StartCoroutine("happy_ending");
 
-            if (Haenyeo.day > limit_day && Haenyeo.debt > 0)
-            {
-                StartCoroutine("bad_ending");
-            }
+        }
 
-            if (Haenyeo.day > limit_day && Haenyeo.debt < 1)
-            {
-                StartCoroutine("happy_ending");
-
-            }
-
-            if (Haenyeo.debt < 1)
-            {
-                StartCoroutine("happy_ending");
-            }
+        if (Haenyeo.debt < 1)
+        {
+            StartCoroutine("happy_ending");
         }
         StartCoroutine(GoDay());    //다음날로 바뀌는 이펙트
 
@@ -694,7 +668,7 @@ public class farm_manager : MonoBehaviour
                 StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.no_HP, true));
             }
         }
-        
+
     }
 
 
@@ -841,7 +815,6 @@ public class farm_manager : MonoBehaviour
 
         PlayerPrefs.SetFloat("Haenyeo_moving_speed", Haenyeo.moving_speed);
         PlayerPrefs.SetInt("Haenyeo_coin_time", Haenyeo.coin_time);
-        PlayerPrefs.SetFloat("Haenyeo_hp_ratio", Haenyeo.hp_ratio);
 
         if (is_repay_locked)
         {
@@ -937,85 +910,42 @@ public class farm_manager : MonoBehaviour
             is_sea_locked = false;
         }
 
-        if (isTest)
-        {
+        Haenyeo.money = PlayerPrefs.GetInt("Haenyeo_money", 0);
+        Haenyeo.debt = PlayerPrefs.GetInt("Haenyeo_debt", 5000000);
+        Haenyeo.payed = PlayerPrefs.GetInt("Haenyeo_payed", 0);
+        Haenyeo.interest = PlayerPrefs.GetInt("Haenyeo_interest", 0);
+        Haenyeo.diving_time = PlayerPrefs.GetInt("Haenyeo_diving_time", 60);
+        Haenyeo.day = PlayerPrefs.GetInt("Haenyeo_day", 1);
+        Haenyeo.level = PlayerPrefs.GetInt("Haenyeo_level", 3); // 다해 : 바다 다 열려고 레벨 3으로 설정 해놨음
+        Haenyeo.hp = PlayerPrefs.GetFloat("Haenyeo_hp", 100);
+        bgm_volume.value = PlayerPrefs.GetFloat("Bgm_volume", 1);
+        effect_volume.value = PlayerPrefs.GetFloat("Effect_volume", 1);
 
-            Haenyeo.money = PlayerPrefs.GetInt("Haenyeo_money", 50000);
-            Haenyeo.debt = PlayerPrefs.GetInt("Haenyeo_debt", 1000000);
-            Haenyeo.payed = PlayerPrefs.GetInt("Haenyeo_payed", 0);
-            Haenyeo.interest = PlayerPrefs.GetInt("Haenyeo_interest", 0);
-            Haenyeo.diving_time = PlayerPrefs.GetInt("Haenyeo_diving_time", 70);
-            Haenyeo.day = PlayerPrefs.GetInt("Haenyeo_day", 1);
-            Haenyeo.level = PlayerPrefs.GetInt("Haenyeo_level", 2);
-            Haenyeo.hp = PlayerPrefs.GetFloat("Haenyeo_hp", 100);
-            bgm_volume.value = PlayerPrefs.GetFloat("Bgm_volume", 1);
-            effect_volume.value = PlayerPrefs.GetFloat("Effect_volume", 1);
+        Haenyeo.moving_speed = PlayerPrefs.GetFloat("Haenyeo_moving_speed", 7);
+        Haenyeo.coin_time = PlayerPrefs.GetInt("Haenyeo_coin_time", 8);
 
-            Haenyeo.moving_speed = PlayerPrefs.GetFloat("Haenyeo_moving_speed", 7);
-            Haenyeo.coin_time = PlayerPrefs.GetInt("Haenyeo_coin_time", 8);
-            Haenyeo.hp_ratio = PlayerPrefs.GetFloat("Haenyeo_hp_ratio", 1);
-            
-            //해녀 보유한 자원 개수 초기화
+        //해녀 보유한 자원 개수 초기화
 
-            Haenyeo.sea_item_number[0] = PlayerPrefs.GetInt("Haenyeo_sea_item_number0", 0);
-            Haenyeo.sea_item_number[1] = PlayerPrefs.GetInt("Haenyeo_sea_item_number1", 0);
-            Haenyeo.sea_item_number[2] = PlayerPrefs.GetInt("Haenyeo_sea_item_number2", 0);
-            Haenyeo.sea_item_number[3] = PlayerPrefs.GetInt("Haenyeo_sea_item_number3", 0);
-            Haenyeo.sea_item_number[4] = PlayerPrefs.GetInt("Haenyeo_sea_item_number4", 0);
-            Haenyeo.sea_item_number[5] = PlayerPrefs.GetInt("Haenyeo_sea_item_number5", 0);
-            Haenyeo.sea_item_number[6] = PlayerPrefs.GetInt("Haenyeo_sea_item_number6", 0);
-            Haenyeo.sea_item_number[7] = PlayerPrefs.GetInt("Haenyeo_sea_item_number7", 0);
-            Haenyeo.sea_item_number[8] = PlayerPrefs.GetInt("Haenyeo_sea_item_number8", 0);
-
-            Haenyeo.farm_item_number[0] = PlayerPrefs.GetInt("Haenyeo_farm_item_number0", 0);
-            Haenyeo.farm_item_number[1] = PlayerPrefs.GetInt("Haenyeo_farm_item_number1", 0);
-            Haenyeo.farm_item_number[2] = PlayerPrefs.GetInt("Haenyeo_farm_item_number2", 0);
-            Haenyeo.farm_item_number[3] = PlayerPrefs.GetInt("Haenyeo_farm_item_number3", 0);
-            Haenyeo.farm_item_number[4] = PlayerPrefs.GetInt("Haenyeo_farm_item_number4", 0);
-            Haenyeo.farm_item_number[5] = PlayerPrefs.GetInt("Haenyeo_farm_item_number5", 0);
-            Haenyeo.farm_item_number[6] = PlayerPrefs.GetInt("Haenyeo_farm_item_number6", 0);
-            Haenyeo.farm_item_number[7] = PlayerPrefs.GetInt("Haenyeo_farm_item_number7", 0);
-            Haenyeo.farm_item_number[8] = PlayerPrefs.GetInt("Haenyeo_farm_item_number8", 0);
-        }
-        else
-        {
-            Haenyeo.money = PlayerPrefs.GetInt("Haenyeo_money", 0); 
-            Haenyeo.debt = PlayerPrefs.GetInt("Haenyeo_debt", 5000000);
-            Haenyeo.payed = PlayerPrefs.GetInt("Haenyeo_payed", 0);
-            Haenyeo.interest = PlayerPrefs.GetInt("Haenyeo_interest", 0);
-            Haenyeo.diving_time = PlayerPrefs.GetInt("Haenyeo_diving_time", 60);
-            Haenyeo.day = PlayerPrefs.GetInt("Haenyeo_day", 1);
-            Haenyeo.level = PlayerPrefs.GetInt("Haenyeo_level", 3); // 다해 : 바다 다 열려고 레벨 3으로 설정 해놨음
-            Haenyeo.hp = PlayerPrefs.GetFloat("Haenyeo_hp", 100);
-            bgm_volume.value = PlayerPrefs.GetFloat("Bgm_volume", 1);
-            effect_volume.value = PlayerPrefs.GetFloat("Effect_volume", 1);
-
-            Haenyeo.moving_speed = PlayerPrefs.GetFloat("Haenyeo_moving_speed", 7);
-            Haenyeo.coin_time = PlayerPrefs.GetInt("Haenyeo_coin_time", 8);
-            Haenyeo.hp_ratio = PlayerPrefs.GetFloat("Haenyeo_hp_ratio", 2);
-
-            //해녀 보유한 자원 개수 초기화
-
-            Haenyeo.sea_item_number[0] = PlayerPrefs.GetInt("Haenyeo_sea_item_number0", 0);
-            Haenyeo.sea_item_number[1] = PlayerPrefs.GetInt("Haenyeo_sea_item_number1", 0);
-            Haenyeo.sea_item_number[2] = PlayerPrefs.GetInt("Haenyeo_sea_item_number2", 0);
-            Haenyeo.sea_item_number[3] = PlayerPrefs.GetInt("Haenyeo_sea_item_number3", 0);
-            Haenyeo.sea_item_number[4] = PlayerPrefs.GetInt("Haenyeo_sea_item_number4", 0);
-            Haenyeo.sea_item_number[5] = PlayerPrefs.GetInt("Haenyeo_sea_item_number5", 0);
-            Haenyeo.sea_item_number[6] = PlayerPrefs.GetInt("Haenyeo_sea_item_number6", 0);
-            Haenyeo.sea_item_number[7] = PlayerPrefs.GetInt("Haenyeo_sea_item_number7", 0);
-            Haenyeo.sea_item_number[8] = PlayerPrefs.GetInt("Haenyeo_sea_item_number8", 0);
+        Haenyeo.sea_item_number[0] = PlayerPrefs.GetInt("Haenyeo_sea_item_number0", 0);
+        Haenyeo.sea_item_number[1] = PlayerPrefs.GetInt("Haenyeo_sea_item_number1", 0);
+        Haenyeo.sea_item_number[2] = PlayerPrefs.GetInt("Haenyeo_sea_item_number2", 0);
+        Haenyeo.sea_item_number[3] = PlayerPrefs.GetInt("Haenyeo_sea_item_number3", 0);
+        Haenyeo.sea_item_number[4] = PlayerPrefs.GetInt("Haenyeo_sea_item_number4", 0);
+        Haenyeo.sea_item_number[5] = PlayerPrefs.GetInt("Haenyeo_sea_item_number5", 0);
+        Haenyeo.sea_item_number[6] = PlayerPrefs.GetInt("Haenyeo_sea_item_number6", 0);
+        Haenyeo.sea_item_number[7] = PlayerPrefs.GetInt("Haenyeo_sea_item_number7", 0);
+        Haenyeo.sea_item_number[8] = PlayerPrefs.GetInt("Haenyeo_sea_item_number8", 0);
 
 
-            Haenyeo.farm_item_number[0] = PlayerPrefs.GetInt("Haenyeo_farm_item_number0", 0);
-            Haenyeo.farm_item_number[1] = PlayerPrefs.GetInt("Haenyeo_farm_item_number1", 0);
-            Haenyeo.farm_item_number[2] = PlayerPrefs.GetInt("Haenyeo_farm_item_number2", 0);
-            Haenyeo.farm_item_number[3] = PlayerPrefs.GetInt("Haenyeo_farm_item_number3", 0);
-            Haenyeo.farm_item_number[4] = PlayerPrefs.GetInt("Haenyeo_farm_item_number4", 0);
-            Haenyeo.farm_item_number[5] = PlayerPrefs.GetInt("Haenyeo_farm_item_number5", 0);
-            Haenyeo.farm_item_number[6] = PlayerPrefs.GetInt("Haenyeo_farm_item_number6", 0);
-            Haenyeo.farm_item_number[7] = PlayerPrefs.GetInt("Haenyeo_farm_item_number7", 0);
-            Haenyeo.farm_item_number[8] = PlayerPrefs.GetInt("Haenyeo_farm_item_number8", 0);
-        }
+        Haenyeo.farm_item_number[0] = PlayerPrefs.GetInt("Haenyeo_farm_item_number0", 0);
+        Haenyeo.farm_item_number[1] = PlayerPrefs.GetInt("Haenyeo_farm_item_number1", 0);
+        Haenyeo.farm_item_number[2] = PlayerPrefs.GetInt("Haenyeo_farm_item_number2", 0);
+        Haenyeo.farm_item_number[3] = PlayerPrefs.GetInt("Haenyeo_farm_item_number3", 0);
+        Haenyeo.farm_item_number[4] = PlayerPrefs.GetInt("Haenyeo_farm_item_number4", 0);
+        Haenyeo.farm_item_number[5] = PlayerPrefs.GetInt("Haenyeo_farm_item_number5", 0);
+        Haenyeo.farm_item_number[6] = PlayerPrefs.GetInt("Haenyeo_farm_item_number6", 0);
+        Haenyeo.farm_item_number[7] = PlayerPrefs.GetInt("Haenyeo_farm_item_number7", 0);
+        Haenyeo.farm_item_number[8] = PlayerPrefs.GetInt("Haenyeo_farm_item_number8", 0);
+
     }
 }

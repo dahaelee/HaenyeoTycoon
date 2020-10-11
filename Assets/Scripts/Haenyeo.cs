@@ -11,7 +11,7 @@ using System.Runtime.Versioning;
 public class Haenyeo : MonoBehaviour
 {
     public static int money, debt, diving_time, farm_number, day, level, payed, interest, coin_time; 
-    public static float hp, moving_speed, hp_ratio;
+    public static float hp, moving_speed;
     public static TodayState todayState = TodayState.day;
     public static int[] sea_item_number = new int[9]; //보유하고있는 자원 개수
     public Text hp_text;
