@@ -30,7 +30,7 @@ public class sea_coin : MonoBehaviour
                 //효민 - daily quest 관련
                 if (quest_Data.daily_quest_list[3].state != -1 && quest_Data.daily_quest_list[3].state != 2)
                 {
-                    PlayerPrefs.SetInt("quest_gold", PlayerPrefs.GetInt("quest_gold") + 1);
+                    PlayerPrefs.SetInt("quest3", PlayerPrefs.GetInt("quest3") + 1);
                 }
             }
 
