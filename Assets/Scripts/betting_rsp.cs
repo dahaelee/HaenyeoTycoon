@@ -108,6 +108,13 @@ public class betting_rsp : MonoBehaviour
         {
             rsp_result = 0; // 비김
             seller_text.text = "비겼구만! 그렇다면 제값에 받도록 하마.";
+
+
+            //효민 - 5번 퀘스트 관련
+            if (quest_Data.daily_quest_list[5].state != -1 && quest_Data.daily_quest_list[5].state != 2)
+            {
+                if (PlayerPrefs.GetInt("quest5", 0) < 3) PlayerPrefs.SetInt("quest5", PlayerPrefs.GetInt("quest5") + 1);
+            }
         }
         else if(k == 1)
         {

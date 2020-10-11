@@ -42,9 +42,9 @@ public class Haenyeo : MonoBehaviour
 
     public enum farm_item_index
     {
-        starfish = 0,
+        shell= 0,
         seaweed,
-        shell,
+        starfish,
         shrimp,
         jellyfish,
         crab,
