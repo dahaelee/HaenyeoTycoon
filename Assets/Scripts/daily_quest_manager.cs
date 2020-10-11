@@ -7,7 +7,6 @@ public class daily_quest_manager : MonoBehaviour
     void Update()
     {
         int questReady = PlayerPrefs.GetInt("questReady", 1);
-
         if (questReady == 1) give_daily_quest(); //일일 퀘스트 제공
 
         todo_update();  //todo문 업데이트
@@ -45,6 +44,7 @@ public class daily_quest_manager : MonoBehaviour
         quest_Data.daily_quest_list[8].todo = $"기능성 오리발 {equipment_upgrade.my_flipper}/1";
         quest_Data.daily_quest_list[9].todo = $"양식 문어 {Haenyeo.farm_item_number[6]}/3";
         quest_Data.daily_quest_list[10].todo = $"양식장 개수 {GameObject.Find("farm_manager").GetComponent<farm_manager>().Activated_farm_number()}/6";
+
     }
 
     public void daily_quest_check(int idx)
@@ -104,6 +104,7 @@ public class daily_quest_manager : MonoBehaviour
                 Haenyeo.sea_item_number[0] -= 3;
                 Haenyeo.money += 20000;
                 StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money",20000));
+
                 break;
             case 1:
                 Haenyeo.farm_item_number[1] -= 3;
@@ -114,6 +115,7 @@ public class daily_quest_manager : MonoBehaviour
                 Haenyeo.sea_item_number[3] -= 4;
                 Haenyeo.money += 50000;
                 StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 50000));
+
                 break;
             case 3:
                 PlayerPrefs.DeleteKey("quest3");
@@ -157,5 +159,4 @@ public class daily_quest_manager : MonoBehaviour
                 break;
         }
     }
-    
 }

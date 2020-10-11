@@ -45,13 +45,6 @@ public class quest_manager : MonoBehaviour
         }
 
         quest_contents_update();
-
-        //sprite 설정
-        Sprite net = Resources.Load<Sprite>("net");
-        Sprite bonus = Resources.Load<Sprite>("bonus");
-        Sprite ball1 = Resources.Load<Sprite>("ball1");
-        Sprite ball2 = Resources.Load<Sprite>("ball2");
-        Sprite ball3 = Resources.Load<Sprite>("ball3");
     }
 
     //퀘스트 목록 업데이트 

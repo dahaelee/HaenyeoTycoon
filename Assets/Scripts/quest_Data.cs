@@ -114,6 +114,7 @@ public class quest_Data : MonoBehaviour
         daily_quest_list.Add(new Daily_quest_form(-1, "양식 문어 3번 수확하기", "양식의 달인", 2, "긴급긴급!! 오늘 등산 동호회가 온다더구나 혹시 몰라 문어를 많이 공수해놓아야겠어\n해녀야 부탁하마!", "", "4만원"));
         daily_quest_list.Add(new Daily_quest_form(-1, "양식장 6개 확장하기", "양식의 달인", 1, "해녀야.. 이제는 정말 베테랑 해녀라고 불러도 되겠어 양식장을 늘리면 한번에 더 많은 자원을 양식할 수 있단다\n양식장을 늘려보겠니?", "", "중간 구슬 3개"));
 
+
         //첫 튜토 시작
         GameObject.Find("tutorial_quest").GetComponent<tutorial_quest>().Sache1();
 
