@@ -91,9 +91,10 @@ public class sea : MonoBehaviour
             }
         }
 
-        if (haenyeo.transform.position.x < -475) //해녀의 위치가 화면 왼쪽 끝으로 가면
+        // 깊이바 추가로 인해 왼쪽 끝으로 갈때 수치 조정함 (475->415)
+        if (haenyeo.transform.position.x < -415) //해녀의 위치가 화면 왼쪽 끝으로 가면
         {
-            gagebar.transform.localPosition = new Vector3((-475 - haenyeo.transform.position.x)/100, 0.85f, -1f); //게이지바가 화면을 넘어가지 않도록 조정
+            gagebar.transform.localPosition = new Vector3((-415 - haenyeo.transform.position.x)/100, 0.85f, -1f); //게이지바가 화면을 넘어가지 않도록 조정
         }
         if (haenyeo.transform.position.x >= -475 && haenyeo.transform.position.x <= 475) //해녀의 위치가 화면 양 끝이 아니면
         {
