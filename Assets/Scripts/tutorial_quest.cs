@@ -48,11 +48,6 @@ public class tutorial_quest : MonoBehaviour
                 switch (step)
                 {
                     case 2:
-
-                        Initialize();
-                        Daddy1();
-                        break;
-                    default:
                         Initialize();
                         Daddy1();
                         break;
@@ -68,7 +63,7 @@ public class tutorial_quest : MonoBehaviour
                     quest_bg.gameObject.SetActive(false);
                     hilight[0].gameObject.SetActive(true);
 
-                    bubble_parent.transform.position = new Vector3(640, 260, 0); // 화면 하단 위치
+                    //bubble_parent.transform.position = new Vector3(640, 260, 0); // 화면 하단 위치
                     bubble_text.text = tutorial_texts[2];
                 }
                 else
@@ -80,7 +75,7 @@ public class tutorial_quest : MonoBehaviour
                         bubble_text.text = tutorial_texts[step - 1];
                     }
                     //말풍선 위치 조정
-                    if (step == 6) bubble_parent.transform.position = new Vector3(640, 450, 0);
+                    //if (step == 6) bubble_parent.transform.position = new Vector3(640, 450, 0);
                     if (step == 9)
                     {
                         bubble_text.text = tutorial_texts[step - 1];
@@ -92,16 +87,14 @@ public class tutorial_quest : MonoBehaviour
                 Initialize();
                 break;
             case 4:
-                if (step == 2)
+                if (step < 4)
                 {
-                    text.text = "다음은 15일 까지 누적 송금액이 200만원 이상이 되도록 해";
-                    hilight_text.text = "15일 까지 200만원 이상 송금하기";
+                    bubble_text.text = tutorial_texts[step - 1];
                 }
-                if (step == 3)
+                else
                 {
-                    SceneManager.LoadScene("ending_bad");
+                    Initialize();
                 }
-                else Initialize();
                 break;
         }
     }
@@ -123,7 +116,7 @@ public class tutorial_quest : MonoBehaviour
     //아빠 1 - 게임 ui 설명
     public void Daddy1()
     {
-        tutorial_texts = new string[]
+        tutorial_texts= new string[]
         {
             "아빠 때문에 네가 고생하는 것 같아 마음이 편하지가 않구나..",
             "아직 양식장 구성에 대해 잘 모를테니 몇가지 설명을 해주마..",
@@ -135,7 +128,6 @@ public class tutorial_quest : MonoBehaviour
             "바다 아이콘을 누르면, 바다로 갈 수 있단다..",
             "이 참에 바다에서 물질하는 법도 알려주마… 바다 아이콘을 눌러보렴"
         };
-
         touch_bg.gameObject.SetActive(true);
         quest_bg.gameObject.SetActive(true);
         bubble_parent.SetActive(true);
@@ -148,7 +140,7 @@ public class tutorial_quest : MonoBehaviour
         quest_Data.tutorial_quest_list[0].state = 1;    //진행중인 퀘스트로 변경
         GameObject.Find("quest_manager").GetComponent<quest_manager>().quest_contents_update(); //실시간 반영
         step = 1; quest_num = 2;
-        bubble_parent.transform.position = new Vector3(640, 450, 0); // 화면 상단 위치
+        //bubble_parent.transform.position = new Vector3(640, 450, 0); // 화면 상단 위치
         bubble_text.text = tutorial_texts[0];
     }
 
@@ -191,7 +183,7 @@ public class tutorial_quest : MonoBehaviour
                     GameObject.Find("quest_manager").GetComponent<quest_manager>().quest_contents_update(); ; //실시간 반영
 
                     step = 1; quest_num = 3;
-                    bubble_parent.transform.position = new Vector3(640, 450, 0); // 화면 상단 위치
+                    //bubble_parent.transform.position = new Vector3(640, 450, 0); // 화면 상단 위치
                     bubble_text.text = "역시 우리 해녀로구나.. 이제 잡은 자원을 양식해보렴";
 
                     item_num = 0;
@@ -215,7 +207,7 @@ public class tutorial_quest : MonoBehaviour
                     GameObject.Find("quest_manager").GetComponent<quest_manager>().quest_contents_update(); //실시간 반영
 
                     step = 1; quest_num = 3;
-                    bubble_parent.transform.position = new Vector3(640, 450, 0); // 화면 상단 위치
+                    //bubble_parent.transform.position = new Vector3(640, 450, 0); // 화면 상단 위치
                     bubble_text.text = "그렇지~ 자원은 그렇게 양식하는 거란다.. 상점도 한번 둘러보겠니?";
                     //PlayerPrefs.SetInt("storeNew", 1);
 
@@ -225,6 +217,27 @@ public class tutorial_quest : MonoBehaviour
                     PlayerPrefs.SetInt("isQuest", 5);
                 }
                 break;
+                
+            case 5:
+                if (PlayerPrefs.GetInt("storeNew", 1) == 0)
+                {
+                    tutorial_texts = new string[]
+                    {
+                        "체력이 0이 되면 바다에 더이상 못들어 가게 된단다...",
+                        "ATM을 이용하여 돈을 송금하게 되면 하루가 지나고 체력이 다시 차게 되니",
+                        "효율적으로 체력을 관리하도록 해.. 그럼 잘 부탁한다 해녀야.."
+                    };
+
+                    touch_bg.gameObject.SetActive(true);
+                    quest_bg.gameObject.SetActive(true);
+                    bubble_parent.SetActive(true);
+                    step = 1; quest_num = 4;
+
+                    bubble_text.text = tutorial_texts[0];
+                    PlayerPrefs.SetInt("isQuest", 6);
+                }
+                break;
+                
         }
     }
 

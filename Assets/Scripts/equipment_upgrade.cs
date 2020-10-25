@@ -17,6 +17,7 @@ public class equipment_upgrade : MonoBehaviour
     private float suit_pos, goggle_pos, flipper_pos;
     private float suit_movepos, goggle_movepos, flipper_movepos;
     private bool suit_IsScroll = false, goggle_IsScroll = false, flipper_IsScroll = false;
+
     // 사운드 이펙트
     public AudioSource upgrade_click;
 
@@ -59,12 +60,6 @@ public class equipment_upgrade : MonoBehaviour
     {
         equip_ui.gameObject.SetActive(false);
         item_ui.gameObject.SetActive(true);
-    }
-
-    public void tab_change_temp()
-    {
-        item_ui.gameObject.SetActive(false);
-        equip_ui.gameObject.SetActive(true);
     }
 
     void Update()
@@ -415,11 +410,11 @@ public class equipment_upgrade : MonoBehaviour
             Haenyeo.money -= suits[my_suit].next_upgrade_price;
             if(my_suit == 0)
             {
-                Haenyeo.hp_ratio = 1f;
+                Haenyeo.level = 2;
             }
             if(my_suit == 1)
             {
-                Haenyeo.hp_ratio = 0.75f;
+                Haenyeo.level = 3;
             }
             my_suit++;
             PlayerPrefs.SetInt("PLAYER_SUIT", my_suit);
@@ -493,14 +488,14 @@ public class equipment_upgrade : MonoBehaviour
         //데이터 저장
 
         PlayerPrefs.SetInt("Haenyeo" + "_" + "money", Haenyeo.money);
-        PlayerPrefs.SetInt("Haenyeo_level", Haenyeo.level);
+
         PlayerPrefs.SetInt("PLAYER_SUIT", my_suit);
         PlayerPrefs.SetInt("PLAYER_GOGGLE", my_goggle);
         PlayerPrefs.SetInt("PLAYER_FLIPPER", my_flipper);
 
-        PlayerPrefs.SetFloat("Haenyeo_moving_speed", Haenyeo.moving_speed);
-        PlayerPrefs.SetInt("Haenyeo_coin_time", Haenyeo.coin_time);
-        PlayerPrefs.SetFloat("Haenyeo_hp_ratio", Haenyeo.hp_ratio);
+        PlayerPrefs.SetInt("Haenyeo_level", Haenyeo.level); // 해녀복 효과 
+        PlayerPrefs.SetInt("Haenyeo_coin_time", Haenyeo.coin_time); // 물안경 효과
+        PlayerPrefs.SetFloat("Haenyeo_moving_speed", Haenyeo.moving_speed); // 오리발 효과  
 
         PlayerPrefs.Save();
     }
