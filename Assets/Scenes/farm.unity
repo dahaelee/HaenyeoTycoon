@@ -22287,6 +22287,7 @@ MonoBehaviour:
   hilight_text: {fileID: 949434770}
   item_click: {fileID: 1910753636}
   icon_click: {fileID: 232115086}
+  UI_manager: {fileID: 833427163}
   hilight_parent: {fileID: 1590067296}
   bubble_parent: {fileID: 2060989857}
   hilight:

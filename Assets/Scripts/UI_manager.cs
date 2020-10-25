@@ -51,7 +51,8 @@ public class UI_manager : MonoBehaviour
 
     public void AllUIoff()
     {
-        for(int i=0; i<UIs.Length; i++)
+        Debug.Log("UI Off");
+        for (int i=0; i<UIs.Length; i++)
         {
             UIs[i].gameObject.SetActive(false);
         }
@@ -61,6 +62,7 @@ public class UI_manager : MonoBehaviour
     //UI 창 오픈하는 코드와 이펙트
     public IEnumerator UI_On(UIstate uistate, bool AutoUIOff = false, float seconds = 2f)
     {
+        Debug.Log("UI On");
         currentState = uistate;
         yield return new WaitForSeconds(0.1f);
         UIs[(int)UIstate.UIbackground].gameObject.SetActive(true);
