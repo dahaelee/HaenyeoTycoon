@@ -583,6 +583,13 @@ public class farm_manager : MonoBehaviour
             next_day.PlayDelayed((float)0.5f);
             Haenyeo.money -= sending_int;
             Haenyeo.payed += sending_int;
+
+            //효민 - 12번 퀘스트 관련
+            if (quest_Data.daily_quest_list[12].state != -1 && quest_Data.daily_quest_list[12].state != 2)
+            {
+                if (sending_int >= 500000) PlayerPrefs.SetInt("quest12", 1);
+            }
+
             if (Haenyeo.debt < 0)
             {
                 Haenyeo.debt = 0;
