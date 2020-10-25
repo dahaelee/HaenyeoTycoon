@@ -20,7 +20,7 @@ public class Haenyeo : MonoBehaviour
 
     public static int[] farm_item_number = new int[9]; //보유하고있는 양식 자원 개수
 
-    public static int[] item = new int[5]; // 아이템 : 그물, 체력, 5m, 10m, 15m
+    public static int[] item_inven = new int[5]; // 아이템 : 그물, 체력, 5m, 10m, 15m
 
     public enum TodayState
     {

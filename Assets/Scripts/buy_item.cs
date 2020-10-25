@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class buy_item : MonoBehaviour
 {
     public store_item_info[] store_items; // net, bonus, 5m, 15m, 25m
-    public int[] item_inven = new int[5]; //아이템 개수
+    //public int[] item_inven = new int[5]; //아이템 개수
     public Text[] inven_text;
     public Text Haenyeo_money;
     public GameObject buy_ui, equip_ui, item_ui, return_ui;
@@ -64,7 +64,7 @@ public class buy_item : MonoBehaviour
 
     public void buy_click(int item) // 사는 버튼 클릭 (돈 줄어들고, 버튼 업데이트, 인벤 업데이트)
     {
-        item_inven[item]++;
+        Haenyeo.item_inven[item]++;
         Haenyeo.money -= store_items[item].price;
         Haenyeo_money.text = Haenyeo.money.ToString("N0");
         check_price();
@@ -77,7 +77,7 @@ public class buy_item : MonoBehaviour
         for (int i = 0; i < store_items.Length; i++)
         {
             //inven_text[i].text = "0";
-            item_inven[i] = 0;
+            Haenyeo.item_inven[i] = 0;
         }
     }
 
@@ -85,7 +85,7 @@ public class buy_item : MonoBehaviour
     {
         for (int i = 0; i < store_items.Length; i++)
         {
-            inven_text[i].text = item_inven[i].ToString();
+            inven_text[i].text = Haenyeo.item_inven[i].ToString();
         }
         data_save();
     }
@@ -96,11 +96,11 @@ public class buy_item : MonoBehaviour
 
         PlayerPrefs.SetInt("Haenyeo" + "_" + "money", Haenyeo.money);
 
-        PlayerPrefs.SetInt("STORE_ITEM_0", item_inven[0]);
-        PlayerPrefs.SetInt("STORE_ITEM_1", item_inven[1]);
-        PlayerPrefs.SetInt("STORE_ITEM_2", item_inven[2]);
-        PlayerPrefs.SetInt("STORE_ITEM_3", item_inven[3]);
-        PlayerPrefs.SetInt("STORE_ITEM_4", item_inven[4]);
+        PlayerPrefs.SetInt("STORE_ITEM_0", Haenyeo.item_inven[0]);
+        PlayerPrefs.SetInt("STORE_ITEM_1", Haenyeo.item_inven[1]);
+        PlayerPrefs.SetInt("STORE_ITEM_2", Haenyeo.item_inven[2]);
+        PlayerPrefs.SetInt("STORE_ITEM_3", Haenyeo.item_inven[3]);
+        PlayerPrefs.SetInt("STORE_ITEM_4", Haenyeo.item_inven[4]);
 
         PlayerPrefs.Save();
     }
@@ -111,11 +111,11 @@ public class buy_item : MonoBehaviour
 
         //해녀 보유한 자원 개수 초기화
 
-        item_inven[0] = PlayerPrefs.GetInt("STORE_ITEM_0", 0);
-        item_inven[1] = PlayerPrefs.GetInt("STORE_ITEM_1", 0);
-        item_inven[2] = PlayerPrefs.GetInt("STORE_ITEM_2", 0);
-        item_inven[3] = PlayerPrefs.GetInt("STORE_ITEM_3", 0);
-        item_inven[4] = PlayerPrefs.GetInt("STORE_ITEM_4", 0);
+        Haenyeo.item_inven[0] = PlayerPrefs.GetInt("STORE_ITEM_0", 0);
+        Haenyeo.item_inven[1] = PlayerPrefs.GetInt("STORE_ITEM_1", 0);
+        Haenyeo.item_inven[2] = PlayerPrefs.GetInt("STORE_ITEM_2", 0);
+        Haenyeo.item_inven[3] = PlayerPrefs.GetInt("STORE_ITEM_3", 0);
+        Haenyeo.item_inven[4] = PlayerPrefs.GetInt("STORE_ITEM_4", 0);
 
     }
 }
