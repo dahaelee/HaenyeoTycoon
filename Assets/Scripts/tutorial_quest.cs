@@ -13,6 +13,7 @@ public class tutorial_quest : MonoBehaviour
     public static int step, quest_num;
     public static int IsQuest, item_num = 0;     //퀘스트 확인용
     public AudioSource item_click, icon_click;
+    public UI_manager UI_manager;
 
     //farm object
     public GameObject hilight_parent, bubble_parent;
@@ -246,14 +247,12 @@ public class tutorial_quest : MonoBehaviour
     {
         icon_click.PlayOneShot(icon_click.clip);
         GameObject.Find("quest_manager").GetComponent<quest_manager>().quest_contents_update(); //실시간 반영
-        quest_bg.gameObject.SetActive(true);
-        quest_ui.gameObject.SetActive(true);
+        StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.quest));
     }
 
     public void quest_ui_close()
     {
-        quest_bg.gameObject.SetActive(false);
-        quest_ui.gameObject.SetActive(false);
+        UI_manager.AllUIoff();
     }
 
     // quest_data를 gameobject로 바꿔줌

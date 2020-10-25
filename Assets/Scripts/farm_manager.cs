@@ -23,7 +23,7 @@ public class farm_manager : MonoBehaviour
     //사운드 관련 필드
     public AudioSource bgm, button_click, popup_click, expand_click, request_denied, get_money, trashing, next_day, debt_sending, num_pad, icon_click, item_click, farm_money;
     public AudioClip farm_night_BGM, farm_day_BGM;
-    public Image repay_icon, farm_night, repay_inactive, sea_inactive;
+    public Image repay_icon, farm_night, repay_inactive, sea_inactive, Switch;
     public Image[] items;
 
     IEnumerator current_Info;
@@ -89,9 +89,11 @@ public class farm_manager : MonoBehaviour
             Color color = new Vector4(1, 1, 1, 1);
             farm_night.color = color;
             farm_night.gameObject.SetActive(true);
+            Switch.sprite = Resources.Load<Sprite>("switch_night");
         }
         else
         {
+            Switch.sprite = Resources.Load<Sprite>("switch_day");
             farm_night.gameObject.SetActive(false);
         }
 
@@ -132,8 +134,15 @@ public class farm_manager : MonoBehaviour
             repay_inactive.gameObject.SetActive(true);    //바다 못가요
             is_repayAnim_Activated = false;
         }
+        if (Haenyeo.todayState == Haenyeo.TodayState.night)
+        {
+            Switch.sprite = Resources.Load<Sprite>("switch_night");
+        }
+        else
+        {
+            Switch.sprite = Resources.Load<Sprite>("switch_day");
+        }
     }
-
     //수확하기 버튼 눌렀을 때 실행
 
     public void farming_money(int index)    //양식장 번호 파라미터
