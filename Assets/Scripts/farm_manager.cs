@@ -14,7 +14,7 @@ public class farm_manager : MonoBehaviour
     public GameObject sea_item_parent;
     public static GameObject[] sea_item;
     public Text name_info, time_info, day, money, debt, debt_repay, money_repay, sending_amount_repay, entire_debt, interest, payed, balance, today, interest_warning;
-    public int chosen_item, chosen_farm, trash_farm_num, activation_cost, sending_int, sending_limit, limit_day;
+    public int chosen_item, chosen_farm, trash_farm_num, activation_cost, sending_int, sending_limit;
     public bool is_chosen;
     public static bool is_sea_locked, is_repay_locked, is_repayAnim_Activated;
     public string sending_str = "";
@@ -25,6 +25,7 @@ public class farm_manager : MonoBehaviour
     public AudioClip farm_night_BGM, farm_day_BGM;
     public Image repay_icon, farm_night, repay_inactive, sea_inactive, Switch;
     public Image[] items;
+    public GameObject twinkles;
 
     IEnumerator current_Info;
 
@@ -63,11 +64,15 @@ public class farm_manager : MonoBehaviour
             GameObject.Find("quest_Data").GetComponent<quest_Data>().newStart();
             PlayerPrefs.SetInt("isNew", 0);
         }
-
+        twinkles.GetComponent<Animation>().Play();
+        /*
+        for(int i=0; i<twinkles.transform.childCount; i++)
+        {
+            twinkles.transform.GetChild(i).GetComponent<Animation>().Play();
+        }*/
 
 
         activation_cost = 50000;        //양식장 확장 비용
-        limit_day = 20;
         sending_int = 0;
         sending_str = "0";
         sending_limit = 100000;
@@ -100,7 +105,7 @@ public class farm_manager : MonoBehaviour
     }
     void Update()
     {
-        day.GetComponent<Text>().text = "D-" + (limit_day - Haenyeo.day + 1).ToString();
+        day.GetComponent<Text>().text = "D-" + (Haenyeo.limit_day - Haenyeo.day + 1).ToString();
         money.GetComponent<Text>().text = string.Format("{0:#,###0}", Haenyeo.money);
         debt.GetComponent<Text>().text = string.Format("{0:#,###0}", Haenyeo.debt + Haenyeo.interest - Haenyeo.payed);
         if (Input.GetKeyUp(KeyCode.Escape))
@@ -595,12 +600,12 @@ public class farm_manager : MonoBehaviour
             is_repay_locked = true;
             is_sea_locked = false;      //바다 아이콘 활성화
             PlayerPrefs.SetInt("is_repay_locked", 1);
-            if (Haenyeo.day > limit_day && Haenyeo.debt > 0)
+            if (Haenyeo.day > Haenyeo.limit_day && Haenyeo.debt > 0)
             {
                 StartCoroutine("bad_ending");
             }
 
-            if (Haenyeo.day > limit_day && Haenyeo.debt < 1)
+            if (Haenyeo.day > Haenyeo.limit_day && Haenyeo.debt < 1)
             {
                 StartCoroutine("happy_ending");
 
@@ -650,12 +655,12 @@ public class farm_manager : MonoBehaviour
         is_repay_locked = true;
         is_sea_locked = false;      //바다 아이콘 활성화
         
-        if (Haenyeo.day > limit_day && Haenyeo.debt > 0)
+        if (Haenyeo.day > Haenyeo.limit_day && Haenyeo.debt > 0)
         {
             StartCoroutine("bad_ending");
         }
 
-        if (Haenyeo.day > limit_day && Haenyeo.debt < 1)
+        if (Haenyeo.day > Haenyeo.limit_day && Haenyeo.debt < 1)
         {
             StartCoroutine("happy_ending");
 
