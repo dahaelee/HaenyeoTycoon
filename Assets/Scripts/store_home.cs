@@ -47,7 +47,8 @@ public class store_home : MonoBehaviour
         }
     }
 
-    public GameObject sell_tab, buy_tab,return_from_buy, return_from_sell, bg;
+    public GameObject sell_tab, buy_tab,return_from_buy, return_from_sell, bg, seller_2;
+    public Image panel_img;
     public int rand_text = -1;
     public string[] seller_text,tuto_text;
     public Text bubble_text;
@@ -64,6 +65,7 @@ public class store_home : MonoBehaviour
 
         bubble_image.gameObject.SetActive(false);
         bubble_text.gameObject.SetActive(false);
+        StartCoroutine(panel_down());
     }
     
     public void buy_panel_click()
@@ -105,7 +107,36 @@ public class store_home : MonoBehaviour
         seller_rand.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
         seller_talk();
         StartCoroutine(UI_On(bubble_image, bubble_text));
+        StartCoroutine(seller_effect());
+        seller_2.gameObject.SetActive(false);
+    }
 
+    IEnumerator panel_down()
+    {
+        panel_img.gameObject.SetActive(true);
+        for (int i = 0; i < 10; i++)
+        {
+            panel_img.rectTransform.localPosition = new Vector3(532, 360 - 55*i, 0);
+            yield return new WaitForSeconds(0.0001f);
+        }
+        yield return new WaitForSeconds(0.001f);
+    }
+
+    public IEnumerator seller_effect()
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            if (i % 2 == 0)
+            {
+                seller_2.gameObject.SetActive(true);
+                yield return new WaitForSeconds(0.2f);
+            }
+            else
+            {
+                seller_2.gameObject.SetActive(false);
+                yield return new WaitForSeconds(0.2f);
+            }
+        }
     }
 
     public IEnumerator UI_On(Image image, Text text)
@@ -117,7 +148,7 @@ public class store_home : MonoBehaviour
         {
             image.rectTransform.localScale = new Vector3((float)(0.95 + i * 0.01), (float)(0.95 + i * 0.01), (float)(0.95 + i * 0.01));
             text.rectTransform.localScale = new Vector3((float)(0.95 + i * 0.01), (float)(0.95 + i * 0.01), (float)(0.95 + i * 0.01));
-            yield return 0;
+             yield return 0;
         }
         yield return new WaitForSeconds(2.5f);
         image.gameObject.SetActive(false);
