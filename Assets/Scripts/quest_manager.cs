@@ -24,9 +24,11 @@ public class quest_manager : MonoBehaviour
     public Button cancel_button;
 
     //퀘스트 텍스트 창 관련 오브젝트
-    public GameObject quest_bg, quest_box_touch,quest_box;
+    public GameObject quest_bg, quest_box_touch,quest_box,triangle;
     public GameObject[] quest_giver;
     public Text hilight_text,box_text;
+    public static int text_done;
+    public IEnumerator text_coroutine, triangle_coroutine;
 
     //reward effect 관련 오브젝트
     public Image reward_item,reward_money,reward_image;
@@ -45,7 +47,7 @@ public class quest_manager : MonoBehaviour
         }
 
         quest_contents_update();
-    }
+ }
 
     //퀘스트 목록 업데이트 
     public void quest_contents_update()
@@ -200,20 +202,62 @@ public class quest_manager : MonoBehaviour
         quest_giver[day_quest.person].SetActive(true);
         quest_box.gameObject.SetActive(true);
         hilight_text.gameObject.SetActive(true);
-        box_text.text = day_quest.text;
-        hilight_text.text = day_quest.summary;
+        //box_text.text = day_quest.text;
+        hilight_text.text ="";
         quest_box_touch.SetActive(true);
+
+        text_coroutine = text_effect(day_quest);
+        StartCoroutine(text_coroutine);
+
+        triangle_coroutine = triangle_effect();
+        StartCoroutine(triangle_coroutine);
+    }
+
+    IEnumerator text_effect(Daily_quest_form day_quest)
+    {
+        text_done = 0;
+        for (int i = 0; i < day_quest.text.Length; i++)
+        {
+            box_text.text = day_quest.text.Substring(0, i + 1);
+            yield return new WaitForSeconds(0.05f);
+        }
+        hilight_text.text = day_quest.summary;
+        text_done = 1;
+    }
+    
+    IEnumerator triangle_effect()
+    {
+        while (true)
+        {
+            triangle.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.3f);
+            triangle.gameObject.SetActive(false);
+            yield return new WaitForSeconds(0.3f);
+        }
     }
 
     public void quest_box_close()
     {
-        item_click.PlayOneShot(item_click.clip);
-        quest_box_touch.gameObject.SetActive(false);
-        quest_bg.gameObject.SetActive(false);
-        for (int i = 0; i < 3; i++) quest_giver[i].SetActive(false);
-        quest_box.gameObject.SetActive(false);
+        if (text_done == 0)
+        {
+            StopCoroutine(triangle_coroutine);
+            StopCoroutine(text_coroutine);
+            triangle_coroutine = null;
+            text_coroutine = null;
+            text_done = 1;
+            box_text.text = quest_Data.daily_quest_list[Haenyeo.day - 2].text;
+            hilight_text.text = quest_Data.daily_quest_list[Haenyeo.day - 2].summary;
+        }
+        else
+        {
+            item_click.PlayOneShot(item_click.clip);
+            quest_box_touch.gameObject.SetActive(false);
+            quest_bg.gameObject.SetActive(false);
+            for (int i = 0; i < 3; i++) quest_giver[i].SetActive(false);
+            quest_box.gameObject.SetActive(false);
+        }
     }
-
+    
     //새로운 퀘스트 있을 때 아이콘 깜박깜박
     IEnumerator quest_icon_effect()
     {
