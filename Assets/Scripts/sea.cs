@@ -46,7 +46,7 @@ public class sea : MonoBehaviour
 
         StartCoroutine("triangle_effect");
 
-        countdown = 5.0f;
+        countdown = 10.0f;
         level = Haenyeo.level;
 
         //그물망 속 자원 개수 전부 0으로 초기화 
@@ -96,7 +96,7 @@ public class sea : MonoBehaviour
         {
             gagebar.transform.localPosition = new Vector3((-415 - haenyeo.transform.position.x)/100, 0.85f, -1f); //게이지바가 화면을 넘어가지 않도록 조정
         }
-        if (haenyeo.transform.position.x >= -475 && haenyeo.transform.position.x <= 475) //해녀의 위치가 화면 양 끝이 아니면
+        if (haenyeo.transform.position.x >= -415 && haenyeo.transform.position.x <= 475) //해녀의 위치가 화면 양 끝이 아니면
         {
             gagebar.transform.localPosition = new Vector3(0f, 0.85f, -1f); //게이지바가 원래 위치에 있도록
         }
@@ -184,6 +184,17 @@ public class sea : MonoBehaviour
     {
         return_to_farms_ui.gameObject.SetActive(false); //물음 팝업창 비활성화
         block_touch.gameObject.SetActive(false); //팝업창 외의 영역 터치 방지 해제 
+    }
+
+    // 체력 0 됐을때 카운트다운 팝업창
+    public void use_hp_item()
+    {
+        // 체력템 개수 -1
+        // load_farm 함수에 템 개수 저장하기
+        block_touch.gameObject.SetActive(false); //팝업창 외의 영역 터치 방지 해제 
+        Haenyeo.hp += 10; // 체력 추가
+        countdown = 10.0f; // 카운트다운 복구
+        timeover_return_ui.gameObject.SetActive(false); //카운트다운 팝업창 비활성화
     }
 
     //그물망 보여주기
