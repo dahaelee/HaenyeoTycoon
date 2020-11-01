@@ -64,7 +64,6 @@ public class farm_manager : MonoBehaviour
             GameObject.Find("quest_Data").GetComponent<quest_Data>().newStart();
             PlayerPrefs.SetInt("isNew", 0);
         }
-        twinkles.GetComponent<Animation>().Play();
         /*
         for(int i=0; i<twinkles.transform.childCount; i++)
         {
@@ -837,7 +836,7 @@ public class farm_manager : MonoBehaviour
         PlayerPrefs.SetInt("Haenyeo_level", Haenyeo.level);
         PlayerPrefs.SetFloat("Haenyeo_hp", Haenyeo.hp);
         PlayerPrefs.SetString("lasttime", System.DateTime.Now.ToString());
-
+        //PlayerPrefs.SetInt("Haenyeo" + "_" + "todayState", (int)Haenyeo.todayState);
         PlayerPrefs.SetFloat("Haenyeo_moving_speed", Haenyeo.moving_speed);
         PlayerPrefs.SetInt("Haenyeo_coin_time", Haenyeo.coin_time);
 
@@ -934,7 +933,7 @@ public class farm_manager : MonoBehaviour
             is_repay_locked = true;
             is_sea_locked = false;
         }
-
+        
         Haenyeo.money = PlayerPrefs.GetInt("Haenyeo_money", 0);
         Haenyeo.debt = PlayerPrefs.GetInt("Haenyeo_debt", 5000000);
         Haenyeo.payed = PlayerPrefs.GetInt("Haenyeo_payed", 0);
@@ -945,7 +944,6 @@ public class farm_manager : MonoBehaviour
         Haenyeo.hp = PlayerPrefs.GetFloat("Haenyeo_hp", 100);
         bgm_volume.value = PlayerPrefs.GetFloat("Bgm_volume", 1);
         effect_volume.value = PlayerPrefs.GetFloat("Effect_volume", 1);
-
         Haenyeo.moving_speed = PlayerPrefs.GetFloat("Haenyeo_moving_speed", 7);
         Haenyeo.coin_time = PlayerPrefs.GetInt("Haenyeo_coin_time", 8);
 
