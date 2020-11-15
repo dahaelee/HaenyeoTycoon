@@ -202,7 +202,6 @@ public class quest_manager : MonoBehaviour
         quest_giver[day_quest.person].SetActive(true);
         quest_box.gameObject.SetActive(true);
         hilight_text.gameObject.SetActive(true);
-        //box_text.text = day_quest.text;
         hilight_text.text ="";
         quest_box_touch.SetActive(true);
 
@@ -240,9 +239,7 @@ public class quest_manager : MonoBehaviour
     {
         if (text_done == 0)
         {
-            StopCoroutine(triangle_coroutine);
             StopCoroutine(text_coroutine);
-            triangle_coroutine = null;
             text_coroutine = null;
             text_done = 1;
             box_text.text = quest_Data.daily_quest_list[Haenyeo.day - 2].text;
@@ -250,6 +247,8 @@ public class quest_manager : MonoBehaviour
         }
         else
         {
+            StopCoroutine(triangle_coroutine);
+            triangle_coroutine = null;
             item_click.PlayOneShot(item_click.clip);
             quest_box_touch.gameObject.SetActive(false);
             quest_bg.gameObject.SetActive(false);

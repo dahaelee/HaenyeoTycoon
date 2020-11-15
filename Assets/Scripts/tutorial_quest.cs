@@ -8,7 +8,7 @@ public class tutorial_quest : MonoBehaviour
 {
     //공통 오브젝트
     public GameObject quest_ui,quest_box;
-    public Image touch_bg, quest_bg,text_box,next_triangle;
+    public Image touch_bg, quest_bg,text_box,triangle;
     public Text text,hilight_text;
     public static int step, quest_num;
     public static int IsQuest, item_num = 0;     //퀘스트 확인용
@@ -22,6 +22,9 @@ public class tutorial_quest : MonoBehaviour
     public Text bubble_text;
     public string[] tutorial_texts;
     public Image sea_icon_fake;
+
+    public IEnumerator text_coroutine, triangle_coroutine;
+    static int text_done;
 
     public void Initialize()
     {
@@ -46,12 +49,19 @@ public class tutorial_quest : MonoBehaviour
                 Initialize();
                 break;
             case 1:
-                switch (step)
+                if (text_done == 0)
                 {
-                    case 2:
-                        Initialize();
-                        Daddy1();
-                        break;
+                    StopCoroutine(text_coroutine);
+                    text_coroutine = null;
+                    text_done = 1;
+                    text.text = "어이 꼬맹이 너가 대신 빚을 갚겠다고? 그래 좋다.. 대신 매일 돈을 송금해야 할거다. 두고보자";
+                }
+                else
+                {
+                    StopCoroutine(triangle_coroutine);
+                    triangle_coroutine = null;
+                    Initialize();
+                    Daddy1();
                 }
                 break;
             case 2:
@@ -111,7 +121,35 @@ public class tutorial_quest : MonoBehaviour
         hilight_text.text = "";
         step = 1; quest_num = 1;
 
-        text.text = "어이 꼬맹이 너가 대신 빚을 갚겠다고? 그래 좋다.. 대신 매일 돈을 송금해야 할거다. 두고보자";
+        string tmp_text = "어이 꼬맹이 너가 대신 빚을 갚겠다고? 그래 좋다.. 대신 매일 돈을 송금해야 할거다. 두고보자";
+
+        text_coroutine = text_effect(tmp_text);
+        StartCoroutine(text_coroutine);
+
+        triangle_coroutine = triangle_effect();
+        StartCoroutine(triangle_coroutine);
+    }
+
+    IEnumerator text_effect(string tmp_text)
+    {
+        text_done = 0;
+        for (int i = 0; i < tmp_text.Length; i++)
+        {
+            text.text = tmp_text.Substring(0, i + 1);
+            yield return new WaitForSeconds(0.05f);
+        }
+        text_done = 1;
+    }
+
+    IEnumerator triangle_effect()
+    {
+        while (true)
+        {
+            triangle.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.3f);
+            triangle.gameObject.SetActive(false);
+            yield return new WaitForSeconds(0.3f);
+        }
     }
 
     //아빠 1 - 게임 ui 설명
@@ -260,21 +298,5 @@ public class tutorial_quest : MonoBehaviour
     {
         GameObject.Find("quest_manager").GetComponent<quest_manager>().quest_contents_update();
     }
-
-    public void Start()
-    {
-        StartCoroutine("triangle_effect");
-    }
-
-    //삼각형 깜박깜박 이펙트
-    IEnumerator triangle_effect()
-    {
-        while (text_box.IsActive())
-        {
-            next_triangle.gameObject.SetActive(true);
-            yield return new WaitForSeconds(0.3f);
-            next_triangle.gameObject.SetActive(false);
-            yield return new WaitForSeconds(0.3f);
-        }
-    }
+    
 }
