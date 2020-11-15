@@ -56,6 +56,12 @@ public class daily_quest_manager : MonoBehaviour
         quest_Data.daily_quest_list[20].todo = $"양식 전복 {Haenyeo.farm_item_number[7]}/5";
         quest_Data.daily_quest_list[21].todo = $"하루 80만원 송금하기";
         quest_Data.daily_quest_list[22].todo = $"조개 {Haenyeo.sea_item_number[0]}/2  새우 {Haenyeo.sea_item_number[3]}/2  문어 {Haenyeo.sea_item_number[6]}/2";
+        quest_Data.daily_quest_list[23].todo = $"양식 미역 {Haenyeo.farm_item_number[1]}/10";
+        quest_Data.daily_quest_list[24].todo = $"금화 {PlayerPrefs.GetInt("quest24", 0)}/3";
+        quest_Data.daily_quest_list[25].todo = $"꽃게 {Haenyeo.sea_item_number[5]}/5";
+        quest_Data.daily_quest_list[26].todo = $"양식 꽃게 {Haenyeo.farm_item_number[5]}/3";
+        quest_Data.daily_quest_list[27].todo = $"양식 전복 {Haenyeo.farm_item_number[7]}/3";
+        quest_Data.daily_quest_list[28].todo = $"조개 {Haenyeo.sea_item_number[0]}/1  미역 {Haenyeo.sea_item_number[1]}/1  불가사리 {Haenyeo.sea_item_number[2]}/1  새우 {Haenyeo.sea_item_number[3]}/1  해파리 {Haenyeo.sea_item_number[4]}/1  꽃게 {Haenyeo.sea_item_number[5]}/1  문어 {Haenyeo.sea_item_number[6]}/1  전복 {Haenyeo.sea_item_number[7]}/1  거북이 {Haenyeo.sea_item_number[8]}/1";
     }
 
     public void daily_quest_check(int idx)
@@ -148,6 +154,30 @@ public class daily_quest_manager : MonoBehaviour
                 break;
             case 22:
                 if (Haenyeo.sea_item_number[0] >= 2 && Haenyeo.sea_item_number[3] >= 2 && Haenyeo.sea_item_number[6] >= 2) quest_Data.daily_quest_list[idx].state = 2;
+                else if (quest_Data.daily_quest_list[idx].state != 0) quest_Data.daily_quest_list[idx].state = 1;
+                break;
+            case 23:
+                if (Haenyeo.farm_item_number[1]>=10) quest_Data.daily_quest_list[idx].state = 2;
+                else if (quest_Data.daily_quest_list[idx].state != 0) quest_Data.daily_quest_list[idx].state = 1;
+                break;
+            case 24:
+                if (PlayerPrefs.GetInt("quest24", 0) >= 3) quest_Data.daily_quest_list[idx].state = 2;
+                else if (quest_Data.daily_quest_list[idx].state != 0) quest_Data.daily_quest_list[idx].state = 1;
+                break;
+            case 25:
+                if (Haenyeo.sea_item_number[5] >= 5) quest_Data.daily_quest_list[idx].state = 2;
+                else if (quest_Data.daily_quest_list[idx].state != 0) quest_Data.daily_quest_list[idx].state = 1;
+                break;
+            case 26:
+                if (Haenyeo.farm_item_number[5] >= 3) quest_Data.daily_quest_list[idx].state = 2;
+                else if (quest_Data.daily_quest_list[idx].state != 0) quest_Data.daily_quest_list[idx].state = 1;
+                break;
+            case 27:
+                if (Haenyeo.farm_item_number[7] >= 3) quest_Data.daily_quest_list[idx].state = 2;
+                else if (quest_Data.daily_quest_list[idx].state != 0) quest_Data.daily_quest_list[idx].state = 1;
+                break;
+            case 28:
+                if (Haenyeo.sea_item_number[0] > 0 && Haenyeo.sea_item_number[1] > 0 && Haenyeo.sea_item_number[2] > 0 && Haenyeo.sea_item_number[3] > 0 && Haenyeo.sea_item_number[4] > 0 && Haenyeo.sea_item_number[5] > 0 && Haenyeo.sea_item_number[6] > 0 && Haenyeo.sea_item_number[7] > 0 && Haenyeo.sea_item_number[8] > 0) quest_Data.daily_quest_list[idx].state = 2;
                 else if (quest_Data.daily_quest_list[idx].state != 0) quest_Data.daily_quest_list[idx].state = 1;
                 break;
         }
@@ -271,6 +301,44 @@ public class daily_quest_manager : MonoBehaviour
                 Haenyeo.sea_item_number[6] -= 2;
                 Haenyeo.money += 100000;
                 StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 100000));
+                break;
+            case 23:
+                Haenyeo.farm_item_number[0] -= 10;
+                Haenyeo.money += 150000;
+                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 100000));
+                break;
+            case 24:
+                PlayerPrefs.DeleteKey("quest24");
+                Haenyeo.item_inven[2] += 3;
+                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("bonus", 0));
+                break;
+            case 25:
+                Haenyeo.sea_item_number[5] -= 5;
+                Haenyeo.money += 70000;
+                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 70000));
+                break;
+            case 26:
+                Haenyeo.farm_item_number[5] -= 3;
+                Haenyeo.money += 50000;
+                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 50000));
+                break;
+            case 27:
+                Haenyeo.farm_item_number[7] -= 3;
+                Haenyeo.money += 70000;
+                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 70000));
+                break;
+            case 28:
+                Haenyeo.sea_item_number[0] -= 1;
+                Haenyeo.sea_item_number[1] -= 1;
+                Haenyeo.sea_item_number[2] -= 1;
+                Haenyeo.sea_item_number[3] -= 1;
+                Haenyeo.sea_item_number[4] -= 1;
+                Haenyeo.sea_item_number[5] -= 1;
+                Haenyeo.sea_item_number[6] -= 1;
+                Haenyeo.sea_item_number[7] -= 1;
+                Haenyeo.sea_item_number[8] -= 1;
+                Haenyeo.money += 200000;
+                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 200000));
                 break;
         }
     }
