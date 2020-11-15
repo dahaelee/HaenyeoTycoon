@@ -181,6 +181,9 @@ public class store_home : MonoBehaviour
         PlayerPrefs.SetInt("Haenyeo_farm_item_number7", Haenyeo.farm_item_number[7]);
         PlayerPrefs.SetInt("Haenyeo_farm_item_number8", Haenyeo.farm_item_number[8]);
 
+
+
+
         PlayerPrefs.Save();
     }
 }
