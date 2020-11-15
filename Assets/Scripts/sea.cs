@@ -11,7 +11,7 @@ public class sea : MonoBehaviour
     public Image text_window, next_triangle;
     public Sprite[] depth_arr; // 깊이바 이미지 배열
     public Image depth, location; // 깊이바 이미지, 위치 표시 이미지
-    public Text countdown_text;
+    public Text countdown_text, hp_num_text;
     public GameObject[] items_got; //그물망 속 자원 배열 
     public int[] item_num; //그물망 속 자원개수 배열
     public Text[] item_num_text; //그물망 속 자원개수 텍스트 배열 
@@ -81,6 +81,7 @@ public class sea : MonoBehaviour
 
             countdown -= Time.deltaTime; //시간의 흐름에 따라 카운트다운 감소
             countdown_text.text = Mathf.CeilToInt(countdown).ToString(); //남은 카운트다운을 countdown_text에 담기 
+            hp_num_text.text = Haenyeo.item_inven[1].ToString(); //hp 아이템 개수
 
             if (countdown <= 0) //카운트다운이 0보다 작아지면
             {
@@ -189,7 +190,7 @@ public class sea : MonoBehaviour
     // 체력 0 됐을때 카운트다운 팝업창
     public void use_hp_item()
     {
-        // 체력템 개수 -1
+        Haenyeo.item_inven[1] -= 1; // 체력템 개수 -1
         // load_farm 함수에 템 개수 저장하기
         block_touch.gameObject.SetActive(false); //팝업창 외의 영역 터치 방지 해제 
         Haenyeo.hp += 10; // 체력 추가

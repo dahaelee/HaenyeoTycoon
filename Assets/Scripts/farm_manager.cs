@@ -882,7 +882,6 @@ public class farm_manager : MonoBehaviour
         PlayerPrefs.SetInt("Haenyeo_farm_item_number7", Haenyeo.farm_item_number[7]);
         PlayerPrefs.SetInt("Haenyeo_farm_item_number8", Haenyeo.farm_item_number[8]);
 
-
         PlayerPrefs.SetInt("Haenyeo_item_inven_number0", Haenyeo.item_inven[0]);
         PlayerPrefs.SetInt("Haenyeo_item_inven_number1", Haenyeo.item_inven[1]);
         PlayerPrefs.SetInt("Haenyeo_item_inven_number2", Haenyeo.item_inven[2]);
@@ -952,14 +951,14 @@ public class farm_manager : MonoBehaviour
             is_sea_locked = false;
         }
         
-        Haenyeo.money = PlayerPrefs.GetInt("Haenyeo_money", 0);
+        Haenyeo.money = PlayerPrefs.GetInt("Haenyeo_money", 10000000);
         Haenyeo.debt = PlayerPrefs.GetInt("Haenyeo_debt", 5000000);
         Haenyeo.payed = PlayerPrefs.GetInt("Haenyeo_payed", 0);
         Haenyeo.interest = PlayerPrefs.GetInt("Haenyeo_interest", 0);
         Haenyeo.diving_time = PlayerPrefs.GetInt("Haenyeo_diving_time", 60);
         Haenyeo.day = PlayerPrefs.GetInt("Haenyeo_day", 1);
         Haenyeo.level = PlayerPrefs.GetInt("Haenyeo_level", 3); // 다해 : 바다 다 열려고 레벨 3으로 설정 해놨음
-        Haenyeo.hp = PlayerPrefs.GetFloat("Haenyeo_hp", 100);
+        Haenyeo.hp = PlayerPrefs.GetFloat("Haenyeo_hp", 10); // hp
         bgm_volume.value = PlayerPrefs.GetFloat("Bgm_volume", 1);
         effect_volume.value = PlayerPrefs.GetFloat("Effect_volume", 1);
         Haenyeo.moving_speed = PlayerPrefs.GetFloat("Haenyeo_moving_speed", 7);
