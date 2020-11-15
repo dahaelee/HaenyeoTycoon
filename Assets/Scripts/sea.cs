@@ -76,14 +76,14 @@ public class sea : MonoBehaviour
             timeover_return_ui.gameObject.SetActive(true); //카운트다운 팝업창 활성화
 
             // 체력템 없으면 버튼 비활성화
-            if (Haenyeo.item_inven[1] < 1)  
+            if (Haenyeo.item_inven[3] < 1)  
                 item_button_lock.gameObject.SetActive(true);
             else
                 item_button_lock.gameObject.SetActive(false);
 
             countdown -= Time.deltaTime; //시간의 흐름에 따라 카운트다운 감소
             countdown_text.text = Mathf.CeilToInt(countdown).ToString(); //남은 카운트다운을 countdown_text에 담기 
-            hp_num_text.text = Haenyeo.item_inven[1].ToString(); //hp 아이템 개수
+            hp_num_text.text = Haenyeo.item_inven[3].ToString(); //hp 아이템 개수
 
             if (countdown <= 0) //카운트다운이 0보다 작아지면
             {
@@ -186,7 +186,7 @@ public class sea : MonoBehaviour
     // 체력 0 됐을때 카운트다운 팝업창
     public void use_hp_item()
     {
-        Haenyeo.item_inven[1] -= 1; // 체력템 개수 -1
+        Haenyeo.item_inven[3] -= 1; // 체력템 개수 -1
         // load_farm 함수에 템 개수 저장하기
         block_touch.gameObject.SetActive(false); //팝업창 외의 영역 터치 방지 해제 
         Haenyeo.hp += 10; // 체력 추가
@@ -244,7 +244,6 @@ public class sea : MonoBehaviour
         PlayerPrefs.SetInt("Haenyeo_item_inven_number1", Haenyeo.item_inven[1]);
         PlayerPrefs.SetInt("Haenyeo_item_inven_number2", Haenyeo.item_inven[2]);
         PlayerPrefs.SetInt("Haenyeo_item_inven_number3", Haenyeo.item_inven[3]);
-        PlayerPrefs.SetInt("Haenyeo_item_inven_number4", Haenyeo.item_inven[4]);
 
         StartCoroutine("fade_out"); //화면 페이드아웃 후 양식장으로 전환
     }
