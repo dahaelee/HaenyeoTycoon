@@ -54,6 +54,9 @@ public class equipment_upgrade : MonoBehaviour
         return_ui.SetActive(false);
         equip_ui.gameObject.SetActive(false);
         item_ui.gameObject.SetActive(false);
+        suits[my_suit].equipment_info_obj.gameObject.SetActive(false);
+        goggles[my_goggle].equipment_info_obj.gameObject.SetActive(false);
+        flippers[my_flipper].equipment_info_obj.gameObject.SetActive(false);
     }
 
     public void tab_change()
