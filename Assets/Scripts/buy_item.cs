@@ -103,7 +103,6 @@ public class buy_item : MonoBehaviour
         PlayerPrefs.SetInt("Haenyeo_item_inven_number1", Haenyeo.item_inven[1]);
         PlayerPrefs.SetInt("Haenyeo_item_inven_number2", Haenyeo.item_inven[2]);
         PlayerPrefs.SetInt("Haenyeo_item_inven_number3", Haenyeo.item_inven[3]);
-        //PlayerPrefs.SetInt("Haenyeo_item_inven_number4", Haenyeo.item_inven[4]);
 
         PlayerPrefs.Save();
     }
