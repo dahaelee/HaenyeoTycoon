@@ -19,7 +19,10 @@ public class buy_item : MonoBehaviour
     }
     public void return_to_home()
     {
-
+        data_save();
+        return_ui.SetActive(false);
+        equip_ui.gameObject.SetActive(false);
+        item_ui.gameObject.SetActive(false);
     }
 
     public void tab_change()
@@ -30,8 +33,8 @@ public class buy_item : MonoBehaviour
 
     void Awake()
     {
-        data_load();
-        init_inven();
+        //data_load();
+        //init_inven();
         //check_price();
         inven_UI();
     }
@@ -69,7 +72,7 @@ public class buy_item : MonoBehaviour
         Haenyeo_money.text = Haenyeo.money.ToString("N0");
         check_price();
         inven_UI();
-        data_save();
+        //data_save();
     }
 
     public void init_inven()
@@ -104,18 +107,5 @@ public class buy_item : MonoBehaviour
 
         PlayerPrefs.Save();
     }
-    public void data_load()
-    {
-
-        Haenyeo.money = PlayerPrefs.GetInt("Haenyeo_money", 500000);
-
-        //해녀 보유한 자원 개수 초기화
-
-        Haenyeo.item_inven[0] = PlayerPrefs.GetInt("Haenyeo_item_inven_number0", 0);
-        Haenyeo.item_inven[1] = PlayerPrefs.GetInt("Haenyeo_item_inven_number1", 0);
-        Haenyeo.item_inven[2] = PlayerPrefs.GetInt("Haenyeo_item_inven_number2", 0);
-        Haenyeo.item_inven[3] = PlayerPrefs.GetInt("Haenyeo_item_inven_number3", 0);
-        Haenyeo.item_inven[4] = PlayerPrefs.GetInt("Haenyeo_item_inven_number4", 0);
-
-    }
+    
 }

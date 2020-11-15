@@ -502,17 +502,6 @@ public class equipment_upgrade : MonoBehaviour
 
         PlayerPrefs.Save();
     }
-
-    //public void data_load()
-    //{
-
-    //    Haenyeo.money = PlayerPrefs.GetInt("Haenyeo_money", 500000);
-    //    Haenyeo.debt = PlayerPrefs.GetInt("Haenyeo_debt", 10000000);
-    //    Haenyeo.moving_speed = PlayerPrefs.GetInt("Haenyeo_moving_speed", 5);
-    //    PlayerPrefs.SetInt("PLAYER_SUIT", my_suit);
-    //    PlayerPrefs.SetInt("PLAYER_GOGGLE", my_goggle);
-    //    PlayerPrefs.SetInt("PLAYER_FLIPPER", my_flipper);
-    //}
 }
 
 
