@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class sea : MonoBehaviour
 {
     public float time_remaining, time_max, countdown;
-    public Image return_to_farms_ui, show_mesh_ui, timeover_return_ui, block_touch, start_button;
+    public Image return_to_farms_ui, show_mesh_ui, timeover_return_ui, block_touch, start_button, item_button_lock;
     public Image text_window, next_triangle;
     public Sprite[] depth_arr; // 깊이바 이미지 배열
     public Image depth, location; // 깊이바 이미지, 위치 표시 이미지
@@ -30,7 +30,6 @@ public class sea : MonoBehaviour
         {
             tutorial_parent.SetActive(true);
             PlayerPrefs.SetInt("IsSeaNew", 0);
-            start_button.gameObject.SetActive(false);
         }
         else
         {
@@ -43,6 +42,7 @@ public class sea : MonoBehaviour
         show_mesh_ui.gameObject.SetActive(false);
         timeover_return_ui.gameObject.SetActive(false);
         timeover_return_ui.gameObject.SetActive(false);
+        item_button_lock.gameObject.SetActive(false);
 
         StartCoroutine("triangle_effect");
 
@@ -51,9 +51,7 @@ public class sea : MonoBehaviour
 
         //그물망 속 자원 개수 전부 0으로 초기화 
         for (int i = 0; i < 9; i++)
-        {
             item_num[i] = 0;
-        }
 
         bgm.volume = PlayerPrefs.GetFloat("Bgm_volume", 1);
         icon_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
@@ -70,14 +68,18 @@ public class sea : MonoBehaviour
         sunlight_transparency_change(); //햇빛 투명도 조정 함수 호출
 
         if (!block_touch.gameObject.activeSelf) //터치 방지가 비활성화 상태일 때만
-        {
             Haenyeo.hp -= Time.deltaTime; //1초당 1씩 체력 감소
-        }
 
         if (Haenyeo.hp <= 0) //체력이 0보다 작아지면
         {
             block_touch.gameObject.SetActive(true); //팝업창 외의 영역 터치 방지
             timeover_return_ui.gameObject.SetActive(true); //카운트다운 팝업창 활성화
+
+            // 체력템 없으면 버튼 비활성화
+            if (Haenyeo.item_inven[1] < 1)  
+                item_button_lock.gameObject.SetActive(true);
+            else
+                item_button_lock.gameObject.SetActive(false);
 
             countdown -= Time.deltaTime; //시간의 흐름에 따라 카운트다운 감소
             countdown_text.text = Mathf.CeilToInt(countdown).ToString(); //남은 카운트다운을 countdown_text에 담기 
@@ -94,17 +96,11 @@ public class sea : MonoBehaviour
 
         // 깊이바 추가로 인해 왼쪽 끝으로 갈때 수치 조정함 (475->415)
         if (haenyeo.transform.position.x < -415) //해녀의 위치가 화면 왼쪽 끝으로 가면
-        {
             gagebar.transform.localPosition = new Vector3((-415 - haenyeo.transform.position.x)/100, 0.85f, -1f); //게이지바가 화면을 넘어가지 않도록 조정
-        }
         if (haenyeo.transform.position.x >= -415 && haenyeo.transform.position.x <= 475) //해녀의 위치가 화면 양 끝이 아니면
-        {
             gagebar.transform.localPosition = new Vector3(0f, 0.85f, -1f); //게이지바가 원래 위치에 있도록
-        }
         if (haenyeo.transform.position.x > 475) //해녀의 위치가 화면 오른쪽 끝으로 가면
-        {
             gagebar.transform.localPosition = new Vector3((475 - haenyeo.transform.position.x)/100, 0.85f, -1f); //게이지바가 화면을 넘어가지 않도록 조정
-        }
 
         // 해녀 깊이바 위치표시 이동
         location.transform.localPosition = new Vector3(3f, haenyeo.transform.position.y * 0.182f - 131.04f, 0f);
@@ -206,21 +202,15 @@ public class sea : MonoBehaviour
         block_touch.gameObject.SetActive(true); //팝업창 외의 영역 터치 방지
 
         for (int i = 0; i < 9; i++)
-        {
             item_num_text[i].text = item_num[i].ToString(); //각 자원 개수를 item_num_text에 담기 
-        }
 
         for (int i = 0; i < 9; i++)
         {
             if (item_num[i] > 0) //한 개 이상 있으면
-            {
                 items_got[i].SetActive(true); //자원 활성화
-            }
 
             else //한 개도 없으면 
-            {
                 items_got[i].SetActive(false); // 자원 비활성화
-            }
         }
     }
 
@@ -246,8 +236,16 @@ public class sea : MonoBehaviour
         PlayerPrefs.SetInt("Haenyeo_sea_item_number6", Haenyeo.sea_item_number[6]);
         PlayerPrefs.SetInt("Haenyeo_sea_item_number7", Haenyeo.sea_item_number[7]);
         PlayerPrefs.SetInt("Haenyeo_sea_item_number8", Haenyeo.sea_item_number[8]);
+
         PlayerPrefs.SetInt("Haenyeo" + "_" + "money", Haenyeo.money); // 바다에서 코인으로 번 돈 저장용
         PlayerPrefs.SetFloat("Haenyeo_hp", Haenyeo.hp); // 체력 저장
+
+        PlayerPrefs.SetInt("Haenyeo_item_inven_number0", Haenyeo.item_inven[0]);
+        PlayerPrefs.SetInt("Haenyeo_item_inven_number1", Haenyeo.item_inven[1]);
+        PlayerPrefs.SetInt("Haenyeo_item_inven_number2", Haenyeo.item_inven[2]);
+        PlayerPrefs.SetInt("Haenyeo_item_inven_number3", Haenyeo.item_inven[3]);
+        PlayerPrefs.SetInt("Haenyeo_item_inven_number4", Haenyeo.item_inven[4]);
+
         StartCoroutine("fade_out"); //화면 페이드아웃 후 양식장으로 전환
     }
     public IEnumerator fade_out()
