@@ -593,6 +593,10 @@ public class farm_manager : MonoBehaviour
             {
                 if (sending_int >= 500000) PlayerPrefs.SetInt("quest12", 1);
             }
+            if (quest_Data.daily_quest_list[21].state != -1 && quest_Data.daily_quest_list[21].state != 2)
+            {
+                if (sending_int >= 800000) PlayerPrefs.SetInt("quest21", 1);
+            }
 
             if (Haenyeo.debt < 0)
             {

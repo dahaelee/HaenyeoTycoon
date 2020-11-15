@@ -3070,7 +3070,7 @@ GameObject:
   - component: {fileID: 153720421}
   - component: {fileID: 153720420}
   m_Layer: 5
-  m_Name: next_triangle
+  m_Name: triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23149,7 +23149,7 @@ MonoBehaviour:
   touch_bg: {fileID: 1384952700}
   quest_bg: {fileID: 1391046867}
   text_box: {fileID: 882616949}
-  next_triangle: {fileID: 153720420}
+  triangle: {fileID: 153720420}
   text: {fileID: 331860564}
   hilight_text: {fileID: 949434770}
   item_click: {fileID: 1910753636}
@@ -29382,6 +29382,7 @@ MonoBehaviour:
   quest_bg: {fileID: 1391046864}
   quest_box_touch: {fileID: 966062141}
   quest_box: {fileID: 1078949182}
+  triangle: {fileID: 153720418}
   quest_giver:
   - {fileID: 1909874635}
   - {fileID: 1221767369}
