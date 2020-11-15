@@ -110,7 +110,14 @@ public class quest_Data : MonoBehaviour
         daily_quest_list.Add(new Daily_quest_form(-1, "양식 전복 5번 수확하기", "양식의 달인", 2, "요즘 전복 수요가 높아졌어. 훌륭한 상점 주인이 되려면 흐름을 읽을 줄 알아야 한단다 허허. 전복을 준비해놔야 겠구나", "", "5만원"));
         daily_quest_list.Add(new Daily_quest_form(-1, "하루 80만원 송금하기", "빚갚기의 달인", 1, "목표를 세우면 더 성실한 하루를 살 수 있단다\n이런 목표는 어떠니?", "", "깊은 구슬 5개"));
         daily_quest_list.Add(new Daily_quest_form(-1, "조개,새우,문어 두개씩 채집하기", "오늘의 점심", 1, "오늘 점심은 해물탕 어떠니? 옆집 아줌마가 쑥갓을 1단 주셔서 이거로 해물탕을 만들면 될 것 같아.. 해산물 재료를 부탁하마", "", "10만원"));
-        daily_quest_list.Add(new Daily_quest_form(-1, "조개,새우,문어 두개씩 채집하기", "오늘의 점심", 1, "오늘 점심은 해물탕 어떠니? 옆집 아줌마가 쑥갓을 1단 주셔서 이거로 해물탕을 만들면 될 것 같아.. 해산물 재료를 부탁하마", "", "10만원"));
+        daily_quest_list.Add(new Daily_quest_form(-1, "양식 미역 10번 수확하기", "양식의 달인", 2, "마을 이장님 환갑 잔치가 코앞이더구나! \n잔치에 필요한 식재료를 준비해야 될 것 같구나 허허", "", "15만원"));
+        daily_quest_list.Add(new Daily_quest_form(-1, "바다에서 금화 3개 모으기", "바다에서 돈모으기", 1, "해녀야 너의 사주에 금이 부족해.. 항상 몸에 금을 소지하고 있으려구나.. ", "", "체력 추가 3개"));
+        daily_quest_list.Add(new Daily_quest_form(-1, "꽃게 5개 채집하기", "제철 해산물", 2, "과일도 제철 과일이 맛있고,\n해산물도 제철 해산물이 맛있지.\n그런고로, 오늘은 꽃게를 가져오면 짭짤하게 쳐주마!", "", "7만원"));
+        daily_quest_list.Add(new Daily_quest_form(-1, "양식 꽃게 3번 수확하기", "양식의 달인", 2, "긴급긴급!! 오늘 자전거 동호회가 온다더구나! 꽃게찜을 예약해 놨는데 빨리 가져다 줄 수 있겠니?", "", "5만원"));
+        daily_quest_list.Add(new Daily_quest_form(-1, "양식 전복 3번 수확하기", "양식의 달인", 1, "해녀야.. 요새 통 전복이 먹고 싶더구나 전복을 구해다 줄 수 있겠니?", "", "7만원"));
+        daily_quest_list.Add(new Daily_quest_form(-1, "모든 자원 하나씩 잡기", "마지막 퀘스트", 1, "해녀야.. 벌써 내일이면 30일이 되는 구나.. 마지막으로 바다에 있는 모든 자원을 잡아와 볼래?", "", "20만원"));
+
+
         //첫 튜토 시작
         GameObject.Find("tutorial_quest").GetComponent<tutorial_quest>().Sache1();
 

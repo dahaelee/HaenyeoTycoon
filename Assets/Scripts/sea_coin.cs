@@ -32,6 +32,11 @@ public class sea_coin : MonoBehaviour
                 {
                     PlayerPrefs.SetInt("quest3", PlayerPrefs.GetInt("quest3") + 1);
                 }
+                //효민 - daily quest 관련
+                if (quest_Data.daily_quest_list[24].state != -1 && quest_Data.daily_quest_list[24].state != 2)
+                {
+                    PlayerPrefs.SetInt("quest24", PlayerPrefs.GetInt("quest24") + 1);
+                }
             }
 
             if (this.gameObject.GetComponent<SpriteRenderer>().sprite.name == "coin_silver")
