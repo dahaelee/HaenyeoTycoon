@@ -11802,7 +11802,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &657302584
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23641,6 +23641,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest_ui: {fileID: 657302583}
   quest_box: {fileID: 1078949182}
+  quest_UIs: {fileID: 1727017455}
   touch_bg: {fileID: 1384952700}
   quest_bg: {fileID: 1391046867}
   text_box: {fileID: 882616949}
@@ -31137,7 +31138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1727017456
 RectTransform:
   m_ObjectHideFlags: 0

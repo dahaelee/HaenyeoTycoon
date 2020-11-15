@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class tutorial_quest : MonoBehaviour
 {
     //공통 오브젝트
-    public GameObject quest_ui,quest_box;
+    public GameObject quest_ui,quest_box,quest_UIs;
     public Image touch_bg, quest_bg,text_box,triangle;
     public Text text,hilight_text;
     public static int step, quest_num;
@@ -118,6 +118,7 @@ public class tutorial_quest : MonoBehaviour
         quest_bg.gameObject.SetActive(true);
         quest_box.SetActive(true);
         sache.gameObject.SetActive(true);
+        quest_UIs.SetActive(true);
         hilight_text.text = "";
         step = 1; quest_num = 1;
 
