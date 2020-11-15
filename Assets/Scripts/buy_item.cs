@@ -31,7 +31,7 @@ public class buy_item : MonoBehaviour
     void Awake()
     {
         data_load();
-        //init_inven();
+        init_inven();
         //check_price();
         inven_UI();
     }
@@ -96,11 +96,11 @@ public class buy_item : MonoBehaviour
 
         PlayerPrefs.SetInt("Haenyeo" + "_" + "money", Haenyeo.money);
 
-        PlayerPrefs.SetInt("STORE_ITEM_0", Haenyeo.item_inven[0]);
-        PlayerPrefs.SetInt("STORE_ITEM_1", Haenyeo.item_inven[1]);
-        PlayerPrefs.SetInt("STORE_ITEM_2", Haenyeo.item_inven[2]);
-        PlayerPrefs.SetInt("STORE_ITEM_3", Haenyeo.item_inven[3]);
-        PlayerPrefs.SetInt("STORE_ITEM_4", Haenyeo.item_inven[4]);
+        PlayerPrefs.SetInt("Haenyeo_item_inven_number0", Haenyeo.item_inven[0]);
+        PlayerPrefs.SetInt("Haenyeo_item_inven_number1", Haenyeo.item_inven[1]);
+        PlayerPrefs.SetInt("Haenyeo_item_inven_number2", Haenyeo.item_inven[2]);
+        PlayerPrefs.SetInt("Haenyeo_item_inven_number3", Haenyeo.item_inven[3]);
+        PlayerPrefs.SetInt("Haenyeo_item_inven_number4", Haenyeo.item_inven[4]);
 
         PlayerPrefs.Save();
     }
@@ -111,11 +111,11 @@ public class buy_item : MonoBehaviour
 
         //해녀 보유한 자원 개수 초기화
 
-        Haenyeo.item_inven[0] = PlayerPrefs.GetInt("STORE_ITEM_0", 0);
-        Haenyeo.item_inven[1] = PlayerPrefs.GetInt("STORE_ITEM_1", 0);
-        Haenyeo.item_inven[2] = PlayerPrefs.GetInt("STORE_ITEM_2", 0);
-        Haenyeo.item_inven[3] = PlayerPrefs.GetInt("STORE_ITEM_3", 0);
-        Haenyeo.item_inven[4] = PlayerPrefs.GetInt("STORE_ITEM_4", 0);
+        Haenyeo.item_inven[0] = PlayerPrefs.GetInt("Haenyeo_item_inven_number0", 0);
+        Haenyeo.item_inven[1] = PlayerPrefs.GetInt("Haenyeo_item_inven_number1", 0);
+        Haenyeo.item_inven[2] = PlayerPrefs.GetInt("Haenyeo_item_inven_number2", 0);
+        Haenyeo.item_inven[3] = PlayerPrefs.GetInt("Haenyeo_item_inven_number3", 0);
+        Haenyeo.item_inven[4] = PlayerPrefs.GetInt("Haenyeo_item_inven_number4", 0);
 
     }
 }
