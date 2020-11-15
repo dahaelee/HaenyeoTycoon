@@ -847,7 +847,7 @@ public class farm_manager : MonoBehaviour
         PlayerPrefs.SetInt("Haenyeo_level", Haenyeo.level);
         PlayerPrefs.SetFloat("Haenyeo_hp", Haenyeo.hp);
         PlayerPrefs.SetString("lasttime", System.DateTime.Now.ToString());
-        //PlayerPrefs.SetInt("Haenyeo" + "_" + "todayState", (int)Haenyeo.todayState);
+        PlayerPrefs.SetInt("Haenyeo" + "_" + "todayState", (int)Haenyeo.todayState);
         PlayerPrefs.SetFloat("Haenyeo_moving_speed", Haenyeo.moving_speed);
         PlayerPrefs.SetInt("Haenyeo_coin_time", Haenyeo.coin_time);
 
@@ -962,6 +962,14 @@ public class farm_manager : MonoBehaviour
         effect_volume.value = PlayerPrefs.GetFloat("Effect_volume", 1);
         Haenyeo.moving_speed = PlayerPrefs.GetFloat("Haenyeo_moving_speed", 7);
         Haenyeo.coin_time = PlayerPrefs.GetInt("Haenyeo_coin_time", 8);
+        if(PlayerPrefs.GetInt("Haenyeo" + "_" + "todayState", 0) == 0)
+        {
+            Haenyeo.todayState = Haenyeo.TodayState.day;
+        }
+        else
+        {
+            Haenyeo.todayState = Haenyeo.TodayState.night;
+        }
 
         //해녀 보유한 자원 개수 초기화
 
