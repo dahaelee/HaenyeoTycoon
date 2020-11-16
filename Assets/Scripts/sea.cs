@@ -83,6 +83,7 @@ public class sea : MonoBehaviour
 
             countdown -= Time.deltaTime; //시간의 흐름에 따라 카운트다운 감소
             countdown_text.text = Mathf.CeilToInt(countdown).ToString(); //남은 카운트다운을 countdown_text에 담기 
+
             hp_num_text.text = Haenyeo.item_inven[3].ToString(); //hp 아이템 개수
 
             if (countdown <= 0) //카운트다운이 0보다 작아지면
@@ -226,17 +227,17 @@ public class sea : MonoBehaviour
 
     public void item_net()
     {
-        Debug.Log("그물망");
+        Haenyeo.item_inven[0] -= 1;
     }
 
     public void item_boost()
     {
-        Debug.Log("부스터");
+        Haenyeo.item_inven[1] -= 1;
     }
 
     public void item_double()
     {
-        Debug.Log("두배");
+        Haenyeo.item_inven[2] -= 1;
     }
 
     //양식장으로 이동할때 쓰는 함수

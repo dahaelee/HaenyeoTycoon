@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class buy_item : MonoBehaviour
 {
-    public store_item_info[] store_items; // net, bonus, 5m, 15m, 25m
+    public store_item_info[] store_items; // 그물, 부스터, 두배, 체력
     //public int[] item_inven = new int[5]; //아이템 개수
     public Text[] inven_text;
     public Text Haenyeo_money;
