@@ -7,6 +7,7 @@ public class sea_itemcool : MonoBehaviour
 {
     public Image image;
     public Button button;
+    public Text text;
     public float coolTime = 10.0f;
     public bool isClicked = false;
     float leftTime;
@@ -29,6 +30,33 @@ public class sea_itemcool : MonoBehaviour
                 if (image)
                     image.fillAmount = ratio;
             }
+
+        if (gameObject.name == "net_active")
+        {
+            text.text = Haenyeo.item_inven[0].ToString();
+            if (Haenyeo.item_inven[0] < 1)
+                gameObject.SetActive(false);
+            else
+                gameObject.SetActive(true);
+        }
+
+        if (gameObject.name == "boost_active")
+        {
+            text.text = Haenyeo.item_inven[1].ToString();
+            if (Haenyeo.item_inven[1] < 1)
+                gameObject.SetActive(false);
+            else
+                gameObject.SetActive(true);
+        }
+
+        if (gameObject.name == "double_active")
+        {
+            text.text = Haenyeo.item_inven[2].ToString();
+            if (Haenyeo.item_inven[2] < 1)
+                gameObject.SetActive(false);
+            else
+                gameObject.SetActive(true);
+        }
     }
 
     public void StartCoolTime()
