@@ -41,17 +41,17 @@ public class daily_quest_manager : MonoBehaviour
         quest_Data.daily_quest_list[5].todo = $"지지 않기 {PlayerPrefs.GetInt("quest5", 0)}/3";
         quest_Data.daily_quest_list[6].todo = $"꽃게 {Haenyeo.sea_item_number[5]}/2";
         quest_Data.daily_quest_list[7].todo = $"새우 {Haenyeo.sea_item_number[3]}/1  꽃게  {Haenyeo.sea_item_number[5]}/1  문어  {Haenyeo.sea_item_number[6]}/1";
-        quest_Data.daily_quest_list[8].todo = $"나의 오리발 단계 : {equipment_upgrade.my_flipper}";
+        quest_Data.daily_quest_list[8].todo = $"나의 오리발 단계 : {equipment_upgrade.my_flipper+1}";
         quest_Data.daily_quest_list[9].todo = $"양식 문어 {Haenyeo.farm_item_number[6]}/3";
         quest_Data.daily_quest_list[10].todo = $"양식장 개수 {GameObject.Find("farm_manager").GetComponent<farm_manager>().Activated_farm_number()}/6";
         quest_Data.daily_quest_list[11].todo = $"연속 승리 {PlayerPrefs.GetInt("quest11", 0)}/3";
         quest_Data.daily_quest_list[12].todo = $"하루 50만원 송금하기";
         quest_Data.daily_quest_list[13].todo = $"전복 {Haenyeo.sea_item_number[7]}/4";
         quest_Data.daily_quest_list[14].todo = $"양식 꽃게 {Haenyeo.farm_item_number[5]}/5";
-        quest_Data.daily_quest_list[15].todo = $"나의 물안경 단계 : {equipment_upgrade.my_goggle}";
+        quest_Data.daily_quest_list[15].todo = $"나의 물안경 단계 : {equipment_upgrade.my_goggle + 1}";
         quest_Data.daily_quest_list[16].todo = $"조개 {Haenyeo.sea_item_number[0]}/5";
         quest_Data.daily_quest_list[17].todo = $"양식 조개 {Haenyeo.farm_item_number[0]}/10";
-        quest_Data.daily_quest_list[18].todo = $"나의 오리발 단계 : {equipment_upgrade.my_flipper}";
+        quest_Data.daily_quest_list[18].todo = $"나의 오리발 단계 : {equipment_upgrade.my_flipper + 1}";
         quest_Data.daily_quest_list[19].todo = $"거북이 {Haenyeo.sea_item_number[8]}/3";
         quest_Data.daily_quest_list[20].todo = $"양식 전복 {Haenyeo.farm_item_number[7]}/5";
         quest_Data.daily_quest_list[21].todo = $"하루 80만원 송금하기";
@@ -61,7 +61,16 @@ public class daily_quest_manager : MonoBehaviour
         quest_Data.daily_quest_list[25].todo = $"꽃게 {Haenyeo.sea_item_number[5]}/5";
         quest_Data.daily_quest_list[26].todo = $"양식 꽃게 {Haenyeo.farm_item_number[5]}/3";
         quest_Data.daily_quest_list[27].todo = $"양식 전복 {Haenyeo.farm_item_number[7]}/3";
-        quest_Data.daily_quest_list[28].todo = $"조개 {Haenyeo.sea_item_number[0]}/1  미역 {Haenyeo.sea_item_number[1]}/1  불가사리 {Haenyeo.sea_item_number[2]}/1  새우 {Haenyeo.sea_item_number[3]}/1  해파리 {Haenyeo.sea_item_number[4]}/1  꽃게 {Haenyeo.sea_item_number[5]}/1  문어 {Haenyeo.sea_item_number[6]}/1  전복 {Haenyeo.sea_item_number[7]}/1  거북이 {Haenyeo.sea_item_number[8]}/1";
+        quest_Data.daily_quest_list[28].todo = $"잡은 자원 종류 {cnt_item_type()}/8";
+    }
+
+    public int cnt_item_type()
+    {
+        int cc = 0;
+        for (int i = 0; i < 9; i++) {
+            if (Haenyeo.sea_item_number[i] > 0) cc++;
+        }
+        return cc;
     }
 
     public void daily_quest_check(int idx)
