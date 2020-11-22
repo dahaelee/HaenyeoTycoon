@@ -117,7 +117,7 @@ public class store_home : MonoBehaviour
         for (int i = 0; i < 10; i++)
         {
             panel_img.rectTransform.localPosition = new Vector3(532, 360 - 55*i, 0);
-            yield return new WaitForSeconds(0.0001f);
+            yield return new WaitForSeconds(0.001f);
         }
         yield return new WaitForSeconds(0.001f);
     }
