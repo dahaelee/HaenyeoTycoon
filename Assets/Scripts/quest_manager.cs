@@ -33,7 +33,9 @@ public class quest_manager : MonoBehaviour
     //reward effect 관련 오브젝트
     public Image reward_item,reward_money,reward_image;
     public Text  money_text;
-    
+
+    public Animator dad_anim, seller_anim;
+
     void Start()
     {
         string tutorial_quest_load = PlayerPrefs.GetString("tutorial_quest", "new");
@@ -47,7 +49,20 @@ public class quest_manager : MonoBehaviour
         }
 
         quest_contents_update();
- }
+    }
+
+    void Update()
+    {
+        if (text_done == 0)
+        {
+            if(quest_giver[1].activeSelf)dad_anim.SetBool("talking", true);
+            if (quest_giver[2].activeSelf) seller_anim.SetBool("talking", true);
+        }
+        else {
+            if (quest_giver[1].activeSelf) dad_anim.SetBool("talking", false);
+            if (quest_giver[2].activeSelf) seller_anim.SetBool("talking", false);
+        }
+    }
 
     //퀘스트 목록 업데이트 
     public void quest_contents_update()
