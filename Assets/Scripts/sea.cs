@@ -21,7 +21,7 @@ public class sea : MonoBehaviour
     public GameObject haenyeo, gagebar;
     public AudioSource bgm, icon_click, button_click, ready, go;
     public GameObject[] tutorials;
-    public GameObject tutorial_parent;
+    public GameObject tutorial_parent, double_effect;
     public static bool is_double;
 
     void Start()
@@ -64,6 +64,7 @@ public class sea : MonoBehaviour
         depth.gameObject.GetComponent<Image>().sprite = depth_arr[Haenyeo.level-1];
 
         is_double = false;
+        double_effect.SetActive(false);
     }
 
     void Update()
@@ -242,6 +243,7 @@ public class sea : MonoBehaviour
     public IEnumerator start_double()
     {
         is_double = true;
+        double_effect.SetActive(true);
 
         yield return StartCoroutine(wait(6f));
 
@@ -259,6 +261,7 @@ public class sea : MonoBehaviour
         }
 
         is_double = false;
+        double_effect.SetActive(false);
     }
 
     //양식장으로 이동할때 쓰는 함수
