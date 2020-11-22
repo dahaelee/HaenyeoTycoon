@@ -2756,7 +2756,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 833427161}
-          m_MethodName: today_work
+          m_MethodName: repay
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -8020,7 +8020,24 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 833427161}
-          m_MethodName: sea_ui
+          m_MethodName: OnSeaPointerDown
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 833427161}
+          m_MethodName: OnSeaPointerUp
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -14366,10 +14383,12 @@ MonoBehaviour:
   farm_money: {fileID: 392580942}
   farm_night_BGM: {fileID: 8300000, guid: 956c874728d281243bb91ee13de4360c, type: 3}
   farm_day_BGM: {fileID: 8300000, guid: bcfeae746bc7558478229a25fde1cb84, type: 3}
-  repay_icon: {fileID: 131324141}
   farm_night: {fileID: 904742563}
+  repay_active: {fileID: 131324141}
   repay_inactive: {fileID: 957500772}
+  sea_active: {fileID: 424081332}
   sea_inactive: {fileID: 1767523082}
+  market: {fileID: 998922837}
   Switch: {fileID: 1501066821}
   items: []
   twinkles: {fileID: 2057967821}
@@ -16439,7 +16458,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 833427161}
-          m_MethodName: today_work
+          m_MethodName: repay
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -17254,7 +17273,24 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 833427161}
-          m_MethodName: go_market
+          m_MethodName: OnMarketPointerDown
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 833427161}
+          m_MethodName: OnMarketPointerUp
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

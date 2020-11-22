@@ -8,6 +8,7 @@ using System.Diagnostics;
 
 public class farm_manager : MonoBehaviour
 {
+
     public UI_manager UI_manager;       //UI 관련 매니저
     public farm[] farms;
     public GameObject[] farmable_items;
@@ -16,18 +17,19 @@ public class farm_manager : MonoBehaviour
     public Text name_info, time_info, day, money, debt, debt_repay, money_repay, sending_amount_repay, entire_debt, interest, payed, balance, today, interest_warning;
     public int chosen_item, chosen_farm, trash_farm_num, activation_cost, sending_int, sending_limit;
     public bool is_chosen;
-    public static bool is_sea_locked, is_repay_locked, is_repayAnim_Activated;
+    public static bool is_sea_locked, is_repay_locked;
     public string sending_str = "";
     public Slider bgm_volume, effect_volume;
     public Text[] item_count;
     //사운드 관련 필드
     public AudioSource bgm, button_click, popup_click, expand_click, request_denied, get_money, trashing, next_day, debt_sending, num_pad, icon_click, item_click, farm_money;
     public AudioClip farm_night_BGM, farm_day_BGM;
-    public Image repay_icon, farm_night, repay_inactive, sea_inactive, Switch;
+    public Image farm_night, repay_active, repay_inactive, sea_active, sea_inactive, market, Switch;
     public Image[] items;
     public GameObject twinkles;
 
     IEnumerator current_Info;
+    public delegate void SceneChange();
 
     public enum farms_index
     {
@@ -122,10 +124,6 @@ public class farm_manager : MonoBehaviour
             {
                 StartCoroutine(GoNight());
             }
-            if (!is_repayAnim_Activated)
-            {
-                StartCoroutine(repayAnim());
-            }
             if (bgm.clip.name == "BGM_farm")
             {
                 bgm.clip = farm_night_BGM;
@@ -136,7 +134,6 @@ public class farm_manager : MonoBehaviour
         {
             sea_inactive.gameObject.SetActive(false);
             repay_inactive.gameObject.SetActive(true);    //바다 못가요
-            is_repayAnim_Activated = false;
         }
         if (Haenyeo.todayState == Haenyeo.TodayState.night)
         {
@@ -176,24 +173,6 @@ public class farm_manager : MonoBehaviour
 
     }
 
-    public IEnumerator repayAnim()
-    {
-        is_repayAnim_Activated = true;
-        while (Haenyeo.hp <= 0)
-        {
-            repay_icon.transform.rotation = Quaternion.Euler(new Vector3(0, 0, -5));
-            yield return new WaitForSeconds(0.2f);
-            repay_icon.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 5));
-            yield return new WaitForSeconds(0.2f);
-            repay_icon.transform.rotation = Quaternion.Euler(new Vector3(0, 0, -5));
-            yield return new WaitForSeconds(0.2f);
-            repay_icon.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 5));
-            yield return new WaitForSeconds(0.2f);
-            repay_icon.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-            yield return new WaitForSeconds(2f);
-        }
-
-    }
 
     IEnumerator FadeOut(Image image, Image image2 = null, Image image3 = null, float sec = 0) //페이드 아웃 되듯이 사라지는 이펙트 함수
     {
@@ -377,7 +356,7 @@ public class farm_manager : MonoBehaviour
         {
             UI_manager.AllUIoff();
             StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.trash));
-            UnityEngine.Debug.Log("trash 열어라");
+            //UnityEngine.Debug.Log("trash 열어라");
         }
     }
 
@@ -587,6 +566,7 @@ public class farm_manager : MonoBehaviour
             next_day.PlayDelayed((float)0.5f);
             Haenyeo.money -= sending_int;
             Haenyeo.payed += sending_int;
+            
 
             //효민 - 12번 퀘스트 관련
             if (quest_Data.daily_quest_list[12].state != -1 && quest_Data.daily_quest_list[12].state != 2)
@@ -610,6 +590,7 @@ public class farm_manager : MonoBehaviour
             is_repay_locked = true;
             is_sea_locked = false;      //바다 아이콘 활성화
             PlayerPrefs.SetInt("is_repay_locked", 1);
+
             if (Haenyeo.day > Haenyeo.limit_day && Haenyeo.debt > 0)
             {
                 StartCoroutine("bad_ending");
@@ -621,7 +602,7 @@ public class farm_manager : MonoBehaviour
 
             }
 
-            if (Haenyeo.debt < 1)
+            if (Haenyeo.debt-Haenyeo.payed < 1)
             {
                 StartCoroutine("happy_ending");
             }
@@ -676,7 +657,7 @@ public class farm_manager : MonoBehaviour
 
         }
 
-        if (Haenyeo.debt < 1)
+        if (Haenyeo.debt - Haenyeo.payed < 1)
         {
             StartCoroutine("happy_ending");
         }
@@ -684,7 +665,7 @@ public class farm_manager : MonoBehaviour
 
     }
 
-
+    /*
     //바다 가기 아이콘 눌렀을 때 실행되는 함수
     public void sea_ui()
     {
@@ -703,9 +684,81 @@ public class farm_manager : MonoBehaviour
                 StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.no_HP, true));
             }
         }
+    }
+    */
+
+    IEnumerator SeaScaleCoroutine, RepayScaleCoroutine, MarketScaleCoroutine;
+
+    //바다 누르고있을 때 줄어드는 
+    public void OnSeaPointerDown()
+    {
+        SeaScaleCoroutine = ChangeScale(sea_active, sea_active.transform.localScale, new Vector3(0.8f, 0.8f, 0.8f));
+            StartCoroutine(SeaScaleCoroutine);
+    }
+
+    public void OnSeaPointerUp()
+    {
+        if (SeaScaleCoroutine != null)
+        {
+            StopCoroutine(SeaScaleCoroutine);
+            SeaScaleCoroutine = ChangeScale(sea_active, sea_active.transform.localScale, new Vector3(1f, 1f, 1f), new SceneChange(go_sea));
+            StartCoroutine(SeaScaleCoroutine);
+        }
+
+    }
+    //송금 누르고있을 때 줄어드는 
+    public void OnRepayPointerDown()
+    {
+        RepayScaleCoroutine = ChangeScale(repay_active, repay_active.transform.localScale, new Vector3(0.8f, 0.8f, 0.8f));
+        StartCoroutine(RepayScaleCoroutine);
+    }
+
+    public void OnRepayPointerUp()
+    {
+        if (RepayScaleCoroutine != null)
+        {
+            StopCoroutine(RepayScaleCoroutine);
+            RepayScaleCoroutine = ChangeScale(repay_active, repay_active.transform.localScale, new Vector3(1f, 1f, 1f));
+            StartCoroutine(RepayScaleCoroutine);
+        }
+        UI_manager.UI_On(UI_manager.UIstate.repay);
+
+    }
+    //상점 누르고있을 때 줄어드는 
+    public void OnMarketPointerDown()
+    {
+
+        MarketScaleCoroutine = ChangeScale(market, market.transform.localScale, new Vector3(0.8f, 0.8f, 0.8f));
+        StartCoroutine(MarketScaleCoroutine);
+    }
+
+    public void OnMarketPointerUp()
+    {
+        if (MarketScaleCoroutine != null)
+        {
+            StopCoroutine(MarketScaleCoroutine);
+            MarketScaleCoroutine = ChangeScale(market, market.transform.localScale, new Vector3(1f, 1f, 1f), new SceneChange(go_market));
+            StartCoroutine(MarketScaleCoroutine);
+        }
 
     }
 
+    IEnumerator ChangeScale(Image img,Vector3 startScale, Vector3 endScale, SceneChange changeScene = null )
+    {
+        float LerpT = 0;
+        Vector2 startpos = transform.position;
+        float speed = 5;
+
+        while (LerpT <= 1)
+        {
+            img.transform.localScale = Vector3.Lerp(startScale, endScale, LerpT);
+
+            LerpT += Time.deltaTime * speed;
+            yield return null;
+        }
+        img.transform.localScale = endScale;
+        changeScene();
+    }
 
     //자원 생성될 때 째깍 거리는 이펙트
     IEnumerator item_effect(Image image)
