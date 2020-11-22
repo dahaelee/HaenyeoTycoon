@@ -250,8 +250,8 @@ public class daily_quest_manager : MonoBehaviour
                 StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 40000));
                 break;
             case 10:
-                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("ball2", 0));
-                Haenyeo.item_inven[3] += 3;
+                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("kick", 0));
+                Haenyeo.item_inven[1] += 3;
                 break;
             case 11:
                 Haenyeo.money += 100000;
@@ -259,12 +259,12 @@ public class daily_quest_manager : MonoBehaviour
                 break;
             case 12:
                 StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("bonus", 0));
-                Haenyeo.item_inven[1] += 3;
+                Haenyeo.item_inven[3] += 3;
                 break;
             case 13:
                 Haenyeo.sea_item_number[7] -= 4;
-                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("ball3", 0));
-                Haenyeo.item_inven[4] += 3;
+                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("double", 0));
+                Haenyeo.item_inven[2] += 3;
                 break;
             case 14:
                 Haenyeo.farm_item_number[5] -= 5;
@@ -277,10 +277,8 @@ public class daily_quest_manager : MonoBehaviour
                 break;
             case 16:
                 Haenyeo.sea_item_number[0] -= 5;
-                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("ball1", 0));
-                Haenyeo.item_inven[2] += 2;
-                Haenyeo.item_inven[3] += 2;
-                Haenyeo.item_inven[4] += 2;
+                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("double", 0));
+                Haenyeo.item_inven[2] += 4;
                 break;
             case 17:
                 Haenyeo.farm_item_number[0] -= 10;
@@ -293,6 +291,7 @@ public class daily_quest_manager : MonoBehaviour
                 break;
             case 19:
                 Haenyeo.sea_item_number[7] -= 3;
+                Haenyeo.item_inven[3] += 3;
                 StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("bonus", 0));
                 break;
             case 20:
@@ -301,8 +300,8 @@ public class daily_quest_manager : MonoBehaviour
                 StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 50000));
                 break;
             case 21:
-                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("ball3", 0));
-                Haenyeo.item_inven[4] += 5;
+                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("kick", 0));
+                Haenyeo.item_inven[1] += 5;
                 break;
             case 22:
                 Haenyeo.sea_item_number[0] -= 2;
@@ -318,7 +317,7 @@ public class daily_quest_manager : MonoBehaviour
                 break;
             case 24:
                 PlayerPrefs.DeleteKey("quest24");
-                Haenyeo.item_inven[2] += 3;
+                Haenyeo.item_inven[3] += 3;
                 StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("bonus", 0));
                 break;
             case 25:
