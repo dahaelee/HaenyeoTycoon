@@ -24,7 +24,7 @@ public class farm_manager : MonoBehaviour
     //사운드 관련 필드
     public AudioSource bgm, button_click, popup_click, expand_click, request_denied, get_money, trashing, next_day, debt_sending, num_pad, icon_click, item_click, farm_money;
     public AudioClip farm_night_BGM, farm_day_BGM;
-    public Image farm_night, repay_active, repay_inactive, sea_active, sea_inactive, market, Switch;
+    public Image farm_night, repay_active, sea_active, sea_inactive, market, Switch;
     public Image[] items;
     public GameObject twinkles;
 
@@ -119,7 +119,6 @@ public class farm_manager : MonoBehaviour
         if (Haenyeo.hp <= 0)
         {
             sea_inactive.gameObject.SetActive(true);    //바다 못가요
-            repay_inactive.gameObject.SetActive(false);    //바다 못가요
             if (Haenyeo.todayState == Haenyeo.TodayState.day)
             {
                 StartCoroutine(GoNight());
@@ -133,7 +132,6 @@ public class farm_manager : MonoBehaviour
         else
         {
             sea_inactive.gameObject.SetActive(false);
-            repay_inactive.gameObject.SetActive(true);    //바다 못가요
         }
         if (Haenyeo.todayState == Haenyeo.TodayState.night)
         {
@@ -721,7 +719,7 @@ public class farm_manager : MonoBehaviour
             RepayScaleCoroutine = ChangeScale(repay_active, repay_active.transform.localScale, new Vector3(1f, 1f, 1f));
             StartCoroutine(RepayScaleCoroutine);
         }
-        UI_manager.UI_On(UI_manager.UIstate.repay);
+        repay();
 
     }
     //상점 누르고있을 때 줄어드는 
@@ -757,7 +755,8 @@ public class farm_manager : MonoBehaviour
             yield return null;
         }
         img.transform.localScale = endScale;
-        changeScene();
+        if(changeScene != null)
+            changeScene();
     }
 
     //자원 생성될 때 째깍 거리는 이펙트
