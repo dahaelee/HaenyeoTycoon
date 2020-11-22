@@ -201,5 +201,30 @@ public class sea_movement : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     public void item_boost()
     {
         Haenyeo.item_inven[1] -= 1;
+        StartCoroutine(start_boost());
     }
+
+    public IEnumerator start_boost()
+    {
+        float original_speed = speed; // 원래 속도 저장 
+        speed *= 2; // 속도 두배 
+
+        yield return StartCoroutine(wait(6f));
+
+        IEnumerator wait(float delay) //delay만큼 대기 (WaitForSeconds는 타이머 일시정지가 안돼서 만듦)
+        {
+            float time = 0f;
+            while (time < delay) //wait의 실행시간이 delay가 될때까지
+            {
+                yield return null; //프레임은 변하지 않으면서
+                if (!block_touch.gameObject.activeSelf) //터치 방지가 비활성화 상태여야만
+                {
+                    time += Time.deltaTime; //시간이 가게 함
+                }
+            }
+        }
+
+        speed = original_speed; // 속도 원상복구
+    }
+
 }
