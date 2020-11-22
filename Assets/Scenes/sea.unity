@@ -7909,7 +7909,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 954742142}
+      - m_Target: {fileID: 1755796947}
         m_MethodName: item_boost
         m_Mode: 1
         m_Arguments:

@@ -229,12 +229,6 @@ public class sea : MonoBehaviour
     {
         Haenyeo.item_inven[0] -= 1;
     }
-
-    public void item_boost()
-    {
-        Haenyeo.item_inven[1] -= 1;
-    }
-
     public void item_double()
     {
         Haenyeo.item_inven[2] -= 1;
