@@ -197,4 +197,9 @@ public class sea_movement : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
         haenyeo_anim.SetBool("is_moving", false);
     }
+
+    public void item_boost()
+    {
+        Haenyeo.item_inven[1] -= 1;
+    }
 }
