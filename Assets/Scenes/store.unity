@@ -17315,6 +17315,7 @@ MonoBehaviour:
   equip_ui: {fileID: 1047060461}
   item_ui: {fileID: 1979333887}
   return_ui: {fileID: 42117902}
+  buy_click_sound: {fileID: 1745343290}
 --- !u!4 &924944554
 Transform:
   m_ObjectHideFlags: 0
