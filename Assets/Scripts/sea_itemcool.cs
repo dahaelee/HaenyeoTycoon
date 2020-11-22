@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class sea_itemcool : MonoBehaviour
 {
-    public Image image;
+    public Image image, block_touch;
     public Button button;
     public Text text;
     public float coolTime = 10.0f;
@@ -17,7 +17,11 @@ public class sea_itemcool : MonoBehaviour
         if (isClicked)
             if (leftTime > 0)
             {
-                leftTime -= Time.deltaTime;
+                if (!block_touch.gameObject.activeSelf) //터치 방지가 비활성화 상태여야만
+                {
+                    leftTime -= Time.deltaTime;
+                }
+               
                 if (leftTime < 0)
                 {
                     leftTime = 0;

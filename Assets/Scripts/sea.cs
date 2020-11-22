@@ -22,6 +22,7 @@ public class sea : MonoBehaviour
     public AudioSource bgm, icon_click, button_click, ready, go;
     public GameObject[] tutorials;
     public GameObject tutorial_parent;
+    public static bool is_double;
 
     void Start()
     {
@@ -61,6 +62,8 @@ public class sea : MonoBehaviour
 
         // 해녀 레벨에 따라 깊이바 이미지 변경
         depth.gameObject.GetComponent<Image>().sprite = depth_arr[Haenyeo.level-1];
+
+        is_double = false;
     }
 
     void Update()
@@ -230,14 +233,32 @@ public class sea : MonoBehaviour
         Haenyeo.item_inven[0] -= 1;
     }
 
-    public void item_boost()
-    {
-        Haenyeo.item_inven[1] -= 1;
-    }
-
     public void item_double()
     {
         Haenyeo.item_inven[2] -= 1;
+        StartCoroutine(start_double());
+    }
+
+    public IEnumerator start_double()
+    {
+        is_double = true;
+
+        yield return StartCoroutine(wait(6f));
+
+        IEnumerator wait(float delay) //delay만큼 대기 (WaitForSeconds는 타이머 일시정지가 안돼서 만듦)
+        {
+            float time = 0f;
+            while (time < delay) //wait의 실행시간이 delay가 될때까지
+            {
+                yield return null; //프레임은 변하지 않으면서
+                if (!block_touch.gameObject.activeSelf) //터치 방지가 비활성화 상태여야만
+                {
+                    time += Time.deltaTime; //시간이 가게 함
+                }
+            }
+        }
+
+        is_double = false;
     }
 
     //양식장으로 이동할때 쓰는 함수

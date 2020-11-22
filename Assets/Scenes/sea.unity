@@ -356,9 +356,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 20621080}
+  block_touch: {fileID: 1791457939}
   button: {fileID: 20621079}
   text: {fileID: 810634126}
-  coolTime: 10
+  coolTime: 6
   isClicked: 0
 --- !u!1 &21347351
 GameObject:
@@ -7909,7 +7910,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 954742142}
+      - m_Target: {fileID: 1755796947}
         m_MethodName: item_boost
         m_Mode: 1
         m_Arguments:
@@ -7984,9 +7985,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 775746972}
+  block_touch: {fileID: 1791457939}
   button: {fileID: 775746971}
   text: {fileID: 234042791}
-  coolTime: 10
+  coolTime: 6
   isClicked: 0
 --- !u!1 &777523889
 GameObject:
@@ -12467,7 +12469,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1253978619}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1440, z: 0}
+  m_LocalPosition: {x: 0, y: 1440, z: -217}
   m_LocalScale: {x: 100.1027, y: 100.1027, z: 1}
   m_Children:
   - {fileID: 603391225}
@@ -21739,6 +21741,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 2115671610}
+  block_touch: {fileID: 1791457939}
   button: {fileID: 2115671609}
   text: {fileID: 1554183445}
   coolTime: 2
