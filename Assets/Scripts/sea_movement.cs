@@ -7,7 +7,7 @@ public class sea_movement : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 {
     public RectTransform rect_background, rect_joystick, rect_screen;
     public float radius, speed, distance, clamped_1, clamped_2, clamped_3, clamped_length;
-    public GameObject player, block_touch;
+    public GameObject player, block_touch, boost_effect;
     public Vector3 move_position; //이동 좌표
     public Vector2 value;
     public Camera cam;
@@ -36,6 +36,8 @@ public class sea_movement : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         haenyeo_anim.SetBool("front", false);
         haenyeo_anim.SetBool("right", false);
         haenyeo_anim.SetBool("left", false);
+
+        boost_effect.SetActive(false);
     }
 
     void Update()
@@ -219,6 +221,7 @@ public class sea_movement : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     {
         float original_speed = speed; // 원래 속도 저장 
         speed *= 2; // 속도 두배 
+        boost_effect.SetActive(true);
 
         yield return StartCoroutine(wait(5f));
 
@@ -235,6 +238,7 @@ public class sea_movement : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
             }
         }
 
+        boost_effect.SetActive(false);
         speed = original_speed; // 속도 원상복구
     }
 

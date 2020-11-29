@@ -8,7 +8,7 @@ public class sea_catch : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public static GameObject target;
     public sea_item[] sea_item;
     public sea_item shell, seaweed, starfish, shrimp, jellyfish, crab, octopus, abalone, turtle;
-    public GameObject obj, gagebar_bg, gagebar_in, gagebar_ball, fail_string, catch_string, bubble_img, player, ink1, ink2, ink3; //obj는 제어할 게임오브젝트(sea)
+    public GameObject obj, gagebar_bg, gagebar_in, gagebar_ball, fail_string, catch_string, catch_double_string, bubble_img, player, ink1, ink2, ink3; //obj는 제어할 게임오브젝트(sea)
     public sea component; //제어할 스크립트 타입의 참조변수
     public float catch_min, catch_max, speed;
     public bool catchable;
@@ -33,6 +33,7 @@ public class sea_catch : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         gagebar_bg.gameObject.SetActive(false);
         fail_string.gameObject.SetActive(false);
         catch_string.gameObject.SetActive(false);
+        catch_double_string.gameObject.SetActive(false);
         bubble_img.gameObject.SetActive(false);
         ink1.gameObject.SetActive(false);
         ink2.gameObject.SetActive(false);
