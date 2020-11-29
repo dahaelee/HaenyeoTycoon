@@ -245,7 +245,7 @@ public class sea : MonoBehaviour
         is_double = true;
         double_effect.SetActive(true);
 
-        yield return StartCoroutine(wait(6f));
+        yield return StartCoroutine(wait(10f));
 
         IEnumerator wait(float delay) //delay만큼 대기 (WaitForSeconds는 타이머 일시정지가 안돼서 만듦)
         {
