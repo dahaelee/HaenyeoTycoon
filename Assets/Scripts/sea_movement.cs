@@ -40,8 +40,19 @@ public class sea_movement : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     void Update()
     {
-        if(!block_touch.activeSelf)
-            keyboard_move(); // 키보드로 움직이기 위한 함수
+        // 팝업창 켜거나 체력 다 되면 이동하던거 멈추기 위함
+        if (block_touch.activeSelf)
+        {
+            rect_joystick.localPosition = Vector3.zero; //스틱을 원위치
+            move_position = Vector3.zero; //이동 좌표 초기화
+            player_render.sprite = front_sprite; //해녀 이미지 정면으로
+            player.transform.rotation = Quaternion.Euler(0, 0, 0); //해녀 이미지 회전 초기화 
+            haenyeo_anim.SetBool("is_moving", false);
+        }
+
+        // 키보드로 움직이기 위한 함수
+        if (!block_touch.activeSelf)
+            keyboard_move(); 
 
         player.GetComponent<Rigidbody2D>().AddForce(move_position * 100);
 
@@ -209,7 +220,7 @@ public class sea_movement : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         float original_speed = speed; // 원래 속도 저장 
         speed *= 2; // 속도 두배 
 
-        yield return StartCoroutine(wait(6f));
+        yield return StartCoroutine(wait(5f));
 
         IEnumerator wait(float delay) //delay만큼 대기 (WaitForSeconds는 타이머 일시정지가 안돼서 만듦)
         {
