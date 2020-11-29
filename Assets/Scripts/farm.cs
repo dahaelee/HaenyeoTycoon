@@ -27,6 +27,10 @@ public class farm : MonoBehaviour
 
     }
 
+    void OnDestroyed()
+    {
+        farm_data_save();
+    }
         void OnDisable()
         {/*
             if (is_farm_Activated)

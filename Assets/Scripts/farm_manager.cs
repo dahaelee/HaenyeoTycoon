@@ -119,6 +119,7 @@ public class farm_manager : MonoBehaviour
         if (Haenyeo.hp <= 0)
         {
             sea_inactive.gameObject.SetActive(true);    //바다 못가요
+            sea_active.gameObject.SetActive(false);
             if (Haenyeo.todayState == Haenyeo.TodayState.day)
             {
                 StartCoroutine(GoNight());
@@ -131,6 +132,7 @@ public class farm_manager : MonoBehaviour
         }
         else
         {
+            sea_active.gameObject.SetActive(true);
             sea_inactive.gameObject.SetActive(false);
         }
         if (Haenyeo.todayState == Haenyeo.TodayState.night)
@@ -250,69 +252,59 @@ public class farm_manager : MonoBehaviour
     //양식 가능한 자원 보여주기
     public void show_farmable_item(int farm_index)
     {
-        if (Haenyeo.hp <= 0)
+ 
+        is_chosen = false;
+        popup_click.PlayOneShot(popup_click.clip);      //팝업창 사운드
+
+        for (int k = 0; k < item_count.Length; k++)            //자원 개수 보여주기
         {
-            if (UI_manager.currentState != UI_manager.UIstate.no_HP)
+            item_count[k].text = Haenyeo.sea_item_number[k].ToString();
+        }
+        int count = 0;
+        for (int j = 0; j < 9; j++)
+        {
+            farmable_items[j].SetActive(false);
+        }
+        for (int i = 0; i < 9; i++)
+        {
+            if (Haenyeo.sea_item_number[i] > 0)    //1개 이상인 자원만 보여주기
             {
-                StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.no_HP, true));
+                count++;
             }
+        }
+        if (count < 1)
+        {
+            request_denied.PlayOneShot(request_denied.clip);        //요청 거절 사운드
+            StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.no_item, true));
         }
         else
         {
-
-
-            is_chosen = false;
-            popup_click.PlayOneShot(popup_click.clip);      //팝업창 사운드
-
-            for (int k = 0; k < item_count.Length; k++)            //자원 개수 보여주기
+            if (UI_manager.currentState != UI_manager.UIstate.farmable_item)
             {
-                item_count[k].text = Haenyeo.sea_item_number[k].ToString();
+                StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.farmable_item));    //양식 가능한 자원 보여주는 ui창 띄우기
             }
-            int count = 0;
-            for (int j = 0; j < 9; j++)
-            {
-                farmable_items[j].SetActive(false);
-            }
+
             for (int i = 0; i < 9; i++)
             {
-                if (Haenyeo.sea_item_number[i] > 0)    //1개 이상인 자원만 보여주기
+
+                if (Haenyeo.sea_item_number[i] > 0)
                 {
                     count++;
-                }
-            }
-            if (count < 1)
-            {
-                request_denied.PlayOneShot(request_denied.clip);        //요청 거절 사운드
-                StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.no_item, true));
-            }
-            else
-            {
-                if (UI_manager.currentState != UI_manager.UIstate.farmable_item)
-                {
-                    StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.farmable_item));    //양식 가능한 자원 보여주는 ui창 띄우기
-                }
-
-                for (int i = 0; i < 9; i++)
-                {
-
-                    if (Haenyeo.sea_item_number[i] > 0)
+                    farmable_items[i].SetActive(true);
+                    if (!is_chosen)
                     {
-                        count++;
-                        farmable_items[i].SetActive(true);
-                        if (!is_chosen)
-                        {
-                            is_chosen = true;
-                            choose_item(i);     //맨 처음꺼 선택된걸로 두기
-                        }
-                    }
-                    else
-                    {
-                        farmable_items[i].SetActive(false);
+                        is_chosen = true;
+                        choose_item(i);     //맨 처음꺼 선택된걸로 두기
                     }
                 }
-                chosen_farm = farm_index;   //양식장 번호 저장
+                else
+                {
+                    farmable_items[i].SetActive(false);
+                }
             }
+            chosen_farm = farm_index;   //양식장 번호 저장
         }
+        
     }
 
 
@@ -429,8 +421,8 @@ public class farm_manager : MonoBehaviour
         Haenyeo.todayState = Haenyeo.TodayState.night;
         StartCoroutine(fadein(farm_night));
         yield return new WaitForSeconds(0.5f);
-        StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.todayFinished, true, 3f));
-        yield return new WaitForSeconds(2f);
+        //StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.todayFinished, true, 3f)); 하암 피곤해
+        //yield return new WaitForSeconds(2f);
 
     }
 
@@ -507,7 +499,7 @@ public class farm_manager : MonoBehaviour
         icon_click.PlayOneShot(icon_click.clip);        //아이콘 클릭시 사운드
         UI_manager.AllUIoff();
         StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.repay));
-        debt_repay.GetComponent<Text>().text = string.Format("{0:#,###0}", Haenyeo.debt);
+        debt_repay.GetComponent<Text>().text = string.Format("{0:#,###0}", Haenyeo.debt-Haenyeo.payed);
         money_repay.GetComponent<Text>().text = string.Format("{0:#,###0}", Haenyeo.money);
         sending_int = 0;
         sending_str = "0";
@@ -599,7 +591,7 @@ public class farm_manager : MonoBehaviour
                 StartCoroutine("happy_ending");
 
             }
-
+            UnityEngine.Debug.Log(Haenyeo.debt - Haenyeo.payed);
             if (Haenyeo.debt-Haenyeo.payed < 1)
             {
                 StartCoroutine("happy_ending");
@@ -654,7 +646,7 @@ public class farm_manager : MonoBehaviour
             StartCoroutine("happy_ending");
 
         }
-
+        UnityEngine.Debug.Log(Haenyeo.debt - Haenyeo.payed);
         if (Haenyeo.debt - Haenyeo.payed < 1)
         {
             StartCoroutine("happy_ending");
@@ -822,6 +814,7 @@ public class farm_manager : MonoBehaviour
         button_click.volume = effect_volume.value;
         icon_click.volume = effect_volume.value;
         item_click.volume = effect_volume.value;
+        
         farm_money.volume = effect_volume.value;
     }
     public void bgm_sound_ctrl()
