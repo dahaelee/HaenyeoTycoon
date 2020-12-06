@@ -518,7 +518,11 @@ public class farm_manager : MonoBehaviour
 
             sending_int = Haenyeo.money;
             sending_str = sending_int.ToString();
-
+            if (sending_int > Haenyeo.debt - Haenyeo.payed)
+            {
+                sending_int = Haenyeo.debt - Haenyeo.payed;
+                sending_str = sending_int.ToString();
+            }
         }
         sending_amount_repay.GetComponent<Text>().text = string.Format("{0:#,###0}", sending_int);
     }
