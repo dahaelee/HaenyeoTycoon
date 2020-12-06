@@ -30,6 +30,7 @@ public class UI_manager : MonoBehaviour
         no_HP,
         todayFinished,
         quest,
+        questPopup,
         None
     }
 
