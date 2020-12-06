@@ -24,7 +24,7 @@ public class farm_manager : MonoBehaviour
     //사운드 관련 필드
     public AudioSource bgm, button_click, popup_click, expand_click, request_denied, get_money, trashing, next_day, debt_sending, num_pad, icon_click, item_click, farm_money;
     public AudioClip farm_night_BGM, farm_day_BGM;
-    public Image farm_night, repay_active, sea_active, sea_inactive, market, Switch;
+    public Image farm_night, farm_night_wave, repay_active, sea_active, sea_inactive, market, Switch;
     public Image[] items;
     public GameObject twinkles;
 
@@ -420,6 +420,7 @@ public class farm_manager : MonoBehaviour
     {
         Haenyeo.todayState = Haenyeo.TodayState.night;
         StartCoroutine(fadein(farm_night));
+        StartCoroutine(fadein(farm_night_wave));
         yield return new WaitForSeconds(0.5f);
         //StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.todayFinished, true, 3f)); 하암 피곤해
         //yield return new WaitForSeconds(2f);
