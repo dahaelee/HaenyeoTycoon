@@ -18,10 +18,9 @@ public class sea : MonoBehaviour
     public SpriteRenderer sunlight_render; //햇빛 이미지의 렌더러
     public Vector3 pos;
     public int level;
-    public GameObject haenyeo, gagebar;
+    public GameObject haenyeo, gagebar, tutorial_parent, sunlight;
     public AudioSource bgm, icon_click, button_click, ready, go;
     public GameObject[] tutorials;
-    public GameObject tutorial_parent, double_effect;
     public static bool is_double;
 
     void Start()
@@ -64,7 +63,6 @@ public class sea : MonoBehaviour
         depth.gameObject.GetComponent<Image>().sprite = depth_arr[Haenyeo.level-1];
 
         is_double = false;
-        double_effect.SetActive(false);
     }
 
     void Update()
@@ -115,8 +113,15 @@ public class sea : MonoBehaviour
     public void sunlight_transparency_change()
     {
         pos = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, Camera.main.nearClipPlane)); //pos는 메인카메라의 월드좌표계
+        
         float y = (float)pos[1]; //pos[1]은 메인카메라의 월드좌표계의 y좌표
-        float y1 = (float)(y * 0.000445 + 0.312); //적당하게 보정한 투명도 값 y1 
+        float y1;
+
+        if (is_double)
+            y1 = (float)(y * 0.00024306 + 0.65); //적당하게 보정한 투명도 값 y1
+        else
+            y1 = (float)(y * 0.000445 + 0.312); //적당하게 보정한 투명도 값 y1
+
         sunlight_render.color = new Color(1, 1, 1, y1); //빛의 투명도를 y1으로 하여 sunlight 렌더링 
     }
 
@@ -242,8 +247,8 @@ public class sea : MonoBehaviour
 
     public IEnumerator start_double()
     {
+        sunlight.GetComponent<Animator>().SetBool("isDouble", true);
         is_double = true;
-        double_effect.SetActive(true);
 
         yield return StartCoroutine(wait(10f));
 
@@ -261,7 +266,7 @@ public class sea : MonoBehaviour
         }
 
         is_double = false;
-        double_effect.SetActive(false);
+        sunlight.GetComponent<Animator>().SetBool("isDouble", false); 
     }
 
     //양식장으로 이동할때 쓰는 함수
