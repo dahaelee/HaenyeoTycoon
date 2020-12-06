@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class sea_catch : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
@@ -49,9 +50,7 @@ public class sea_catch : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         //터치 중 충돌 벗어날 때 게이지바 없애기 위함
         if (target == null)
-        {
             gagebar_bg.gameObject.SetActive(false);
-        }
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -164,25 +163,31 @@ public class sea_catch : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public IEnumerator catch_effect()
     {
+        GameObject effect_string;
+
+        if (sea.is_double)
+            effect_string = catch_double_string;
+        else
+            effect_string = catch_string;
+
         float string_time = 0.3f;
         float time = 0f;
-        Vector3 string_pos = catch_string.transform.localPosition;
+        Vector3 string_pos = effect_string.transform.localPosition;
         string_pos.y = 0f;
 
-        //yield return new WaitForSeconds(0.5f);
-        catch_string.gameObject.SetActive(true); //문구 활성화 
+        effect_string.gameObject.SetActive(true); //문구 활성화
+
 
         while (string_pos.y < 0.85)
         {
             time += Time.deltaTime / string_time;
             string_pos.y = Mathf.Lerp(-0f, 0.85f, time);
-            catch_string.transform.localPosition = new Vector3(0, string_pos.y, 0);
+            effect_string.transform.localPosition = new Vector3(0, string_pos.y, 0);
             yield return null;
         }
 
-        //yield return new WaitForSeconds(1f);
         yield return new WaitForSeconds(0.5f);
-        catch_string.gameObject.SetActive(false); //문구 비활성화
+        effect_string.gameObject.SetActive(false); //문구 비활성화
     }
 
     public IEnumerator bubble()
