@@ -28,7 +28,7 @@ public class quest_manager : MonoBehaviour
     public GameObject[] quest_giver;
     public Text hilight_text,box_text;
     public static int text_done;
-    public IEnumerator text_coroutine, triangle_coroutine;
+    public IEnumerator text_coroutine, triangle_coroutine, icon_effect_coroutine=null;
 
     //reward effect 관련 오브젝트
     public Image reward_item,reward_money,reward_image;
@@ -180,17 +180,15 @@ public class quest_manager : MonoBehaviour
     public void done_check()
     {
         bool flag = false;
-        int effect_flag = PlayerPrefs.GetInt("effect_flag", 0);
 
         for (int idx = 0; idx < quest_Data.daily_quest_list.Count; idx++)
         {
             if (quest_Data.daily_quest_list[idx].state == 2) flag = true;
         }
 
-        if (flag && effect_flag==0)
+        if (flag)
         {
             done_exist.SetActive(true);
-            PlayerPrefs.SetInt("effect_flag", 1);
             StartCoroutine("quest_icon_effect");
         }
         if(!flag) done_exist.SetActive(false);
@@ -275,19 +273,22 @@ public class quest_manager : MonoBehaviour
     //새로운 퀘스트 있을 때 아이콘 깜박깜박
     IEnumerator quest_icon_effect()
     {
-        int time = 0;
-        while (time < 5)
+        if (icon_effect_coroutine == null)
         {
-            quest_icon.gameObject.transform.Rotate(Vector3.back * 5);
-            yield return new WaitForSeconds(0.2f);
-            quest_icon.gameObject.transform.Rotate(Vector3.forward * 5);
-            yield return new WaitForSeconds(0.2f);
-            time++;
+            icon_effect_coroutine = quest_icon_effect();
+            int time = 0;
+            while (time < 5)
+            {
+                quest_icon.gameObject.transform.Rotate(Vector3.back * 5);
+                yield return new WaitForSeconds(0.2f);
+                quest_icon.gameObject.transform.Rotate(Vector3.forward * 5);
+                yield return new WaitForSeconds(0.2f);
+                time++;
+            }
+            yield return new WaitForSeconds(3.0f);
+
+            icon_effect_coroutine = null;
         }
-
-        yield return new WaitForSeconds(3.0f);
-
-        PlayerPrefs.SetInt("effect_flag", 0);
     }
 
     //보상 버튼 이펙트
