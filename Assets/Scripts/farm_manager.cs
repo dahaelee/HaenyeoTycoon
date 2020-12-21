@@ -12,7 +12,7 @@ public class farm_manager : MonoBehaviour
     public UI_manager UI_manager;       //UI 관련 매니저
     public farm[] farms;
     public GameObject[] farmable_items;
-    public GameObject sea_item_parent;
+    public GameObject sea_item_parent,UI;
     public static GameObject[] sea_item;
     public Text name_info, time_info, day, money, debt, debt_repay, money_repay, sending_amount_repay, entire_debt, interest, payed, balance, today, interest_warning;
     public int chosen_item, chosen_farm, trash_farm_num, activation_cost, sending_int, sending_limit;
@@ -62,6 +62,7 @@ public class farm_manager : MonoBehaviour
         int isNew = PlayerPrefs.GetInt("isNew", 1);     //새로운거인지 확인
         if (isNew == 1)     //첫 시작이면 퀘스트 뜨게 함
         {
+            UI.SetActive(true);
             //효민 - 빚쟁이 텍스트
             GameObject.Find("quest_Data").GetComponent<quest_Data>().newStart();
             PlayerPrefs.SetInt("isNew", 0);
@@ -830,6 +831,7 @@ public class farm_manager : MonoBehaviour
     //배드 엔딩으로 넘어감
     IEnumerator bad_ending()
     {
+        UI.SetActive(false);
         StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.ending));
         UI_manager.UIs[(int)UI_manager.UIstate.ending].color = new Vector4(1, 1, 1, 0);
         for (float i = 0f; i <= 1; i += 0.1f)
@@ -844,6 +846,7 @@ public class farm_manager : MonoBehaviour
     //해피 엔딩으로 넘어감
     IEnumerator happy_ending()
     {
+        UI.SetActive(false);
         StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.ending));        //중간 장면
         UI_manager.UIs[(int)UI_manager.UIstate.ending].color = new Vector4(1, 1, 1, 0);
         for (float i = 0f; i <= 1; i += 0.1f)
@@ -873,6 +876,7 @@ public class farm_manager : MonoBehaviour
         {
             farms[i].farmReset();
         }
+        UI.SetActive(false);
         SceneManager.LoadScene("start");
     }
 
