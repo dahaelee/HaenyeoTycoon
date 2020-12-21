@@ -12,7 +12,7 @@ public class farm_manager : MonoBehaviour
     public UI_manager UI_manager;       //UI 관련 매니저
     public farm[] farms;
     public GameObject[] farmable_items;
-    public GameObject sea_item_parent;
+    public GameObject sea_item_parent,UI;
     public static GameObject[] sea_item;
     public Text name_info, time_info, day, money, debt, debt_repay, money_repay, sending_amount_repay, entire_debt, interest, payed, balance, today, interest_warning;
     public int chosen_item, chosen_farm, trash_farm_num, activation_cost, sending_int, sending_limit;
@@ -24,7 +24,7 @@ public class farm_manager : MonoBehaviour
     //사운드 관련 필드
     public AudioSource bgm, button_click, popup_click, expand_click, request_denied, get_money, trashing, next_day, debt_sending, num_pad, icon_click, item_click, farm_money;
     public AudioClip farm_night_BGM, farm_day_BGM;
-    public Image farm_night, farm_night_wave, repay_active, sea_active, sea_inactive, market, Switch;
+    public Image farm_night, repay_active, sea_active, sea_inactive, market, Switch;
     public Image[] items;
     public GameObject twinkles;
 
@@ -62,6 +62,7 @@ public class farm_manager : MonoBehaviour
         int isNew = PlayerPrefs.GetInt("isNew", 1);     //새로운거인지 확인
         if (isNew == 1)     //첫 시작이면 퀘스트 뜨게 함
         {
+            UI.SetActive(true);
             //효민 - 빚쟁이 텍스트
             GameObject.Find("quest_Data").GetComponent<quest_Data>().newStart();
             PlayerPrefs.SetInt("isNew", 0);
@@ -420,7 +421,6 @@ public class farm_manager : MonoBehaviour
     {
         Haenyeo.todayState = Haenyeo.TodayState.night;
         StartCoroutine(fadein(farm_night));
-        StartCoroutine(fadein(farm_night_wave));
         yield return new WaitForSeconds(0.5f);
         //StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.todayFinished, true, 3f)); 하암 피곤해
         //yield return new WaitForSeconds(2f);
@@ -835,6 +835,7 @@ public class farm_manager : MonoBehaviour
     //배드 엔딩으로 넘어감
     IEnumerator bad_ending()
     {
+        UI.SetActive(false);
         StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.ending));
         UI_manager.UIs[(int)UI_manager.UIstate.ending].color = new Vector4(1, 1, 1, 0);
         for (float i = 0f; i <= 1; i += 0.1f)
@@ -849,6 +850,7 @@ public class farm_manager : MonoBehaviour
     //해피 엔딩으로 넘어감
     IEnumerator happy_ending()
     {
+        UI.SetActive(false);
         StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.ending));        //중간 장면
         UI_manager.UIs[(int)UI_manager.UIstate.ending].color = new Vector4(1, 1, 1, 0);
         for (float i = 0f; i <= 1; i += 0.1f)
@@ -878,6 +880,7 @@ public class farm_manager : MonoBehaviour
         {
             farms[i].farmReset();
         }
+        UI.SetActive(false);
         SceneManager.LoadScene("start");
     }
 
@@ -1000,7 +1003,7 @@ public class farm_manager : MonoBehaviour
             is_sea_locked = false;
         }
         
-        Haenyeo.money = PlayerPrefs.GetInt("Haenyeo_money", 10000000);
+        Haenyeo.money = PlayerPrefs.GetInt("Haenyeo_money", 0);
         Haenyeo.debt = PlayerPrefs.GetInt("Haenyeo_debt", 5000000);
         Haenyeo.payed = PlayerPrefs.GetInt("Haenyeo_payed", 0);
         Haenyeo.interest = PlayerPrefs.GetInt("Haenyeo_interest", 0);
@@ -1011,7 +1014,7 @@ public class farm_manager : MonoBehaviour
         bgm_volume.value = PlayerPrefs.GetFloat("Bgm_volume", 1);
         effect_volume.value = PlayerPrefs.GetFloat("Effect_volume", 1);
         Haenyeo.moving_speed = PlayerPrefs.GetFloat("Haenyeo_moving_speed", 7);
-        Haenyeo.coin_time = PlayerPrefs.GetInt("Haenyeo_coin_time", 8);
+        Haenyeo.coin_time = PlayerPrefs.GetInt("Haenyeo_coin_time", 12);
         if(PlayerPrefs.GetInt("Haenyeo" + "_" + "todayState", 0) == 0)
         {
             Haenyeo.todayState = Haenyeo.TodayState.day;

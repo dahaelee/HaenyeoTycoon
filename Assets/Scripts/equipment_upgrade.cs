@@ -441,11 +441,11 @@ public class equipment_upgrade : MonoBehaviour
             Haenyeo.money -= goggles[my_goggle].next_upgrade_price;
             if (my_goggle == 0)
             {
-                Haenyeo.coin_time = 7;
+                Haenyeo.coin_time = 10;
             }
             if (my_goggle == 1)
             {
-                Haenyeo.coin_time = 6;
+                Haenyeo.coin_time = 8;
             }
             my_goggle++;
             PlayerPrefs.SetInt("PLAYER_GOGGLE", my_goggle);

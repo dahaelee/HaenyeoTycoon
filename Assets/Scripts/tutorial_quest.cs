@@ -21,7 +21,9 @@ public class tutorial_quest : MonoBehaviour
     public Image sache, speech_bubble;
     public Text bubble_text;
     public string[] tutorial_texts;
+    public Image Scrollbar;
     public Image sea_icon_fake;
+
 
     public IEnumerator text_coroutine, triangle_coroutine;
     static int text_done;
@@ -33,7 +35,7 @@ public class tutorial_quest : MonoBehaviour
         quest_box.SetActive(false);
         hilight_parent.SetActive(false);
         bubble_parent.gameObject.SetActive(false);
-        sea_icon_fake.gameObject.SetActive(false);
+        Scrollbar.gameObject.SetActive(false);
         quest_ui.gameObject.SetActive(false);
     }
 
@@ -79,16 +81,29 @@ public class tutorial_quest : MonoBehaviour
                 }
                 else
                 {
-                    if (step < 9)
+                    if (step != 11)
                     {
                         hilight[step - 4].gameObject.SetActive(false);
                         hilight[step - 3].gameObject.SetActive(true);
                         bubble_text.text = tutorial_texts[step - 1];
+                        if (step == 7) {
+                            Scrollbar.gameObject.SetActive(true);
+                            touch_bg.gameObject.SetActive(false);
+                        }
+                        if (step == 8) {
+                            Scrollbar.gameObject.SetActive(false);
+                            touch_bg.gameObject.SetActive(true);
+                        }
+                        if (step == 9) {
+                            bubble_parent.transform.position = new Vector3(bubble_parent.transform.position.x, bubble_parent.transform.position.y - 200, bubble_parent.transform.position.z);
+                        }
                     }
-                    //말풍선 위치 조정
-                    //if (step == 6) bubble_parent.transform.position = new Vector3(640, 450, 0);
-                    if (step == 9)
+                    else if (step == 11)
                     {
+                        bubble_parent.transform.position = new Vector3(bubble_parent.transform.position.x, bubble_parent.transform.position.y + 300, bubble_parent.transform.position.z);
+                        hilight[step - 4].gameObject.SetActive(false);
+                        hilight[step - 3].gameObject.SetActive(true);
+                        touch_bg.gameObject.SetActive(false);
                         bubble_text.text = tutorial_texts[step - 1];
                         sea_icon_fake.gameObject.SetActive(true);
                     }
@@ -162,11 +177,13 @@ public class tutorial_quest : MonoBehaviour
             "아직 양식장 구성에 대해 잘 모를테니 몇가지 설명을 해주마..",
             "이건 너의 소지금을 나타낸단다...",
             "이건.. 한 달동안 갚아야할 돈의 액수란다..",
-            "이건 너의 체력을 나타내.. 체력이 0이되면, 하루를 마무리 짓게 된단다.",
-            "이걸 누르면, 해야 할일의 목록과 내용을 확인할 수 있단다..",
-            "상점 아이콘을 누르면, 상점으로 갈 수 있단다..",
-            "바다 아이콘을 누르면, 바다로 갈 수 있단다..",
-            "이 참에 바다에서 물질하는 법도 알려주마… 바다 아이콘을 눌러보렴"
+            "이건 너의 체력인데, 체력이 0이되면 하루를 마무리 짓게 된단다.",
+            "이건 해야할 일 목록이란다. 그 날 해야하는 내용을 확인할 수 있지..",
+            "앗차, 해변가에도 알려줄 게 있었지. 이걸 한 번 눌러보겠니?",
+            "양식장과 해변가는 이렇게 이동할 수 있단다.",
+            "해변에는 아이템을 팔거나 살 수 있는 상점이 있고,",
+            "ATM 기계를 통해 빚쟁이에게 돈을 송금할 수 있어.",
+            "그리고 이 표지판을 따라가면 바다로 갈 수 있단다.. 이 참에 물질하는 법도 알려주마. 한 번 눌러보렴"
         };
         touch_bg.gameObject.SetActive(true);
         quest_bg.gameObject.SetActive(true);
@@ -187,11 +204,12 @@ public class tutorial_quest : MonoBehaviour
     //fake_sea_icon 눌렀을 때 함수
     public void sea_open()
     {
+        Debug.Log("눌림");
         icon_click.PlayOneShot(icon_click.clip);
         Initialize();
         PlayerPrefs.SetInt("isQuest", 3);
         SceneManager.LoadScene("sea"); // 바다로 이동
-        hilight[5].gameObject.SetActive(false);
+        hilight[8].gameObject.SetActive(false);
     }
 
 

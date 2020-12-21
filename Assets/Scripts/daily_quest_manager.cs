@@ -231,7 +231,7 @@ public class daily_quest_manager : MonoBehaviour
             case 6:
                 Haenyeo.sea_item_number[5] -= 2;
                 StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("bonus", 0));
-                Haenyeo.item_inven[1] += 2;
+                Haenyeo.item_inven[3] += 2;
                 break;
             case 7:
                 Haenyeo.sea_item_number[3] -= 1;
