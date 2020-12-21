@@ -94,11 +94,13 @@ public class tutorial_quest : MonoBehaviour
                             Scrollbar.gameObject.SetActive(false);
                             touch_bg.gameObject.SetActive(true);
                         }
+                        if (step == 9) {
+                            bubble_parent.transform.position = new Vector3(bubble_parent.transform.position.x, bubble_parent.transform.position.y - 200, bubble_parent.transform.position.z);
+                        }
                     }
-                    //말풍선 위치 조정
-                    //if (step == 6) bubble_parent.transform.position = new Vector3(640, 450, 0);
                     else if (step == 11)
                     {
+                        bubble_parent.transform.position = new Vector3(bubble_parent.transform.position.x, bubble_parent.transform.position.y + 300, bubble_parent.transform.position.z);
                         hilight[step - 4].gameObject.SetActive(false);
                         hilight[step - 3].gameObject.SetActive(true);
                         touch_bg.gameObject.SetActive(false);
