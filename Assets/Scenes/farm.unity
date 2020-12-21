@@ -14852,6 +14852,7 @@ MonoBehaviour:
   - {fileID: 1570259226}
   - {fileID: 805013111}
   sea_item_parent: {fileID: 2045954006}
+  UI: {fileID: 195394516}
   name_info: {fileID: 1930365665}
   time_info: {fileID: 742131068}
   day: {fileID: 1129194332}
