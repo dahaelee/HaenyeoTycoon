@@ -29,6 +29,7 @@ public class sea : MonoBehaviour
         if (IsSeaNew == 1)
         {
             tutorial_parent.SetActive(true);
+            start_button.gameObject.SetActive(false);
             PlayerPrefs.SetInt("IsSeaNew", 0);
         }
         else
