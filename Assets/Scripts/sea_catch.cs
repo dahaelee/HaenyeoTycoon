@@ -8,8 +8,7 @@ using System.Linq;
 public class sea_catch : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public static GameObject target;
-    public static GameObject[] targets;
-    public static int tar_i;
+    public static List<GameObject> targets;
     public Image block_touch;
     public sea_item[] sea_item;
     public sea_item shell, seaweed, starfish, shrimp, jellyfish, crab, octopus, abalone, turtle;
@@ -33,8 +32,7 @@ public class sea_catch : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         sea_item[7] = abalone;
         sea_item[8] = turtle;
 
-        targets = new GameObject[20];
-        tar_i = 0;
+        targets = new List<GameObject>();
 
         catchable = true;
         gagebar_ball.transform.localPosition = new Vector3(-0.0f, 0.0f, -2.0f); //게이지바 구슬 중앙으로
@@ -65,10 +63,7 @@ public class sea_catch : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         Haenyeo.item_inven[0] -= 1;
 
-        targets = new GameObject[20];
-        for (int i = 0; i < 20; i++)
-            targets[i] = null;
-        tar_i = 0;
+        targets = new List<GameObject>();
 
         StartCoroutine(start_net());
         StartCoroutine(net_effect1());
@@ -119,19 +114,19 @@ public class sea_catch : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void net_effect2() 
     {
-        //그물 벗어난 것, 중복 요소, NULL 제거
-        for (int i = 0; i < 10; i++)
-            if (targets[i] != null && targets[i].GetComponent<Animator>().GetBool("collided") == false)
-                targets[i] = null;
-        
-        targets = targets.Distinct().ToArray<GameObject>();
-        targets = targets.Where(x => x != null).ToArray<GameObject>();
+        //그물 벗어난 것, 중복 요소 제거
+        targets = targets.Where(x => x.GetComponent<Animator>().GetBool("collided") == true).ToList();
+        targets = targets.Distinct().ToList();
+
+        // 그물 범위 내의 자원들 찍어보기 (나중에 삭제)
+        for (int i = 0; i < targets.Count; i++)
+            Debug.Log(targets[i]);
 
         // 거품 순차적으로 터지는 효과
         StartCoroutine("net_effect3");
 
         // 그물 안에 있는 것들만 먹기
-        for (int j = 0; j < targets.Length; j++)
+        for (int j = 0; j < targets.Count; j++)
         {
             target = targets[j];
 
@@ -153,7 +148,7 @@ public class sea_catch : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public IEnumerator net_effect3()
     {
-        for (int j = 0; j < targets.Length; j++)
+        for (int j = 0; j < targets.Count; j++)
         {
             target = targets[j];
             StartCoroutine("bubble"); 

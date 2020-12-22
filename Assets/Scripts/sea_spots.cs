@@ -102,9 +102,9 @@ public class sea_spots : MonoBehaviour
             }
         }
 
-        // 싹쓸이 그물에 충돌하면 충돌할때 처음 한번만 호출해서 배열에 담기
+        // 싹쓸이 그물에 충돌하면 충돌할때 처음 한번만 호출해서 리스트에 추가
         if (col.gameObject.CompareTag("net"))
-            sea_catch.targets[sea_catch.tar_i++] = this.gameObject;
+            sea_catch.targets.Add(this.gameObject);
     }
 
     //해녀와 충돌하면 테두리 있는 애니메이션으로 변경하고 target 설정
