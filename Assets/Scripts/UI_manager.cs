@@ -52,7 +52,6 @@ public class UI_manager : MonoBehaviour
 
     public void AllUIoff()
     {
-        Debug.Log("UI Off");
         for (int i=0; i<UIs.Length; i++)
         {
             UIs[i].gameObject.SetActive(false);
@@ -64,7 +63,6 @@ public class UI_manager : MonoBehaviour
     public IEnumerator UI_On(UIstate uistate, bool AutoUIOff = false, float seconds = 2f)
     {
         AllUIoff();
-        Debug.Log("UI On");
         currentState = uistate;
         yield return new WaitForSeconds(0.1f);
         UIs[(int)UIstate.UIbackground].gameObject.SetActive(true);
