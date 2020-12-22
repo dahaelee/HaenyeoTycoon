@@ -265,11 +265,9 @@ public class tutorial_quest : MonoBehaviour
                     GameObject.Find("quest_manager").GetComponent<quest_manager>().quest_contents_update(); //실시간 반영
 
                     step = 1; quest_num = 3;
-                    //bubble_parent.transform.position = new Vector3(640, 450, 0); // 화면 상단 위치
-                    bubble_text.text = "그렇지~ 자원은 그렇게 양식하는 거란다.. 상점도 한번 둘러보겠니?";
-                    //PlayerPrefs.SetInt("storeNew", 1);
 
-                    if(PlayerPrefs.GetInt("storeNew",1)==0) quest_Data.tutorial_quest_list[2].state = -1;
+                    if (PlayerPrefs.GetInt("storeNew", 1) == 0) quest_Data.tutorial_quest_list[2].state = -1;
+                    if (PlayerPrefs.GetInt("storeNew", 1) != 0) bubble_text.text = "그렇지~ 자원은 그렇게 양식하는 거란다.. 상점도 한번 둘러보겠니?";
 
                     item_num = 0;
                     PlayerPrefs.SetInt("isQuest", 5);
