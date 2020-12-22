@@ -1912,7 +1912,7 @@ GameObject:
   - component: {fileID: 76003650}
   - component: {fileID: 76003649}
   m_Layer: 5
-  m_Name: Scrollbar
+  m_Name: Scrollbar_tuto
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3723,7 +3723,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 9.95, y: -0.6}
+  m_AnchoredPosition: {x: 9.949997, y: -0.5999985}
   m_SizeDelta: {x: -44.14, y: -21.81}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &167367959
@@ -14910,6 +14910,7 @@ MonoBehaviour:
   Switch: {fileID: 1501066821}
   items: []
   twinkles: {fileID: 2057967821}
+  Scrollbar_tuto: {fileID: 76003652}
 --- !u!4 &833427162
 Transform:
   m_ObjectHideFlags: 0
@@ -24325,7 +24326,7 @@ MonoBehaviour:
   speech_bubble: {fileID: 866778930}
   bubble_text: {fileID: 1863668752}
   tutorial_texts: []
-  Scrollbar: {fileID: 76003652}
+  Scrollbar_tuto: {fileID: 76003652}
   sea_icon_fake: {fileID: 1044792158}
 --- !u!1 &1347373915
 GameObject:

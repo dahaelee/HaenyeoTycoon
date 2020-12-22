@@ -27,6 +27,7 @@ public class farm_manager : MonoBehaviour
     public Image farm_night, repay_active, sea_active, sea_inactive, market, Switch;
     public Image[] items;
     public GameObject twinkles;
+    public Image Scrollbar_tuto;
 
     IEnumerator current_Info;
     public delegate void SceneChange();
@@ -60,6 +61,7 @@ public class farm_manager : MonoBehaviour
     void Start()
     {
         int isNew = PlayerPrefs.GetInt("isNew", 1);     //새로운거인지 확인
+        Scrollbar_tuto.gameObject.SetActive(false);
         if (isNew == 1)     //첫 시작이면 퀘스트 뜨게 함
         {
             UI.SetActive(true);
