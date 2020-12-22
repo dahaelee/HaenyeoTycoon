@@ -21,7 +21,7 @@ public class tutorial_quest : MonoBehaviour
     public Image sache, speech_bubble;
     public Text bubble_text;
     public string[] tutorial_texts;
-    public Image Scrollbar;
+    public Image Scrollbar_tuto;
     public Image sea_icon_fake;
 
 
@@ -35,7 +35,7 @@ public class tutorial_quest : MonoBehaviour
         quest_box.SetActive(false);
         hilight_parent.SetActive(false);
         bubble_parent.gameObject.SetActive(false);
-        Scrollbar.gameObject.SetActive(false);
+        Scrollbar_tuto.gameObject.SetActive(false);
         quest_ui.gameObject.SetActive(false);
     }
 
@@ -87,11 +87,11 @@ public class tutorial_quest : MonoBehaviour
                         hilight[step - 3].gameObject.SetActive(true);
                         bubble_text.text = tutorial_texts[step - 1];
                         if (step == 7) {
-                            Scrollbar.gameObject.SetActive(true);
+                            Scrollbar_tuto.gameObject.SetActive(true);
                             touch_bg.gameObject.SetActive(false);
                         }
                         if (step == 8) {
-                            Scrollbar.gameObject.SetActive(false);
+                            Scrollbar_tuto.gameObject.SetActive(false);
                             touch_bg.gameObject.SetActive(true);
                         }
                         if (step == 9) {
