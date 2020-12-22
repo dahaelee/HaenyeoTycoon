@@ -19,7 +19,7 @@ public class sea : MonoBehaviour
     public Vector3 pos;
     public int level;
     public GameObject haenyeo, gagebar, tutorial_parent, sunlight;
-    public AudioSource bgm, icon_click, button_click, ready, go;
+    public AudioSource bgm, icon_click, button_click, ready, go, double_sound, hp_sound;
     public GameObject[] tutorials;
     public static bool is_double;
 
@@ -59,6 +59,8 @@ public class sea : MonoBehaviour
         button_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
         ready.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
         go.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+        double_sound.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+        hp_sound.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
 
         // 해녀 레벨에 따라 깊이바 이미지 변경
         depth.gameObject.GetComponent<Image>().sprite = depth_arr[Haenyeo.level-1];
@@ -197,6 +199,7 @@ public class sea : MonoBehaviour
     // 체력 0 됐을때 카운트다운 팝업창
     public void use_hp_item()
     {
+        hp_sound.PlayOneShot(hp_sound.clip);
         Haenyeo.item_inven[3] -= 1; // 체력템 개수 -1
         // load_farm 함수에 템 개수 저장하기
         block_touch.gameObject.SetActive(false); //팝업창 외의 영역 터치 방지 해제 
@@ -235,11 +238,6 @@ public class sea : MonoBehaviour
         }
     }
 
-    public void item_net()
-    {
-        Haenyeo.item_inven[0] -= 1;
-    }
-
     public void item_double()
     {
         Haenyeo.item_inven[2] -= 1;
@@ -248,6 +246,8 @@ public class sea : MonoBehaviour
 
     public IEnumerator start_double()
     {
+        double_sound.PlayOneShot(double_sound.clip);
+
         sunlight.GetComponent<Animator>().SetBool("isDouble", true);
         is_double = true;
 

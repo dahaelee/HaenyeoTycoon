@@ -103,6 +103,8 @@ public class sea_item_manager : MonoBehaviour
 
     void Start()
     {
+        item_create.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+
         // 코인
         StartCoroutine(create_coins());
 
@@ -135,7 +137,6 @@ public class sea_item_manager : MonoBehaviour
         }
 
         level = Haenyeo.level;
-        item_create.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
 
         //해녀 레벨에 따라 초기 자원 생성 및 추가 자원 생성
         if (level == 1)
@@ -159,8 +160,6 @@ public class sea_item_manager : MonoBehaviour
             StartCoroutine(create_plus(3, 2));
             StartCoroutine(create_plus(3, 3));
         }
-
-        item_create.volume = PlayerPrefs.GetFloat("item_creat", 1);
     }
 
     //바다의 깊이에 따른 초기 자원 생성 함수

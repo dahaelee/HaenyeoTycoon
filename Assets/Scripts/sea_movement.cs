@@ -17,6 +17,7 @@ public class sea_movement : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     public BoxCollider2D bound1, bound2, bound3;
     public int level;
     public Animator haenyeo_anim;
+    public AudioSource boost_sound;
 
     void Start()
     {
@@ -36,8 +37,9 @@ public class sea_movement : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         haenyeo_anim.SetBool("front", false);
         haenyeo_anim.SetBool("right", false);
         haenyeo_anim.SetBool("left", false);
-
         boost_effect.SetActive(false);
+
+        boost_sound.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
     }
 
     void Update()
@@ -219,6 +221,8 @@ public class sea_movement : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     public IEnumerator start_boost()
     {
+        boost_sound.PlayOneShot(boost_sound.clip);
+
         float original_speed = speed; // 원래 속도 저장 
         speed *= 2; // 속도 두배 
         boost_effect.SetActive(true);

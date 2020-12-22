@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 public class sea_catch : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public static GameObject target;
+    public static GameObject[] targets;
+    public static int tar_i;
+    public Image block_touch;
     public sea_item[] sea_item;
     public sea_item shell, seaweed, starfish, shrimp, jellyfish, crab, octopus, abalone, turtle;
-    public GameObject obj, gagebar_bg, gagebar_in, gagebar_ball, fail_string, catch_string, catch_double_string, bubble_img, player, ink1, ink2, ink3; //obj는 제어할 게임오브젝트(sea)
+    public GameObject obj, gagebar_bg, gagebar_in, gagebar_ball, fail_string, catch_string, catch_double_string, player, ink1, ink2, ink3, net; //obj는 제어할 게임오브젝트(sea)
     public sea component; //제어할 스크립트 타입의 참조변수
     public float catch_min, catch_max, speed;
     public bool catchable;
     public int difficulty, idx; //채집할 자원의 인덱스
-    public AudioSource item_catch, item_fail, ink_1, ink_2;
+    public AudioSource item_catch, item_fail, ink_1, ink_2, net_sound1;
 
     void Start()
     {
@@ -29,21 +33,25 @@ public class sea_catch : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         sea_item[7] = abalone;
         sea_item[8] = turtle;
 
+        targets = new GameObject[20];
+        tar_i = 0;
+
         catchable = true;
         gagebar_ball.transform.localPosition = new Vector3(-0.0f, 0.0f, -2.0f); //게이지바 구슬 중앙으로
         gagebar_bg.gameObject.SetActive(false);
         fail_string.gameObject.SetActive(false);
         catch_string.gameObject.SetActive(false);
         catch_double_string.gameObject.SetActive(false);
-        bubble_img.gameObject.SetActive(false);
         ink1.gameObject.SetActive(false);
         ink2.gameObject.SetActive(false);
         ink3.gameObject.SetActive(false);
+        net.gameObject.SetActive(false);
         component = obj.GetComponent<sea>();
         item_catch.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
         item_fail.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
         ink_1.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
         ink_2.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+        net_sound1.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
     }
 
     void Update()
@@ -51,6 +59,106 @@ public class sea_catch : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         //터치 중 충돌 벗어날 때 게이지바 없애기 위함
         if (target == null)
             gagebar_bg.gameObject.SetActive(false);
+    }
+
+    public void item_net()
+    {
+        Haenyeo.item_inven[0] -= 1;
+
+        targets = new GameObject[20];
+        for (int i = 0; i < 20; i++)
+            targets[i] = null;
+        tar_i = 0;
+
+        StartCoroutine(start_net());
+        StartCoroutine(net_effect1());
+    }
+
+    public IEnumerator start_net()
+    {
+        net_sound1.PlayOneShot(net_sound1.clip);
+        yield return StartCoroutine(wait(5f));
+
+        IEnumerator wait(float delay) //delay만큼 대기 (WaitForSeconds는 타이머 일시정지가 안돼서 만듦)
+        {
+            float time = 0f;
+            while (time < delay) //wait의 실행시간이 delay가 될때까지
+            {
+                yield return null; //프레임은 변하지 않으면서
+                if (!block_touch.gameObject.activeSelf) //터치 방지가 비활성화 상태여야만
+                {
+                    time += Time.deltaTime; //시간이 가게 함
+                }
+            }
+        }
+    }
+
+    public IEnumerator net_effect1()
+    {
+        float scale = 0f;
+        int i = 0;
+
+        net.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+        net.gameObject.SetActive(true); //그물 활성화
+        catchable = false;
+
+        while (i <= 50)
+        {
+            yield return new WaitForSeconds(0.01f);
+            net.transform.localScale = new Vector3(0.5f + scale, 0.5f + scale, 1);
+            scale += 0.01f;
+            i++;
+            if (i == 50) // 그물 제일 커졌을 때
+            {
+                net_effect2(); // 범위 안에 있는 자원들 한번에 잡기
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+        net.gameObject.SetActive(false); //그물 비활성화
+    }
+
+    public void net_effect2() 
+    {
+        //그물 벗어난 것, 중복 요소, NULL 제거
+        for (int i = 0; i < 10; i++)
+            if (targets[i] != null && targets[i].GetComponent<Animator>().GetBool("collided") == false)
+                targets[i] = null;
+        
+        targets = targets.Distinct().ToArray<GameObject>();
+        targets = targets.Where(x => x != null).ToArray<GameObject>();
+
+        // 거품 순차적으로 터지는 효과
+        StartCoroutine("net_effect3");
+
+        // 그물 안에 있는 것들만 먹기
+        for (int j = 0; j < targets.Length; j++)
+        {
+            target = targets[j];
+
+            // 아이템 인덱스 알아내기
+            for (int i = 0; i < sea_item.Length; i++)
+            {
+                if (target.gameObject.GetComponent<sea_item>().item_name == sea_item[i].name)
+                    idx = i;
+            }
+
+            if (sea.is_double)
+                component.item_num[idx] += 2; //sea스크립트 상의 해녀 그물망에 추가
+            else
+                component.item_num[idx] += 1; //sea스크립트 상의 해녀 그물망에 추가
+
+            Haenyeo.sea_item_number[idx] += 1; //해녀의 보유 아이템 개수에 추가
+        }
+    }
+
+    public IEnumerator net_effect3()
+    {
+        for (int j = 0; j < targets.Length; j++)
+        {
+            target = targets[j];
+            StartCoroutine("bubble"); 
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -110,9 +218,7 @@ public class sea_catch : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         for (int i = 0; i < sea_item.Length; i++)
         {
             if (target.gameObject.GetComponent<sea_item>().item_name == sea_item[i].name)
-            {
                 idx = i;
-            }
         }
 
         switch (difficulty)
@@ -196,25 +302,25 @@ public class sea_catch : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         float scale = 0f;
         int i = 0;
-        bubble_img.transform.localScale = new Vector3(100, 100, 1);
 
-        bubble_img.transform.position = target_now.transform.position; //거품의 위치는 현재 자원의 위치
-        bubble_img.gameObject.SetActive(true); //거품 활성화
+        Transform bubble = target_now.transform.GetChild(0);
+        bubble.localScale = new Vector3(1, 1, 1);
+        bubble.gameObject.SetActive(true);
 
-        while (i <= 4)
+        while (i <= 8)
         {
-            yield return new WaitForSeconds(0.1f);
-            bubble_img.transform.localScale = new Vector3(100 + scale, 100 + scale, 1);
-            scale += 40;
+            yield return new WaitForSeconds(0.05f);
+            bubble.transform.localScale = new Vector3(1 + scale, 1 + scale, 1);
+            scale += 0.2f;
             i++;
-            if (i == 3)
+            if (i == 6)
             {
                 item_catch.PlayOneShot(item_catch.clip);
                 target_now.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0); //자원 안보이게
             }
         }
 
-        bubble_img.gameObject.SetActive(false); //거품 비활성화
+        bubble.gameObject.SetActive(false); //거품 비활성화
         yield return new WaitForSeconds(0.6f);
         target_now.GetComponent<sea_spots>().targeted = false;
         target_now.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1); //자원 다시 보이게 
@@ -338,10 +444,5 @@ public class sea_catch : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     target_now.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
     target_now.gameObject.SetActive(false); //자원 비활성화
     catchable = true; //터치 가능
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        throw new System.NotImplementedException();
     }
 }

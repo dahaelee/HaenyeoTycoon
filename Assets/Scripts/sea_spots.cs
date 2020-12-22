@@ -101,25 +101,39 @@ public class sea_spots : MonoBehaviour
                 move_right = true;
             }
         }
+
+        // 싹쓸이 그물에 충돌하면 충돌할때 처음 한번만 호출해서 배열에 담기
+        if (col.gameObject.CompareTag("net"))
+            sea_catch.targets[sea_catch.tar_i++] = this.gameObject;
     }
 
     //해녀와 충돌하면 테두리 있는 애니메이션으로 변경하고 target 설정
     public void OnTriggerStay2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("haenyeo"))
+        if (col.gameObject.CompareTag("haenyeo")) 
         {
             this.GetComponent<Animator>().SetBool("collided", true);
             sea_catch.target = this.gameObject;
         }
+
+        // 싹쓸이 그물에 충돌하고 있는 내내 테두리 애니메이션 나오도록
+        if (col.gameObject.CompareTag("net"))
+            this.GetComponent<Animator>().SetBool("collided", true);
     }
 
     //해녀와의 충돌상태에서 나가면 테두리 없는 애니메이션으로 변경하고 target 초기화, targeted를 false로 
     public void OnTriggerExit2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("haenyeo"))
+        if (col.gameObject.CompareTag("haenyeo")) 
         {
             this.GetComponent<Animator>().SetBool("collided", false);
             sea_catch.target = null;
+            this.targeted = false;
+        }
+
+        if (col.gameObject.CompareTag("net"))
+        {
+            this.GetComponent<Animator>().SetBool("collided", false);
             this.targeted = false;
         }
     }
