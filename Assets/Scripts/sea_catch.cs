@@ -138,11 +138,15 @@ public class sea_catch : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             }
 
             if (sea.is_double)
+            {
                 component.item_num[idx] += 2; //sea스크립트 상의 해녀 그물망에 추가
+                Haenyeo.sea_item_number[idx] += 2; //해녀의 보유 아이템 개수에 추가
+            }
             else
+            {
                 component.item_num[idx] += 1; //sea스크립트 상의 해녀 그물망에 추가
-
-            Haenyeo.sea_item_number[idx] += 1; //해녀의 보유 아이템 개수에 추가
+                Haenyeo.sea_item_number[idx] += 1; //해녀의 보유 아이템 개수에 추가
+            }
         }
     }
 
@@ -238,12 +242,17 @@ public class sea_catch : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         if (pos > catch_min && pos < catch_max) //노란색 영역의 범위에 있으면
         {
-            if(sea.is_double)
+            if (sea.is_double)
+            {
                 component.item_num[idx] += 2; //sea스크립트 상의 해녀 그물망에 추가
+                Haenyeo.sea_item_number[idx] += 2; //해녀의 보유 아이템 개수에 추가
+            }
             else
+            {
                 component.item_num[idx] += 1; //sea스크립트 상의 해녀 그물망에 추가
+                Haenyeo.sea_item_number[idx] += 1; //해녀의 보유 아이템 개수에 추가
+            }
 
-            Haenyeo.sea_item_number[idx] += 1; //해녀의 보유 아이템 개수에 추가
             catchable = false; //터치 불가능
             StartCoroutine("bubble"); //거품 이펙트
             StartCoroutine("catch_effect"); //성공 이펙트
