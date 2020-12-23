@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class sea : MonoBehaviour
 {
     public float time_remaining, time_max, countdown;
-    public Image return_to_farms_ui, show_mesh_ui, timeover_return_ui, block_touch, start_button, item_button_lock;
+    public Image return_to_farms_ui, show_mesh_ui, timeover_return_ui, block_touch, start_button, item_button_lock, block_start;
     public Image text_window, next_triangle;
     public Sprite[] depth_arr; // 깊이바 이미지 배열
     public Image depth, location; // 깊이바 이미지, 위치 표시 이미지
@@ -44,6 +44,7 @@ public class sea : MonoBehaviour
         timeover_return_ui.gameObject.SetActive(false);
         timeover_return_ui.gameObject.SetActive(false);
         item_button_lock.gameObject.SetActive(false);
+        block_start.gameObject.SetActive(false);
 
         StartCoroutine("triangle_effect");
 
@@ -131,6 +132,7 @@ public class sea : MonoBehaviour
     //바다 첫 화면에서 버튼 눌러 시작하기 
     public void sea_start()
     {
+        block_start.gameObject.SetActive(true);
         StartCoroutine("start_effect");
     }
     IEnumerator start_effect()
@@ -149,6 +151,7 @@ public class sea : MonoBehaviour
             yield return null;
         }
 
+        block_start.gameObject.SetActive(false);
         go.PlayOneShot(go.clip);
         yield return new WaitForSeconds(0.1f);
 
