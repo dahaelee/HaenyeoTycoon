@@ -1207,7 +1207,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1000, y: 700}
+  m_SizeDelta: {x: 1000, y: 650}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &92339880
 MonoBehaviour:
@@ -1890,7 +1890,7 @@ MonoBehaviour:
   item_name_kor: 
   chosen_mark: {fileID: 0}
   sea1_prob: 0.3
-  sea2_prob: 0.15
+  sea2_prob: 0.1
   sea3_prob: 0.2
   moving: 0
   difficulty: 1
@@ -5855,7 +5855,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1000, y: 700}
+  m_SizeDelta: {x: 1000, y: 650}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &405038857
 MonoBehaviour:
@@ -8333,7 +8333,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1000, y: 700}
+  m_SizeDelta: {x: 1000, y: 650}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &596107394
 MonoBehaviour:
@@ -11147,7 +11147,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1000, y: 700}
+  m_SizeDelta: {x: 1000, y: 650}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &962330178
 MonoBehaviour:
@@ -12500,7 +12500,7 @@ MonoBehaviour:
   item_name_kor: 
   chosen_mark: {fileID: 0}
   sea1_prob: 0
-  sea2_prob: 0.25
+  sea2_prob: 0.3
   sea3_prob: 0
   moving: 0
   difficulty: 3
@@ -15444,7 +15444,7 @@ MonoBehaviour:
   item_name_kor: 
   chosen_mark: {fileID: 0}
   sea1_prob: 0
-  sea2_prob: 0.25
+  sea2_prob: 0.35
   sea3_prob: 0
   moving: 1
   difficulty: 3
@@ -20044,7 +20044,7 @@ MonoBehaviour:
   item_name_kor: 
   chosen_mark: {fileID: 0}
   sea1_prob: 0.25
-  sea2_prob: 0.2
+  sea2_prob: 0.1
   sea3_prob: 0.2
   moving: 0
   difficulty: 1
