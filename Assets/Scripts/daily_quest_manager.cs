@@ -61,7 +61,7 @@ public class daily_quest_manager : MonoBehaviour
         quest_Data.daily_quest_list[25].todo = $"꽃게 {Haenyeo.sea_item_number[5]}/5";
         quest_Data.daily_quest_list[26].todo = $"양식 꽃게 {Haenyeo.farm_item_number[5]}/3";
         quest_Data.daily_quest_list[27].todo = $"양식 전복 {Haenyeo.farm_item_number[7]}/3";
-        quest_Data.daily_quest_list[28].todo = $"잡은 자원 종류 {cnt_item_type()}/8";
+        quest_Data.daily_quest_list[28].todo = $"잡은 자원 종류 {cnt_item_type()}/9";
     }
 
     public int cnt_item_type()
@@ -98,7 +98,7 @@ public class daily_quest_manager : MonoBehaviour
                 else if (quest_Data.daily_quest_list[idx].state != 0) quest_Data.daily_quest_list[idx].state = 1;
                 break;
             case 5:
-                if (PlayerPrefs.GetInt("quest5", 0) >= 3) quest_Data.daily_quest_list[idx].state = 2;
+                if (PlayerPrefs.GetInt("quest5_s", 0) == 1) quest_Data.daily_quest_list[idx].state = 2;
                 else if (quest_Data.daily_quest_list[idx].state != 0) quest_Data.daily_quest_list[idx].state = 1;
                 break;
             case 6:
@@ -120,7 +120,7 @@ public class daily_quest_manager : MonoBehaviour
                 if (GameObject.Find("farm_manager").GetComponent<farm_manager>().Activated_farm_number() >= 6) quest_Data.daily_quest_list[idx].state = 2;
                 break;
             case 11:
-                if (PlayerPrefs.GetInt("quest11", 0) >= 3) quest_Data.daily_quest_list[idx].state = 2;
+                if (PlayerPrefs.GetInt("quest11_s", 0) == 1) quest_Data.daily_quest_list[idx].state = 2;
                 else if (quest_Data.daily_quest_list[idx].state != 0) quest_Data.daily_quest_list[idx].state = 1;
                 break;
             case 12:
@@ -158,7 +158,7 @@ public class daily_quest_manager : MonoBehaviour
                 else if (quest_Data.daily_quest_list[idx].state != 0) quest_Data.daily_quest_list[idx].state = 1;
                 break;
             case 21:
-                if (PlayerPrefs.GetInt("quest21", 0) >= 3) quest_Data.daily_quest_list[idx].state = 2;
+                if (PlayerPrefs.GetInt("quest21", 0) == 1) quest_Data.daily_quest_list[idx].state = 2;
                 else if (quest_Data.daily_quest_list[idx].state != 0) quest_Data.daily_quest_list[idx].state = 1;
                 break;
             case 22:
@@ -198,19 +198,19 @@ public class daily_quest_manager : MonoBehaviour
         {
             case 0:
                 Haenyeo.sea_item_number[0] -= 3;
-                Haenyeo.money += 20000;
-                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money",20000));
+                Haenyeo.money += 40000;
+                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money",40000));
 
                 break;
             case 1:
                 Haenyeo.farm_item_number[1] -= 3;
-                Haenyeo.money += 30000;
-                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 30000));
+                Haenyeo.money += 50000;
+                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 50000));
                 break;
             case 2:
                 Haenyeo.sea_item_number[3] -= 4;
-                Haenyeo.money += 50000;
-                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 50000));
+                Haenyeo.money += 70000;
+                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 70000));
 
                 break;
             case 3:
@@ -220,24 +220,24 @@ public class daily_quest_manager : MonoBehaviour
                 break;
             case 4:
                 Haenyeo.sea_item_number[4] -= 3;
-                Haenyeo.money += 30000;
-                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 30000));
+                Haenyeo.money += 50000;
+                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 50000));
                 break;
             case 5:
                 PlayerPrefs.DeleteKey("quest5");
                 StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("net", 0));
-                Haenyeo.item_inven[0] += 3;
+                Haenyeo.item_inven[0] += 5;
                 break;
             case 6:
                 Haenyeo.sea_item_number[5] -= 2;
                 StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("bonus", 0));
-                Haenyeo.item_inven[3] += 2;
+                Haenyeo.item_inven[3] += 3;
                 break;
             case 7:
                 Haenyeo.sea_item_number[3] -= 1;
                 Haenyeo.sea_item_number[5] -= 1;
                 Haenyeo.sea_item_number[6] -= 1;
-                Haenyeo.money += 40000;
+                Haenyeo.money += 60000;
                 StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 40000));
                 break;
             case 8:
@@ -246,12 +246,12 @@ public class daily_quest_manager : MonoBehaviour
                 break;
             case 9:
                 Haenyeo.farm_item_number[6] -= 3;
-                Haenyeo.money += 40000;
-                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 40000));
+                Haenyeo.money += 60000;
+                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 60000));
                 break;
             case 10:
                 StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("kick", 0));
-                Haenyeo.item_inven[1] += 3;
+                Haenyeo.item_inven[1] += 5;
                 break;
             case 11:
                 Haenyeo.money += 100000;
@@ -264,29 +264,29 @@ public class daily_quest_manager : MonoBehaviour
             case 13:
                 Haenyeo.sea_item_number[7] -= 4;
                 StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("double", 0));
-                Haenyeo.item_inven[2] += 3;
+                Haenyeo.item_inven[2] += 5;
                 break;
             case 14:
                 Haenyeo.farm_item_number[5] -= 5;
-                Haenyeo.money += 120000;
-                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 120000));
+                Haenyeo.money += 150000;
+                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 150000));
                 break;
             case 15:
                 StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("net", 0));
-                Haenyeo.item_inven[0] += 3;
+                Haenyeo.item_inven[0] += 5;
                 break;
             case 16:
                 Haenyeo.sea_item_number[0] -= 5;
                 StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("double", 0));
-                Haenyeo.item_inven[2] += 4;
+                Haenyeo.item_inven[2] += 5;
                 break;
             case 17:
                 Haenyeo.farm_item_number[0] -= 10;
-                Haenyeo.money += 70000;
-                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 70000));
+                Haenyeo.money += 100000;
+                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 100000));
                 break;
             case 18:
-                Haenyeo.item_inven[0] += 3;
+                Haenyeo.item_inven[0] += 5;
                 StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("net", 0));
                 break;
             case 19:
@@ -296,8 +296,8 @@ public class daily_quest_manager : MonoBehaviour
                 break;
             case 20:
                 Haenyeo.farm_item_number[7] -= 5;
-                Haenyeo.money += 50000;
-                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 50000));
+                Haenyeo.money += 100000;
+                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 100000));
                 break;
             case 21:
                 StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("kick", 0));
@@ -317,23 +317,23 @@ public class daily_quest_manager : MonoBehaviour
                 break;
             case 24:
                 PlayerPrefs.DeleteKey("quest24");
-                Haenyeo.item_inven[3] += 3;
+                Haenyeo.item_inven[3] += 5;
                 StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("bonus", 0));
                 break;
             case 25:
                 Haenyeo.sea_item_number[5] -= 5;
-                Haenyeo.money += 70000;
-                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 70000));
+                Haenyeo.money += 100000;
+                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 100000));
                 break;
             case 26:
                 Haenyeo.farm_item_number[5] -= 3;
-                Haenyeo.money += 50000;
-                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 50000));
+                Haenyeo.money += 70000;
+                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 70000));
                 break;
             case 27:
                 Haenyeo.farm_item_number[7] -= 3;
-                Haenyeo.money += 70000;
-                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 70000));
+                Haenyeo.money += 100000;
+                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 100000));
                 break;
             case 28:
                 Haenyeo.sea_item_number[0] -= 1;
@@ -345,8 +345,8 @@ public class daily_quest_manager : MonoBehaviour
                 Haenyeo.sea_item_number[6] -= 1;
                 Haenyeo.sea_item_number[7] -= 1;
                 Haenyeo.sea_item_number[8] -= 1;
-                Haenyeo.money += 200000;
-                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 200000));
+                Haenyeo.money += 300000;
+                StartCoroutine(GameObject.Find("quest_manager").GetComponent<quest_manager>().reward_effect("money", 300000));
                 break;
         }
     }

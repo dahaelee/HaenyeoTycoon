@@ -49,6 +49,10 @@ public class quest_manager : MonoBehaviour
         }
 
         quest_contents_update();
+
+        button_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+        reward_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+        item_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
     }
 
     void Update()
