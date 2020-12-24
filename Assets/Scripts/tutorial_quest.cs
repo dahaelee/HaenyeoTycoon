@@ -28,6 +28,11 @@ public class tutorial_quest : MonoBehaviour
     public IEnumerator text_coroutine, triangle_coroutine;
     static int text_done;
 
+    void Start() {
+        item_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+        icon_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+    }
+
     public void Initialize()
     {
         touch_bg.gameObject.SetActive(false);

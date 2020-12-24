@@ -49,7 +49,7 @@ public class sea_catch : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         item_fail.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
         ink_1.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
         ink_2.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
-        net_sound1.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+        net_sound1.volume = PlayerPrefs.GetFloat("Effect_volume", 1)/2;
     }
 
     void Update()
