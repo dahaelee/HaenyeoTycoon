@@ -120,7 +120,7 @@ public class sea_catch : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         // 그물 범위 내의 자원들 찍어보기 (나중에 삭제)
         for (int i = 0; i < targets.Count; i++)
-            Debug.Log(targets[i]);
+            Debug.Log(targets[i].GetComponent<sea_item>().item_name);
 
         // 거품 순차적으로 터지는 효과
         StartCoroutine("net_effect3");
@@ -152,6 +152,9 @@ public class sea_catch : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public IEnumerator net_effect3()
     {
+        if (targets.Count == 0) // 그물 안에 뭐 없으면
+            catchable = true; // 바로 터치 가능
+
         for (int j = 0; j < targets.Count; j++)
         {
             target = targets[j];
