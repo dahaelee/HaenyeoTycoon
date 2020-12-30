@@ -33,7 +33,7 @@ public class bad_ending : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        string sentence = "그렇게 20일이 지났다...";
+        string sentence = "그렇게 "+Haenyeo.day+"일이 지났다...";
         for(int i=0; i < sentence.Length; i++)
         {
             text.text = sentence.Substring(0, i + 1);
