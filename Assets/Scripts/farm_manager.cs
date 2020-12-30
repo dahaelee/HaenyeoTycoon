@@ -53,8 +53,9 @@ public class farm_manager : MonoBehaviour
         }
         data_load();
     }
-    void Awake()
+    void OnDisable()
     {
+        data_save();
     }
 
     // Start is called before the first frame update
@@ -109,7 +110,7 @@ public class farm_manager : MonoBehaviour
     }
     void Update()
     {
-        day.GetComponent<Text>().text = "D-" + (Haenyeo.limit_day - Haenyeo.day + 1).ToString();
+        day.GetComponent<Text>().text = "D-" + (Haenyeo.limit_day - Haenyeo.day).ToString();
         money.GetComponent<Text>().text = string.Format("{0:#,###0}", Haenyeo.money);
         debt.GetComponent<Text>().text = string.Format("{0:#,###0}", Haenyeo.debt);
         if (Input.GetKeyUp(KeyCode.Escape))
@@ -551,7 +552,7 @@ public class farm_manager : MonoBehaviour
     public void send_money()
     {
         UI_manager.AllUIoff();
-        if (sending_int < sending_limit)
+        if (sending_int < sending_limit && sending_int<Haenyeo.debt)
         {
             button_click.PlayOneShot(button_click.clip);
             interest_warning.text = "10만원보다 적은 금액 송금시\n 이자" + ((int)((Haenyeo.debt - sending_int) * 0.03)).ToString() + "원이 붙습니다.";
@@ -1017,7 +1018,7 @@ public class farm_manager : MonoBehaviour
         Haenyeo.payed = PlayerPrefs.GetInt("Haenyeo_payed", 0);
         Haenyeo.interest = PlayerPrefs.GetInt("Haenyeo_interest", 0);
         Haenyeo.diving_time = PlayerPrefs.GetInt("Haenyeo_diving_time", 60);
-        Haenyeo.day = PlayerPrefs.GetInt("Haenyeo_day", 1);
+        Haenyeo.day = PlayerPrefs.GetInt("Haenyeo_day", 0);
         Haenyeo.level = PlayerPrefs.GetInt("Haenyeo_level", 1); 
         Haenyeo.hp = PlayerPrefs.GetFloat("Haenyeo_hp", 100); // hp
         bgm_volume.value = PlayerPrefs.GetFloat("Bgm_volume", 1);
