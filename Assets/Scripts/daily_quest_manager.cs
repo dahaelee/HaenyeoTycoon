@@ -98,7 +98,7 @@ public class daily_quest_manager : MonoBehaviour
                 else if (quest_Data.daily_quest_list[idx].state != 0) quest_Data.daily_quest_list[idx].state = 1;
                 break;
             case 5:
-                if (PlayerPrefs.GetInt("quest5_s", 0) == 1) quest_Data.daily_quest_list[idx].state = 2;
+                if (PlayerPrefs.GetInt("quest5", 0) == 3) quest_Data.daily_quest_list[idx].state = 2;
                 else if (quest_Data.daily_quest_list[idx].state != 0) quest_Data.daily_quest_list[idx].state = 1;
                 break;
             case 6:
@@ -120,7 +120,7 @@ public class daily_quest_manager : MonoBehaviour
                 if (GameObject.Find("farm_manager").GetComponent<farm_manager>().Activated_farm_number() >= 6) quest_Data.daily_quest_list[idx].state = 2;
                 break;
             case 11:
-                if (PlayerPrefs.GetInt("quest11_s", 0) == 1) quest_Data.daily_quest_list[idx].state = 2;
+                if (PlayerPrefs.GetInt("quest11", 0) == 3) quest_Data.daily_quest_list[idx].state = 2;
                 else if (quest_Data.daily_quest_list[idx].state != 0) quest_Data.daily_quest_list[idx].state = 1;
                 break;
             case 12:

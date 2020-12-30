@@ -146,6 +146,7 @@ public class quest_manager : MonoBehaviour
             PlayerPrefs.SetString("tutorial_quest", tutorial_quest_save);
             PlayerPrefs.SetString("daily_quest", daily_quest_save);
         }
+        
     }
 
     //퀘스트 목록에서 클릭했을 시
