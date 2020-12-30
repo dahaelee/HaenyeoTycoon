@@ -21,12 +21,13 @@ public class betting_rsp : MonoBehaviour
     public Text seller_text;
     public Image bubble_seller;
 
-    public AudioSource win, lose;
+    public AudioSource win, lose, draw;
 
     public void Awake()
     {
         win.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
         lose.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+        draw.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
     }
 
     public void initial_rsp()
@@ -108,7 +109,7 @@ public class betting_rsp : MonoBehaviour
         {
             rsp_result = 0; // 비김
             seller_text.text = "비겼구만! 그렇다면 제값에 받도록 하마.";
-
+            draw.PlayOneShot(draw.clip);
 
             //효민 - 5번 퀘스트 관련
             if (quest_Data.daily_quest_list[5].state != -1 && quest_Data.daily_quest_list[5].state != 2)

@@ -29,7 +29,10 @@ public class store_home : MonoBehaviour
             step = 1;
         }
     }
-
+    void OnDisable()
+    {
+        data_save();
+    }
     public void tuto_click()
     {
         if (step != 0)
