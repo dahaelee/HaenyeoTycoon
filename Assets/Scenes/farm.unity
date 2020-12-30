@@ -1912,12 +1912,12 @@ GameObject:
   - component: {fileID: 76003650}
   - component: {fileID: 76003649}
   m_Layer: 5
-  m_Name: Scrollbar
+  m_Name: Scrollbar_tuto
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &76003648
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3723,7 +3723,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 9.95, y: -0.6}
+  m_AnchoredPosition: {x: 9.949997, y: -0.5999985}
   m_SizeDelta: {x: -44.14, y: -21.81}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &167367959
@@ -6844,9 +6844,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC5B4\uC774 \uAF2C\uB9F9\uC774 \uB108\uAC00 \uB300\uC2E0 \uBE5A\uC744
-    \uAC1A\uACA0\uB2E4\uACE0?\\n \uADF8\uB798 \uC88B\uB2E4.. \uB300\uC2E0 \uB9E4\uC77C
-    \uB3C8\uC744 \uC1A1\uAE08\uD574\uC57C \uD560\uAC70\uB2E4.\\n\uB450\uACE0\uBCF4\uC790"
+  m_Text: "\uD574\uB140\uC57C \uAE4A\uC740 \uBC14\uB2E4\uC5D0\uC11C \uAC70\uBD81\uC774\uB97C
+    \uBCF8 \uC801\uC774 \uC788\uB2C8? \uC544\uB2C8 \uC606\uC9D1 \uC544\uC800\uC528\uAC00
+    \uC544\uBB34\uB9AC \uC124\uBA85\uD574\uB3C4 \uBBFF\uC9C8 \uC54A\uB354\uAD6C\uB098!
+    \uAC70\uBD81\uC774 3\uB9C8\uB9AC\uB9CC \uBD80\uD0C1\uD558\uB9C8"
 --- !u!222 &331860565
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11071,7 +11072,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &590784828
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11088,8 +11089,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 40, y: 0}
+  m_SizeDelta: {x: 150, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &590784829
 CanvasRenderer:
@@ -11119,7 +11120,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 7378a8c6a246ddb4aa2b08e90ecb52b8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2ae1cf729aea1c54fbb2e8d7c83cfcbd, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -14910,6 +14911,7 @@ MonoBehaviour:
   Switch: {fileID: 1501066821}
   items: []
   twinkles: {fileID: 2057967821}
+  Scrollbar_tuto: {fileID: 76003652}
 --- !u!4 &833427162
 Transform:
   m_ObjectHideFlags: 0
@@ -14956,6 +14958,7 @@ MonoBehaviour:
   - {fileID: 1109672386}
   - {fileID: 1590888331}
   - {fileID: 657302585}
+  - {fileID: 1022298180}
   hp_minus: {fileID: 1056700770}
 --- !u!1 &834583875
 GameObject:
@@ -16892,7 +16895,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: "\uAC70\uBD81\uC774 3\uAC1C \uCC44\uC9D1\uD558\uAE30"
 --- !u!222 &949434771
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18053,7 +18056,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.2, y: 1}
   m_AnchoredPosition: {x: -10.25, y: 0}
   m_SizeDelta: {x: 20.5, y: 4.82}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -24325,7 +24328,7 @@ MonoBehaviour:
   speech_bubble: {fileID: 866778930}
   bubble_text: {fileID: 1863668752}
   tutorial_texts: []
-  Scrollbar: {fileID: 76003652}
+  Scrollbar_tuto: {fileID: 76003652}
   sea_icon_fake: {fileID: 1044792158}
 --- !u!1 &1347373915
 GameObject:
@@ -31341,7 +31344,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1702310863
 RectTransform:
   m_ObjectHideFlags: 0
@@ -35004,10 +35007,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD574\uB140\uC57C.. \uC624\uB298 \uC810\uC2EC\uC740 \uD574\uBB3C\uB77C\uBA74
-    \uC5B4\uB5A0\uB2C8? \n\uC544\uBE60\uAC00 \uC544\uC8FC \uB9DB\uC788\uAC8C \uB053\uC5EC\uC904\uAC8C..!\n\uC544\uB798
-    \uC7AC\uB8CC\uB97C \uBD80\uD0C1\uD55C\uB2E8\uB2E4..\n\uC81C\uBC1C \uBD80\uD0C1\uD574!
-    \u315C\u3160\u3160\u315C"
+  m_Text: "\uD574\uB140\uC57C \uAE4A\uC740 \uBC14\uB2E4\uC5D0\uC11C \uAC70\uBD81\uC774\uB97C
+    \uBCF8 \uC801\uC774 \uC788\uB2C8? \uC544\uB2C8 \uC606\uC9D1 \uC544\uC800\uC528\uAC00
+    \uC544\uBB34\uB9AC \uC124\uBA85\uD574\uB3C4 \uBBFF\uC9C8 \uC54A\uB354\uAD6C\uB098!
+    \uAC70\uBD81\uC774 3\uB9C8\uB9AC\uB9CC \uBD80\uD0C1\uD558\uB9C8"
 --- !u!222 &1955343867
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -19,7 +19,7 @@ public class equipment_upgrade : MonoBehaviour
     private bool suit_IsScroll = false, goggle_IsScroll = false, flipper_IsScroll = false;
 
     // 사운드 이펙트
-    public AudioSource upgrade_click;
+    public AudioSource upgrade_click, other_click;
 
     public Text Haenyeo_money;
 
@@ -224,7 +224,8 @@ public class equipment_upgrade : MonoBehaviour
             flippers[2].gameObject.transform.SetAsLastSibling();
         }
         upgrade_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
-        
+        other_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+
         Haenyeo_money.text = Haenyeo.money.ToString("N0");
         //init_equipment();
 
@@ -387,16 +388,19 @@ public class equipment_upgrade : MonoBehaviour
     // 해녀복 레이아웃 보이기
     public void suit_info()
     {
+        other_click.PlayOneShot(other_click.clip);
         suits[my_suit].equipment_info_obj.gameObject.SetActive(!suits[my_suit].equipment_info_obj.gameObject.activeSelf);
     }
     // 물안경 레이아웃 켜기/끄기
     public void goggle_info()
     {
+        other_click.PlayOneShot(other_click.clip);
         goggles[my_goggle].equipment_info_obj.gameObject.SetActive(!goggles[my_goggle].equipment_info_obj.gameObject.activeSelf);
     }
     // 오리발 레이아웃 켜기/끄기
     public void flipper_info()
     {
+        other_click.PlayOneShot(other_click.clip);
         flippers[my_flipper].equipment_info_obj.gameObject.SetActive(!flippers[my_flipper].equipment_info_obj.gameObject.activeSelf);
     }
 

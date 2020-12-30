@@ -11,7 +11,7 @@ public class buy_item : MonoBehaviour
     public Text[] inven_text;
     public Text Haenyeo_money;
     public GameObject buy_ui, equip_ui, item_ui, return_ui;
-    public AudioSource buy_click_sound;
+    public AudioSource buy_click_sound, other_click;
     public GameObject[] item_info;
 
     // Start is called before the first frame update
@@ -40,6 +40,7 @@ public class buy_item : MonoBehaviour
         //check_price();
         inven_UI();
         buy_click_sound.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+        other_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
     }
 
     // Update is called once per frame
@@ -81,6 +82,7 @@ public class buy_item : MonoBehaviour
 
     public void show_info(int item)
     {
+        other_click.PlayOneShot(other_click.clip);
         item_info[item].SetActive(!item_info[item].activeSelf);
     }
 

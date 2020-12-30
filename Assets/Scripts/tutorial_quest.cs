@@ -21,12 +21,17 @@ public class tutorial_quest : MonoBehaviour
     public Image sache, speech_bubble;
     public Text bubble_text;
     public string[] tutorial_texts;
-    public Image Scrollbar;
+    public Image Scrollbar_tuto;
     public Image sea_icon_fake;
 
 
     public IEnumerator text_coroutine, triangle_coroutine;
     static int text_done;
+
+    void Start() {
+        item_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+        icon_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+    }
 
     public void Initialize()
     {
@@ -35,7 +40,7 @@ public class tutorial_quest : MonoBehaviour
         quest_box.SetActive(false);
         hilight_parent.SetActive(false);
         bubble_parent.gameObject.SetActive(false);
-        Scrollbar.gameObject.SetActive(false);
+        Scrollbar_tuto.gameObject.SetActive(false);
         quest_ui.gameObject.SetActive(false);
     }
 
@@ -87,11 +92,11 @@ public class tutorial_quest : MonoBehaviour
                         hilight[step - 3].gameObject.SetActive(true);
                         bubble_text.text = tutorial_texts[step - 1];
                         if (step == 7) {
-                            Scrollbar.gameObject.SetActive(true);
+                            Scrollbar_tuto.gameObject.SetActive(true);
                             touch_bg.gameObject.SetActive(false);
                         }
                         if (step == 8) {
-                            Scrollbar.gameObject.SetActive(false);
+                            Scrollbar_tuto.gameObject.SetActive(false);
                             touch_bg.gameObject.SetActive(true);
                         }
                         if (step == 9) {
@@ -265,11 +270,9 @@ public class tutorial_quest : MonoBehaviour
                     GameObject.Find("quest_manager").GetComponent<quest_manager>().quest_contents_update(); //실시간 반영
 
                     step = 1; quest_num = 3;
-                    //bubble_parent.transform.position = new Vector3(640, 450, 0); // 화면 상단 위치
-                    bubble_text.text = "그렇지~ 자원은 그렇게 양식하는 거란다.. 상점도 한번 둘러보겠니?";
-                    //PlayerPrefs.SetInt("storeNew", 1);
 
-                    if(PlayerPrefs.GetInt("storeNew",1)==0) quest_Data.tutorial_quest_list[2].state = -1;
+                    if (PlayerPrefs.GetInt("storeNew", 1) == 0) quest_Data.tutorial_quest_list[2].state = -1;
+                    if (PlayerPrefs.GetInt("storeNew", 1) != 0) bubble_text.text = "그렇지~ 자원은 그렇게 양식하는 거란다.. 상점도 한번 둘러보겠니?";
 
                     item_num = 0;
                     PlayerPrefs.SetInt("isQuest", 5);

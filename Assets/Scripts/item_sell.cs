@@ -11,7 +11,7 @@ public class item_sell : MonoBehaviour
     public Text Haenyeo_money;
 
     // 사운드 이펙트
-    public AudioSource sell_click, updown_click;
+    public AudioSource sell_click, updown_click, other_click;
 
     public GameObject sell_ui, ask_ui, rsp_ui, wild_ui, farmed_ui, touch_x, no_wild, return_ui, black_bg;
 
@@ -26,6 +26,7 @@ public class item_sell : MonoBehaviour
     {
         sell_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
         updown_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
+        other_click.volume = PlayerPrefs.GetFloat("Effect_volume", 1);
         data_load();
         item_noshow();
         item_UI();        
@@ -49,6 +50,7 @@ public class item_sell : MonoBehaviour
 
     public void rsp_yes()
     {
+        other_click.PlayOneShot(other_click.clip);
         black_bg.SetActive(true);
         touch_x.SetActive(false);
         ask_ui.gameObject.SetActive(false);
@@ -131,6 +133,18 @@ public class item_sell : MonoBehaviour
 
     // 팔 자원 개수 늘이는 버튼
     public void number_up(int item_index)
+    {
+        updown_click.PlayOneShot(updown_click.clip);
+        sea_items[item_index].sell_number++;
+        sea_items[item_index].sell_price += sea_items[item_index].raw_price;
+        sea_items[item_index].sell_number_text.text = sea_items[item_index].sell_number.ToString();
+        sea_items[item_index].sell_price_text.text = (sea_items[item_index].raw_price * sea_items[item_index].sell_number).ToString("N0");
+        up(item_index);
+        down(item_index);
+
+    }
+
+    public void number_up_on_trigger(int item_index)
     {
         updown_click.PlayOneShot(updown_click.clip);
         sea_items[item_index].sell_number++;
