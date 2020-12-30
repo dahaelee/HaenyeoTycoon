@@ -114,12 +114,11 @@ public class betting_rsp : MonoBehaviour
             if (quest_Data.daily_quest_list[5].state != -1 && quest_Data.daily_quest_list[5].state != 2)
             {
                 if (PlayerPrefs.GetInt("quest5", 0) < 3) PlayerPrefs.SetInt("quest5", PlayerPrefs.GetInt("quest5") + 1);
-                if (PlayerPrefs.GetInt("quest5", 0) >= 3) PlayerPrefs.SetInt("quest5_s", 1);
             }
             //효민 - 11번 퀘스트 관련
             if (quest_Data.daily_quest_list[11].state != -1 && quest_Data.daily_quest_list[11].state != 2)
             {
-                PlayerPrefs.SetInt("quest11", 0);
+                if (PlayerPrefs.GetInt("quest11", 0) < 3) PlayerPrefs.SetInt("quest11", 0);
             }
         }
         else if(k == 1)
@@ -131,12 +130,12 @@ public class betting_rsp : MonoBehaviour
             //효민 - 5번 퀘스트 관련
             if (quest_Data.daily_quest_list[5].state != -1 && quest_Data.daily_quest_list[5].state != 2)
             {
-                PlayerPrefs.SetInt("quest5", 0);
+                if (PlayerPrefs.GetInt("quest5", 0) < 3) PlayerPrefs.SetInt("quest5", 0);
             }
             //효민 - 11번 퀘스트 관련
             if (quest_Data.daily_quest_list[11].state != -1 && quest_Data.daily_quest_list[11].state != 2)
             {
-                 PlayerPrefs.SetInt("quest11", 0);
+                if (PlayerPrefs.GetInt("quest11", 0) < 3) PlayerPrefs.SetInt("quest11", 0);
             }
         }
         else
@@ -149,13 +148,11 @@ public class betting_rsp : MonoBehaviour
             if (quest_Data.daily_quest_list[5].state != -1 && quest_Data.daily_quest_list[5].state != 2)
             {
                 if (PlayerPrefs.GetInt("quest5", 0) < 3) PlayerPrefs.SetInt("quest5", PlayerPrefs.GetInt("quest5") + 1);
-                if (PlayerPrefs.GetInt("quest5", 0) >= 3) PlayerPrefs.SetInt("quest5_s", 1);
             }
             //효민 - 11번 퀘스트 관련
             if (quest_Data.daily_quest_list[11].state != -1 && quest_Data.daily_quest_list[11].state != 2)
             {
                 if (PlayerPrefs.GetInt("quest11", 0) < 3) PlayerPrefs.SetInt("quest11", PlayerPrefs.GetInt("quest11") + 1);
-                if (PlayerPrefs.GetInt("quest11", 0) >= 3) PlayerPrefs.SetInt("quest11_s", 1);
             }
         }
     }
