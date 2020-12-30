@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -111,7 +111,7 @@ public class farm_manager : MonoBehaviour
     {
         day.GetComponent<Text>().text = "D-" + (Haenyeo.limit_day - Haenyeo.day + 1).ToString();
         money.GetComponent<Text>().text = string.Format("{0:#,###0}", Haenyeo.money);
-        debt.GetComponent<Text>().text = string.Format("{0:#,###0}", Haenyeo.debt + Haenyeo.interest - Haenyeo.payed);
+        debt.GetComponent<Text>().text = string.Format("{0:#,###0}", Haenyeo.debt);
         if (Input.GetKeyUp(KeyCode.Escape))
         {
             StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.ask_quit));
@@ -490,7 +490,7 @@ public class farm_manager : MonoBehaviour
         entire_debt.text = string.Format("{0:#,###0}", Haenyeo.debt);
         interest.text = string.Format("{0:#,###0}", Haenyeo.interest);
         payed.text = string.Format("{0:#,###0}", Haenyeo.payed);
-        balance.text = string.Format("{0:#,###0}", (Haenyeo.debt - Haenyeo.payed + Haenyeo.interest));
+        balance.text = string.Format("{0:#,###0}", (Haenyeo.debt));
         today.text = Haenyeo.day.ToString();
         StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.today_work));
 
@@ -502,7 +502,7 @@ public class farm_manager : MonoBehaviour
         icon_click.PlayOneShot(icon_click.clip);        //아이콘 클릭시 사운드
         UI_manager.AllUIoff();
         StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.repay));
-        debt_repay.GetComponent<Text>().text = string.Format("{0:#,###0}", Haenyeo.debt-Haenyeo.payed);
+        debt_repay.GetComponent<Text>().text = string.Format("{0:#,###0}", Haenyeo.debt);
         money_repay.GetComponent<Text>().text = string.Format("{0:#,###0}", Haenyeo.money);
         sending_int = 0;
         sending_str = "0";
@@ -520,11 +520,7 @@ public class farm_manager : MonoBehaviour
 
             sending_int = Haenyeo.money;
             sending_str = sending_int.ToString();
-            if (sending_int > Haenyeo.debt - Haenyeo.payed)
-            {
-                sending_int = Haenyeo.debt - Haenyeo.payed;
-                sending_str = sending_int.ToString();
-            }
+
         }
         sending_amount_repay.GetComponent<Text>().text = string.Format("{0:#,###0}", sending_int);
     }
@@ -554,7 +550,7 @@ public class farm_manager : MonoBehaviour
         if (sending_int < sending_limit)
         {
             button_click.PlayOneShot(button_click.clip);
-            interest_warning.text = "10만원보다 적은 금액 송금시\n 이자" + ((int)((Haenyeo.debt + Haenyeo.interest - Haenyeo.payed) * 0.03)).ToString() + "원이 붙습니다.";
+            interest_warning.text = "10만원보다 적은 금액 송금시\n 이자" + ((int)((Haenyeo.debt - sending_int) * 0.03)).ToString() + "원이 붙습니다.";
             StartCoroutine(UI_manager.UI_On(UI_manager.UIstate.interest_warning));
         }
         else
@@ -562,7 +558,7 @@ public class farm_manager : MonoBehaviour
             debt_sending.PlayOneShot(debt_sending.clip);
             next_day.PlayDelayed((float)0.5f);
             Haenyeo.money -= sending_int;
-            Haenyeo.payed += sending_int;
+            Haenyeo.debt -= sending_int;
             
 
             //효민 - 12번 퀘스트 관련
@@ -598,8 +594,7 @@ public class farm_manager : MonoBehaviour
                 StartCoroutine("happy_ending");
 
             }
-            UnityEngine.Debug.Log(Haenyeo.debt - Haenyeo.payed);
-            if (Haenyeo.debt-Haenyeo.payed < 1)
+            if (Haenyeo.debt < 1)
             {
                 StartCoroutine("happy_ending");
             }
@@ -633,12 +628,12 @@ public class farm_manager : MonoBehaviour
         Haenyeo.day++;
         Haenyeo.hp = 100;
         Haenyeo.todayState = Haenyeo.TodayState.day;
-        Haenyeo.payed += sending_int;
+        Haenyeo.debt -= sending_int;
         if (Haenyeo.debt <= 0)
         {
             Haenyeo.debt = 0;
         }
-        Haenyeo.interest += (int)((Haenyeo.debt + Haenyeo.interest - Haenyeo.payed) * 0.03);     //이자율 3%
+        Haenyeo.debt += (int)((Haenyeo.debt) * 0.03);     //이자율 3%
         UI_manager.AllUIoff();
         is_repay_locked = true;
         is_sea_locked = false;      //바다 아이콘 활성화
@@ -648,13 +643,12 @@ public class farm_manager : MonoBehaviour
             StartCoroutine("bad_ending");
         }
 
-        if (Haenyeo.day > Haenyeo.limit_day && Haenyeo.debt < 1)
+        if (Haenyeo.day > Haenyeo.limit_day && Haenyeo.debt <= 0)
         {
             StartCoroutine("happy_ending");
 
         }
-        UnityEngine.Debug.Log(Haenyeo.debt - Haenyeo.payed);
-        if (Haenyeo.debt - Haenyeo.payed < 1)
+        if (Haenyeo.debt<=0)
         {
             StartCoroutine("happy_ending");
         }
@@ -769,6 +763,15 @@ public class farm_manager : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         image.gameObject.transform.Rotate(Vector3.forward * 20);
         yield return new WaitForSeconds(0.3f);
+    }
+
+    //switch 버튼 효과음
+    public void SwitchSoundFX()
+    {
+        if (!icon_click.isPlaying)
+        {
+            icon_click.PlayOneShot(icon_click.clip);
+        }
     }
 
     //게임 설정 창 UI
@@ -1006,7 +1009,7 @@ public class farm_manager : MonoBehaviour
         }
         
         Haenyeo.money = PlayerPrefs.GetInt("Haenyeo_money", 0); 
-        Haenyeo.debt = PlayerPrefs.GetInt("Haenyeo_debt", 5000000);
+        Haenyeo.debt = PlayerPrefs.GetInt("Haenyeo_debt", 10000000);
         Haenyeo.payed = PlayerPrefs.GetInt("Haenyeo_payed", 0);
         Haenyeo.interest = PlayerPrefs.GetInt("Haenyeo_interest", 0);
         Haenyeo.diving_time = PlayerPrefs.GetInt("Haenyeo_diving_time", 60);
