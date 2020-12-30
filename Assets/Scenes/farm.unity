@@ -24038,7 +24038,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   raw_price: 9000
   farm_price: 24000
-  farm_time: 75
+  farm_time: 70
   number: 6
   item_name: octopus
   item_name_kor: "\uBB38\uC5B4"
@@ -28349,7 +28349,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   raw_price: 12000
   farm_price: 30000
-  farm_time: 75
+  farm_time: 80
   number: 7
   item_name: abalone
   item_name_kor: "\uC804\uBCF5"
