@@ -7823,7 +7823,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 25, y: -10}
+  m_AnchoredPosition: {x: 7, y: -25}
   m_SizeDelta: {x: 410, y: 210}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &553135886
@@ -7839,7 +7839,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.49411768, g: 0.24705884, b: 0, a: 1}
+  m_Color: {r: 0.4433962, g: 0.32859656, b: 0.006274463, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -7860,7 +7860,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\uD574\uB140\uC57C.. \n\uB0B4\uAC00 \uB9D0\uB85C \uC124\uBA85\uD558\uB294
-    \uAC83\uBCF4\uB2E4, \uC9C1\uC811 \uD574\uBCF4\uBA74 \uB354 \uC798 \uC54C \uC218
+    \uAC83\uBCF4\uB2E4, \n\uC9C1\uC811 \uD574\uBCF4\uBA74 \uB354 \uC798 \uC54C \uC218
     \uC788\uC744\uAC70\uC57C! \uC544\uBB34 \uC790\uC6D0 \uD558\uB098\uB9CC \uC7A1\uC544\uBCF4\uACA0\uB2C8..?"
 --- !u!222 &553135887
 CanvasRenderer:
