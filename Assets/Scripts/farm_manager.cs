@@ -107,6 +107,8 @@ public class farm_manager : MonoBehaviour
             farm_night.gameObject.SetActive(false);
         }
 
+
+        PlayerPrefs.SetInt("isNew", 0);     //새로운게 아니라고 표시
     }
     void Update()
     {
@@ -891,6 +893,8 @@ public class farm_manager : MonoBehaviour
             farms[i].farmReset();
         }
         UI.SetActive(false);
+        data_load();
+        PlayerPrefs.SetInt("isNew", 1);     //새로운거라고 표시
         SceneManager.LoadScene("start");
     }
 
@@ -898,8 +902,6 @@ public class farm_manager : MonoBehaviour
     public void data_save()
     {
         //데이터 저장
-
-        PlayerPrefs.SetInt("isNew", 0);     //새로운게 아니라고 표시
 
         PlayerPrefs.SetInt("Haenyeo" + "_" + "money", Haenyeo.money);
         PlayerPrefs.SetInt("Haenyeo_debt", Haenyeo.debt);
