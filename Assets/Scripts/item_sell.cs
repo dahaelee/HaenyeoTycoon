@@ -115,9 +115,9 @@ public class item_sell : MonoBehaviour
                 sea_items[i].sell_number_text.text = sea_items[i].sell_number.ToString();
                 sea_items[i].total_number_text.text = sea_items[i].total_number.ToString();
                 sea_items[i].sell_price_text.text = sea_items[i].sell_price.ToString();
-
-                up(i);
-                down(i);
+                sea_items[i].sell_button.GetComponent<Button>().interactable = false;
+                //up(i);
+                //down(i);
             }
         }
     }
@@ -134,38 +134,51 @@ public class item_sell : MonoBehaviour
     // 팔 자원 개수 늘이는 버튼
     public void number_up(int item_index)
     {
-        updown_click.PlayOneShot(updown_click.clip);
-        sea_items[item_index].sell_number++;
-        sea_items[item_index].sell_price += sea_items[item_index].raw_price;
-        sea_items[item_index].sell_number_text.text = sea_items[item_index].sell_number.ToString();
-        sea_items[item_index].sell_price_text.text = (sea_items[item_index].raw_price * sea_items[item_index].sell_number).ToString("N0");
-        up(item_index);
-        down(item_index);
+        if (sea_items[item_index].sell_number < sea_items[item_index].total_number) // 총 자원보다 적으면 활성화
+        {
+            sea_items[item_index].sell_button.GetComponent<Button>().interactable = true;
+            sea_items[item_index].sell_number++;
+            sea_items[item_index].sell_price += sea_items[item_index].raw_price;
+            sea_items[item_index].sell_number_text.text = sea_items[item_index].sell_number.ToString();
+            sea_items[item_index].sell_price_text.text = (sea_items[item_index].sell_price).ToString("N0");
+        }
+        else if (sea_items[item_index].sell_number >= sea_items[item_index].total_number) // 총 자원보다 많거나 같아지면 비활성화 (안되는 부분)
+        {
+            sea_items[item_index].sell_button.GetComponent<Button>().interactable = false;
+            sea_items[item_index].sell_number = 0;
+            sea_items[item_index].sell_price = 0;
+            sea_items[item_index].sell_number_text.text = sea_items[item_index].sell_number.ToString();
+            sea_items[item_index].sell_price_text.text = (sea_items[item_index].sell_price).ToString("N0");
+        }
 
-    }
-
-    public void number_up_on_trigger(int item_index)
-    {
-        updown_click.PlayOneShot(updown_click.clip);
-        sea_items[item_index].sell_number++;
-        sea_items[item_index].sell_price += sea_items[item_index].raw_price;
-        sea_items[item_index].sell_number_text.text = sea_items[item_index].sell_number.ToString();
-        sea_items[item_index].sell_price_text.text = (sea_items[item_index].raw_price * sea_items[item_index].sell_number).ToString("N0");
-        up(item_index);
-        down(item_index);
+        //up(item_index);
+        //down(item_index);
 
     }
 
     // 팔 자원 개수 줄이는 버튼
     public void number_down(int item_index)
     {
-        updown_click.PlayOneShot(updown_click.clip);
-        sea_items[item_index].sell_number--;
-        sea_items[item_index].sell_price -= sea_items[item_index].raw_price;
-        sea_items[item_index].sell_number_text.text = sea_items[item_index].sell_number.ToString();
-        sea_items[item_index].sell_price_text.text = (sea_items[item_index].raw_price * sea_items[item_index].sell_number).ToString("N0");
-        up(item_index);
-        down(item_index);
+        if (sea_items[item_index].sell_number > 0) // 팔 자원 개수가 0보다 많아지면 활성화
+        {
+            sea_items[item_index].sell_button.GetComponent<Button>().interactable = true;
+            if (sea_items[item_index].sell_number == 1)
+                sea_items[item_index].sell_button.GetComponent<Button>().interactable = false;
+            sea_items[item_index].sell_number--;
+            sea_items[item_index].sell_price -= sea_items[item_index].raw_price;
+            sea_items[item_index].sell_number_text.text = sea_items[item_index].sell_number.ToString();
+            sea_items[item_index].sell_price_text.text = (sea_items[item_index].sell_price).ToString("N0");
+        }
+        else if (sea_items[item_index].sell_number <= 0) // 팔 자원 개수가 0과 같거나 작아지면 비활성화 (안되는 부분)
+        {
+            sea_items[item_index].sell_button.GetComponent<Button>().interactable = true;
+            sea_items[item_index].sell_number = sea_items[item_index].total_number;
+            sea_items[item_index].sell_price = sea_items[item_index].raw_price * sea_items[item_index].total_number;
+            sea_items[item_index].sell_number_text.text = sea_items[item_index].sell_number.ToString();
+            sea_items[item_index].sell_price_text.text = (sea_items[item_index].sell_price).ToString("N0");
+        }
+        //up(item_index);
+        //down(item_index);
     }
 
     // 팔기 버튼

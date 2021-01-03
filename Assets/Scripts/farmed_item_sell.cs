@@ -64,9 +64,9 @@ public class farmed_item_sell : MonoBehaviour
                 farmed_items[i].sell_number_text.text = farmed_items[i].sell_number.ToString();
                 farmed_items[i].total_number_text.text = farmed_items[i].total_number.ToString();
                 farmed_items[i].sell_price_text.text = farmed_items[i].sell_price.ToString();
-
-                up(i);
-                down(i);
+                farmed_items[i].sell_button.GetComponent<Button>().interactable = false;
+                //up(i);
+                //down(i);
             }
         }
     }
@@ -84,24 +84,52 @@ public class farmed_item_sell : MonoBehaviour
     public void number_up(int item_index)
     {
         updown_click.PlayOneShot(updown_click.clip);
-        farmed_items[item_index].sell_number++;
-        farmed_items[item_index].sell_price += farmed_items[item_index].raw_price;
-        farmed_items[item_index].sell_number_text.text = farmed_items[item_index].sell_number.ToString();
-        farmed_items[item_index].sell_price_text.text = (farmed_items[item_index].raw_price * farmed_items[item_index].sell_number).ToString("N0");
-        up(item_index);
-        down(item_index);
+        if (farmed_items[item_index].sell_number < farmed_items[item_index].total_number) // 총 자원보다 적으면 활성화
+        {
+            farmed_items[item_index].sell_button.GetComponent<Button>().interactable = true;
+            farmed_items[item_index].sell_number++;
+            farmed_items[item_index].sell_price += farmed_items[item_index].raw_price;
+            farmed_items[item_index].sell_number_text.text = farmed_items[item_index].sell_number.ToString();
+            farmed_items[item_index].sell_price_text.text = (farmed_items[item_index].sell_price).ToString("N0");
+        }
+        else if (farmed_items[item_index].sell_number >= farmed_items[item_index].total_number) // 총 자원보다 많거나 같아지면 비활성화 (안되는 부분)
+        {
+            farmed_items[item_index].sell_button.GetComponent<Button>().interactable = false;
+            farmed_items[item_index].sell_number = 0;
+            farmed_items[item_index].sell_price = 0;
+            farmed_items[item_index].sell_number_text.text = farmed_items[item_index].sell_number.ToString();
+            farmed_items[item_index].sell_price_text.text = (farmed_items[item_index].sell_price).ToString("N0");
+        }
+        
+        //up(item_index);
+        //down(item_index);
     }
 
     // 팔 자원 개수 줄이는 버튼
     public void number_down(int item_index)
     {
         updown_click.PlayOneShot(updown_click.clip);
-        farmed_items[item_index].sell_number--;
-        farmed_items[item_index].sell_price -= farmed_items[item_index].raw_price;
-        farmed_items[item_index].sell_number_text.text = farmed_items[item_index].sell_number.ToString();
-        farmed_items[item_index].sell_price_text.text = (farmed_items[item_index].raw_price * farmed_items[item_index].sell_number).ToString("N0");
-        up(item_index);
-        down(item_index);
+        if (farmed_items[item_index].sell_number > 0) // 팔 자원 개수가 0보다 많아지면 활성화
+        {
+            farmed_items[item_index].sell_button.GetComponent<Button>().interactable = true;
+            if (farmed_items[item_index].sell_number == 1) farmed_items[item_index].sell_button.GetComponent<Button>().interactable = false;
+            farmed_items[item_index].sell_number--;
+            farmed_items[item_index].sell_price -= farmed_items[item_index].raw_price;
+            farmed_items[item_index].sell_number_text.text = farmed_items[item_index].sell_number.ToString();
+            farmed_items[item_index].sell_price_text.text = (farmed_items[item_index].sell_price).ToString("N0");
+        }
+        else if (farmed_items[item_index].sell_number <= 0) // 팔 자원 개수가 0과 같거나 작아지면 비활성화 (안되는 부분)
+        {
+            farmed_items[item_index].sell_button.GetComponent<Button>().interactable = true;
+            farmed_items[item_index].sell_number = farmed_items[item_index].total_number;
+            farmed_items[item_index].sell_price = farmed_items[item_index].raw_price * farmed_items[item_index].total_number;
+            farmed_items[item_index].sell_number_text.text = farmed_items[item_index].sell_number.ToString();
+            farmed_items[item_index].sell_price_text.text = (farmed_items[item_index].sell_price).ToString("N0");
+        }
+
+        
+        //up(item_index);
+        //down(item_index);
     }
 
     // 팔기 버튼
