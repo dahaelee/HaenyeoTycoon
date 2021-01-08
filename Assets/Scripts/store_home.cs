@@ -12,7 +12,6 @@ public class store_home : MonoBehaviour
         {
             quest_Data.tutorial_quest_list[2].state = -1;
             PlayerPrefs.SetInt("storeNew", 0);
-
             //간단 상점 튜토
             tuto_text = new string[]
                 {
@@ -23,6 +22,7 @@ public class store_home : MonoBehaviour
                     "그럼~ 앞으로 잘 부탁한다 해녀야!!"
                 };
             bg.SetActive(true);
+            touch_bg.SetActive(true);
             bubble_image.gameObject.SetActive(true);
             bubble_text.gameObject.SetActive(true);
             bubble_text.text = tuto_text[0];
@@ -39,6 +39,7 @@ public class store_home : MonoBehaviour
         {
             if (step >= tuto_text.Length)
             {
+                touch_bg.SetActive(false);
                 bg.SetActive(false);
                 bubble_image.gameObject.SetActive(false);
                 bubble_text.gameObject.SetActive(false);
@@ -50,7 +51,7 @@ public class store_home : MonoBehaviour
         }
     }
 
-    public GameObject sell_tab, buy_tab,return_from_buy, return_from_sell, bg, seller_2;
+    public GameObject sell_tab, buy_tab,return_from_buy, return_from_sell, bg, seller_2, touch_bg;
     public Image panel_img;
     public int rand_text = -1;
     public string[] seller_text,tuto_text;

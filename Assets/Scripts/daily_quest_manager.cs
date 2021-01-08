@@ -22,10 +22,10 @@ public class daily_quest_manager : MonoBehaviour
     public void give_daily_quest()
     {
         PlayerPrefs.SetInt("questReady", 0);
-        if (Haenyeo.day>=2 && Haenyeo.day <= quest_Data.daily_quest_list.Count+1)
+        if (Haenyeo.day>=1 && Haenyeo.day <= quest_Data.daily_quest_list.Count+1)
         {
-            quest_Data.daily_quest_list[Haenyeo.day - 2].state = 0;
-            GameObject.Find("quest_manager").GetComponent<quest_manager>().show_quest_box(quest_Data.daily_quest_list[Haenyeo.day - 2]);
+            quest_Data.daily_quest_list[Haenyeo.day - 1].state = 0;
+            GameObject.Find("quest_manager").GetComponent<quest_manager>().show_quest_box(quest_Data.daily_quest_list[Haenyeo.day - 1]);
         }
         GameObject.Find("quest_manager").GetComponent<quest_manager>().quest_contents_update();
     }
