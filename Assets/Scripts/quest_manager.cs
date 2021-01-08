@@ -260,8 +260,8 @@ public class quest_manager : MonoBehaviour
             StopCoroutine(text_coroutine);
             text_coroutine = null;
             text_done = 1;
-            box_text.text = quest_Data.daily_quest_list[Haenyeo.day - 2].text;
-            hilight_text.text = quest_Data.daily_quest_list[Haenyeo.day - 2].summary;
+            box_text.text = quest_Data.daily_quest_list[Haenyeo.day - 1].text;
+            hilight_text.text = quest_Data.daily_quest_list[Haenyeo.day - 1].summary;
         }
         else
         {
