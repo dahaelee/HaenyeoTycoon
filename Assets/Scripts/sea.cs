@@ -22,6 +22,7 @@ public class sea : MonoBehaviour
     public AudioSource bgm, icon_click, button_click, ready, go, double_sound, hp_sound;
     public GameObject[] tutorials;
     public static bool is_double;
+    public bool going_farm;
 
     void Start()
     {
@@ -67,6 +68,7 @@ public class sea : MonoBehaviour
         depth.gameObject.GetComponent<Image>().sprite = depth_arr[Haenyeo.level-1];
 
         is_double = false;
+        going_farm = false;
     }
 
     void Update()
@@ -184,6 +186,7 @@ public class sea : MonoBehaviour
     //물음 팝업창에서 yes 선택 
     public void return_to_farms_yes()
     {
+        going_farm = true;
         return_to_farms_ui.gameObject.SetActive(false); //물음 팝업창 비활성화 
         farm_manager.is_repay_locked = false;
         farm_manager.is_sea_locked = true;
@@ -202,13 +205,15 @@ public class sea : MonoBehaviour
     // 체력 0 됐을때 카운트다운 팝업창
     public void use_hp_item()
     {
-        hp_sound.PlayOneShot(hp_sound.clip);
-        Haenyeo.item_inven[3] -= 1; // 체력템 개수 -1
-        // load_farm 함수에 템 개수 저장하기
-        block_touch.gameObject.SetActive(false); //팝업창 외의 영역 터치 방지 해제 
-        Haenyeo.hp += 10; // 체력 추가
-        countdown = 10.0f; // 카운트다운 복구
-        timeover_return_ui.gameObject.SetActive(false); //카운트다운 팝업창 비활성화
+        if (!going_farm) 
+        {
+            hp_sound.PlayOneShot(hp_sound.clip);
+            Haenyeo.item_inven[3] -= 1; // 체력템 개수 -1
+            block_touch.gameObject.SetActive(false); //팝업창 외의 영역 터치 방지 해제 
+            Haenyeo.hp += 10; // 체력 추가
+            countdown = 10.0f; // 카운트다운 복구
+            timeover_return_ui.gameObject.SetActive(false); //카운트다운 팝업창 비활성화
+        }
     }
 
     //그물망 보여주기
