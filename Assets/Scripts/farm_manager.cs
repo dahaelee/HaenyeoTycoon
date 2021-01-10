@@ -158,6 +158,7 @@ public class farm_manager : MonoBehaviour
         //양식자원 하나 증가
         int item_num = farms[index].item.number;
         Haenyeo.farm_item_number[item_num]++;
+        farms[index].farmReset();
         //양식장 비우기
         StartCoroutine(farming_effect(index));
 
@@ -174,7 +175,6 @@ public class farm_manager : MonoBehaviour
             farms[index].money.transform.GetChild(0).transform.localScale = d;
             yield return new WaitForSeconds(0.02f);
         }
-        farms[index].farmReset();
         farms[index].money.transform.GetChild(0).transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
 
     }
