@@ -160,24 +160,24 @@ public class betting_rsp : MonoBehaviour
     
     public void clickRock()
     {
+        blank_bg.SetActive(true);
         result_mask.SetActive(true);
         select[0].SetActive(true);
         result(0);
-        blank_bg.SetActive(true);
     }
     public void clickSci()
     {
+        blank_bg.SetActive(true);
         result_mask.SetActive(true);
         select[1].SetActive(true);
         result(1);
-        blank_bg.SetActive(true);
     }
     public void clickPaper()
     {
+        blank_bg.SetActive(true);
         result_mask.SetActive(true);
         select[2].SetActive(true);
         result(2);
-        blank_bg.SetActive(true);
     }
 
     public void hide_effect() // 가림막 없어지는 효과
