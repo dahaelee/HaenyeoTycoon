@@ -34,6 +34,10 @@ public class start : MonoBehaviour
 
     }
 
+    void Awake() {
+        Screen.SetResolution(Screen.width, (Screen.width * 9) / 16, true);
+    }
+
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.Escape))
