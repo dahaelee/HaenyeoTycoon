@@ -606,6 +606,11 @@ public class farm_manager : MonoBehaviour
                 StartCoroutine("happy_ending");
             }
 
+            //광고 추가
+            if (Haenyeo.day % 2 == 0) {
+                GameObject.Find("google_ads").GetComponent<GoogleAdsManager>().AdsShow();
+            }
+
             StartCoroutine(GoDay());    //다음날로 바뀌는 이펙트
 
 
@@ -659,6 +664,13 @@ public class farm_manager : MonoBehaviour
         {
             StartCoroutine("happy_ending");
         }
+
+        //광고 추가
+        if (Haenyeo.day % 2 == 0)
+        {
+            GameObject.Find("google_ads").GetComponent<GoogleAdsManager>().AdsShow();
+        }
+
         StartCoroutine(GoDay());    //다음날로 바뀌는 이펙트
 
     }
