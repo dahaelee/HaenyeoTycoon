@@ -6,7 +6,14 @@
 양식장 사업에 실패하여 빚더미에 앉게된 아버지를 대신해, 물질과 양식장 경영으로 빚을 갚아보세요!
 
 ## Trailer Video
-- [굳세어라 해녀야 트레일러 영상](https://www.youtube.com/watch?v=6DXkHLmD7EY&feature=youtu.be)
+[굳세어라 해녀야! 트레일러 영상](https://www.youtube.com/watch?v=6DXkHLmD7EY&feature=youtu.be)
+
+## Download Link
+![image](https://user-images.githubusercontent.com/53745427/111434244-ac1b6580-8742-11eb-941b-ac4334b54cf0.png)   
+
+<img src="https://user-images.githubusercontent.com/53745427/111434332-c48b8000-8742-11eb-883a-a7a852a78181.png" width="400"> 
+
+[굳세어라 해녀야! 다운로드 링크](https://play.google.com/store/apps/details?id=com.KING.HaenyeoTycoon)
 
 ## Team
 기획 및 개발
