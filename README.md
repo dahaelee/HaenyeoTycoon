@@ -11,7 +11,7 @@
 ## Download Link
 ![image](https://user-images.githubusercontent.com/53745427/111434244-ac1b6580-8742-11eb-941b-ac4334b54cf0.png)   
 
-<img src="https://user-images.githubusercontent.com/53745427/111434332-c48b8000-8742-11eb-883a-a7a852a78181.png" width="400"> 
+<img src="https://user-images.githubusercontent.com/53745427/111434332-c48b8000-8742-11eb-883a-a7a852a78181.png" width="450"> 
 
 [굳세어라 해녀야! 다운로드 링크](https://play.google.com/store/apps/details?id=com.KING.HaenyeoTycoon)
 
